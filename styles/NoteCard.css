@@ -1,0 +1,5 @@
+.content-card {
+    background: linear-gradient(to bottom, #9A9A9A 0%, #00000000 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
