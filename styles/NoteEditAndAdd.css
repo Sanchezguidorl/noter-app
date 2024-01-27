@@ -1,0 +1,5 @@
+#NoteContentPanel textarea{
+    resize: none;
+    padding: 10px; 
+    min-height: 60vh;
+ }

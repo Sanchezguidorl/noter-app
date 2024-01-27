@@ -1,52 +1,41 @@
 import DeleteIcon from "@mui/icons-material/Delete";
-import DescriptionIcon from "@mui/icons-material/Description";
-import HomeIcon from "@mui/icons-material/Home";
-import SearchIcon from "@mui/icons-material/Search";
-import AddIcon from "@mui/icons-material/Add";
-import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
+import DropDownItemNavCompact from "./../Buttons/DropDownItemNavCompact";
+import Link from "next/link";
+import HomeButton from "./../Buttons/HomeButton";
+import AddButton from "../Buttons/AddButton";
+import SearchButton from "../Buttons/SearchButton";
+import { dbMockNotebooks, dbMockNotes } from "@/app/db/dbMock";
 
 function NavCompact() {
+  const notebooksData = dbMockNotebooks;
+
+  const notesData = dbMockNotes;
   return (
-    <div className=" sm:hidden px-2 py-4 h-full bg-base relative">
-      <div className="flex flex-col gap-3 items-center">
-        <SearchIcon className="w-4 h-4" />
+    <div className="w-full sm:hidden px-4  py-4 bg-base">
+      <div className="flex justify-between items-center">
+        <SearchButton />
         <div className="relative">
-          <AddIcon className="w-6 h-6 bg-primary-buttons  rounded-full" />
-          <ul className="absolute top-0 left-full p-2  pl-4 z-30 bg-base rounded-md min-w-24 max-w-40 text-xs text-primary-buttons ">
-            <li className="text-nowrap text-ellipsis overflow-hidden">
-              Agregar nueva nota
-            </li>
-            <li className="text-nowrap text-ellipsis overflow-hidden">
-              Agregar nueva tarea
-            </li>
-          </ul>
+          <AddButton />
         </div>
-        <HomeIcon className="w-4 h-4"/>
+        <Link href={"/"}>
+          <HomeButton />
+        </Link>
+        <DropDownItemNavCompact
+          itemCategoryName={notesData.itemCategoryName}
+          icon={notesData.icon}
+          linkAdd={notesData.linkAdd}
+          listItems={notesData.listItems}
+        />
 
-        <div className="relative">
-        <CollectionsBookmarkIcon className="w-4 h-4" />
-          <ul className="absolute top-0 left-full p-2  pl-4 z-30 bg-base rounded-md min-w-24 max-w-40 text-xs text-primary-buttons ">
-            <li className="text-nowrap text-ellipsis overflow-hidden">
-              Agregar nueva nota
-            </li>
-            <li className="text-nowrap text-ellipsis overflow-hidden">
-              Agregar nueva tarea
-            </li>
-          </ul>
-        </div>
-
-        <div className="relative">
-        <DescriptionIcon className="w-4 h-4" />
-          <ul className="absolute top-0 left-full p-2  pl-4 z-30 bg-base rounded-md min-w-24 max-w-40 text-xs text-primary-buttons ">
-            <li className="text-nowrap text-ellipsis overflow-hidden">
-              Agregar nueva nota
-            </li>
-            <li className="text-nowrap text-ellipsis overflow-hidden">
-              Agregar nueva tarea
-            </li>
-          </ul>
-        </div>
-        <DeleteIcon className="w-4 h-4" />
+        <DropDownItemNavCompact
+          itemCategoryName={notebooksData.itemCategoryName}
+          icon={notebooksData.icon}
+          linkAdd={notebooksData.linkAdd}
+          listItems={notebooksData.listItems}
+        />
+        <Link href={"/papelera"}>
+          <DeleteIcon fontSize="small" className="hover:text-primary-buttons" />
+        </Link>
       </div>
     </div>
   );

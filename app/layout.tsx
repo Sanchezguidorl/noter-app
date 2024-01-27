@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import NavComponent from '@/components/layouts/NavComponent'
+import NavCompact from '@/components/layouts/NavCompact'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,7 +18,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+      <div className="flex flex-col sm:flex-row h-full">
+      <NavCompact />
+      <NavComponent />
+        {children}
+        </div>
+        </body>
     </html>
   )
 }

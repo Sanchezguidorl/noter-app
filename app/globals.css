@@ -18,6 +18,14 @@ input, textarea{
   border: none !important;
 }
 
+#NotFound{
+  background: radial-gradient(#dcdcdc4e 2%, #000 70%,#000 100%)
+}
+
+a{
+  text-decoration: none;
+}
+
 
 *{
   box-sizing: border-box;
@@ -37,4 +45,17 @@ input, textarea{
   border-radius: 10px;
  
 }
-  
+
+/*Utilities*/
+
+.max-h-500{
+  max-height:500px;
+}
+
+.max-h-600{
+  max-height:600px;
+}
+
+.text-xxs{
+font-size: 10px;
+}

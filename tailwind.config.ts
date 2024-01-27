@@ -17,6 +17,7 @@ const config: Config = {
       'primary-buttons': '#5E35B1',
       'secondary-text': '#9A9A9A',
       'focus-text': '#D4D4D4',
+      '1p': '1px',
     },
     extend: {
       backgroundImage: {

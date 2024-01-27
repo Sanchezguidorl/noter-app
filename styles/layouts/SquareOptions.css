@@ -6,3 +6,9 @@ border-bottom: 10px solid rgb(38, 38, 38);
 border-left: 20px solid transparent;
 border-radius: 14px;
 }
+
+
+.more-options-active + .dialog-container{
+display:block;
+opacity: 1;
+}
