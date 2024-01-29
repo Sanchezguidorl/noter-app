@@ -43,7 +43,7 @@ function Header() {
     const month = months[dateTime.getMonth()];
     const year = dateTime.getFullYear();
 
-    return `${day}, ${dateTime.getDay()} de ${month} de ${year}`;
+    return `${day}, ${dateTime.getDate()} de ${month} de ${year}`;
   };
 
   return (

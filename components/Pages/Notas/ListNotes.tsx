@@ -7,7 +7,7 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import { useState } from "react";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
-function ListNotes({ list }) {
+function ListNotes({ list }:{list:NoteInterface[]}) {
 const [showCards, setShowCards]= useState<boolean>(false);
 
 
@@ -23,9 +23,9 @@ const [showCards, setShowCards]= useState<boolean>(false);
           <SortIcon />
         </div>
         <div className="flex mt-3 text-secondary-text border-b border-interactive pb-2">
-<div className="flex items-center cursor-pointer" onClick={()=>setShowCards(!showCards)}>
+<div className="flex items-center cursor-pointer select-none" onClick={()=>setShowCards(!showCards)}>
 <ArrowDropDownIcon className={` right-4 transition-all duration-200 ${showCards && '-rotate-90'}`}/>
-        <p className="text-xs ">{showCards ? 'Ocultar notas': 'Ver notas'}</p>
+        <p className="text-xs ">{!showCards ? 'Ocultar notas': 'Ver notas'}</p>
 </div>
         </div>
       </div>

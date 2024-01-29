@@ -1,10 +1,12 @@
 import DeleteIcon from "@mui/icons-material/Delete";
-import DropDownItemNavCompact from "./../Buttons/DropDownItemNavCompact";
+import DropDownNotesCompact from "../Buttons/DropDownNotesCompact";
 import Link from "next/link";
-import HomeButton from "./../Buttons/HomeButton";
+import HomeIcon from "@mui/icons-material/Home";
 import AddButton from "../Buttons/AddButton";
 import SearchButton from "../Buttons/SearchButton";
 import { dbMockNotebooks, dbMockNotes } from "@/app/db/dbMock";
+import DropDownNotebooksCompact from "../Buttons/DropDownNotebooksCompact";
+import PageActiveMobile from "../Buttons/PageActiveMobile";
 
 function NavCompact() {
   const notebooksData = dbMockNotebooks;
@@ -18,21 +20,18 @@ function NavCompact() {
           <AddButton />
         </div>
         <Link href={"/"}>
-          <HomeButton />
+          <PageActiveMobile icon={<HomeIcon/>} currentUrl={''}/>
         </Link>
-        <DropDownItemNavCompact
-          itemCategoryName={notesData.itemCategoryName}
+        <DropDownNotesCompact
           icon={notesData.icon}
-          linkAdd={notesData.linkAdd}
           listItems={notesData.listItems}
         />
 
-        <DropDownItemNavCompact
+      <DropDownNotebooksCompact
           itemCategoryName={notebooksData.itemCategoryName}
           icon={notebooksData.icon}
-          linkAdd={notebooksData.linkAdd}
           listItems={notebooksData.listItems}
-        />
+  />
         <Link href={"/papelera"}>
           <DeleteIcon fontSize="small" className="hover:text-primary-buttons" />
         </Link>

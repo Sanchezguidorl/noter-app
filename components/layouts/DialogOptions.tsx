@@ -15,8 +15,6 @@ const [isActive,setIsActive]= useState<boolean>(false);
         <div className="dialog absolute -top-2 right-1"></div>
         <div className="bg-primary rounded-sm p-2 ">
           <div className="text-center text-xs">
-            <p className="">Hola</p>
-            <p className="">Hola</p>
           </div>
         </div>
       </div>
