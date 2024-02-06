@@ -12,7 +12,7 @@ function DropDownNotes({ listItems, icon }: NotesDataI) {
   const renderedListItems =
     listItems.length > 0 ? (
       listItems.map((note: NoteI) => (
-        <Link href={`/notas/${note.itemId}`} key={note.itemId}>
+        <Link href={`/notas/${note.id}`} key={note.id}>
           <li className="px-2 py-1 text-xxs hover:brightness-125 cursor-pointer uppercase">
             <LibraryBooksIcon fontSize="small" />
             {note.title}

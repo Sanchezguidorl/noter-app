@@ -1,6 +1,7 @@
-import { NoteInterface } from "./NoteCardPrevisualization"
+
+import { NoteI } from '@/app/db/dbMock'
 import '../../../styles/NoteEditAndAdd.css'
-function NoteContent({note}:{note:NoteInterface}) {
+function NoteContent({note}:{note:NoteI}) {
 
   return (
     <div className=" w-full h-screen bg-primary">

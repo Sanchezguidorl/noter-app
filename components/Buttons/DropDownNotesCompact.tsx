@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { NotesDataI } from "@/app/db/dbMock";
 import PageActiveMobile from "./PageActiveMobile";
-import HomeIcon from '@mui/icons-material/Home';
 
 function DropDownNotesCompact({ listItems, icon }: NotesDataI) {
   const [active, setActive] = useState<boolean>(false);
@@ -42,7 +41,7 @@ function DropDownNotesCompact({ listItems, icon }: NotesDataI) {
         </li>
         {listItems.length > 0 &&
           listItems.map((note) => (
-            <Link key={note.itemId} href={`/notas/${note.itemId}`}>
+            <Link key={note.id} href={`/notas/${note.id}`}>
               <li className=" hover:text-white uppercase">{note.title}</li>
             </Link>
           ))}

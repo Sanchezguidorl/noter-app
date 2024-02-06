@@ -4,13 +4,20 @@ import SearchIcon from "@mui/icons-material/Search";
 import DropDownNotebook from "../Buttons/DropDownNotebook";
 import Link from "next/link";
 import AddButtonDropDown from "../Buttons/AddButtonDropDown";
-import { dbMockNotebooks, dbMockNotes } from "@/app/db/dbMock";
 import DropDownNotes from "../Buttons/DropDownNotes";
+import DescriptionIcon from '@mui/icons-material/Description';
+import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 
-function NavComponent() {
-  const notebooksData =dbMockNotebooks;
+async function NavComponent() {
+    const getNotebooks=await fetch("http://localhost:3000/api/libretas");
+  
+    const notebooksData= await getNotebooks?.json();
 
-  const notesData =dbMockNotes;
+  const getNotes=await fetch("http://localhost:3000/api/notas").catch(() =>
+  console.log("llegaste aca")
+);
+
+  const notesData =await getNotes?.json();
 
   return (
     <div className=" sm:w-1/3 md:w-1/4 max-w-48 py-4 hidden sm:flex flex-col gap-2 font-semibold text-xs border-interactive border-r-2">
@@ -39,15 +46,15 @@ function NavComponent() {
           </li>
           <li className="relative flex flex-col justify-center">
             <DropDownNotebook
-              icon={notebooksData.icon}
-              itemCategoryName={notebooksData.itemCategoryName}
-              listItems={notebooksData.listItems}
+              icon={<CollectionsBookmarkIcon fontSize="small" />}
+              itemCategoryName={"Libretas"}
+              listItems={notebooksData}
             />
           </li>
           <li className="relative flex flex-col justify-center">
             <DropDownNotes
-              icon={notesData.icon}
-              listItems={notesData.listItems}
+              icon={<DescriptionIcon fontSize="small" />}
+              listItems={notesData}
             />
           </li>
           <li className="h-10 hover:bg-primary  pl-6 cursor-pointer uppercase flex items-center">

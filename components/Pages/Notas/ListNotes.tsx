@@ -1,13 +1,12 @@
 'use client';
-import NoteCardPrevisualization, {
-  NoteInterface,
-} from "./NoteCardPrevisualization";
+import NoteCardPrevisualization from "./NoteCardPrevisualization";
 import SortIcon from "@mui/icons-material/Sort";
 import DescriptionIcon from "@mui/icons-material/Description";
 import { useState } from "react";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { NoteI } from "@/app/db/dbMock";
 
-function ListNotes({ list }:{list:NoteInterface[]}) {
+function ListNotes({ list }:{list:NoteI[]}) {
 const [showCards, setShowCards]= useState<boolean>(false);
 
 
@@ -19,7 +18,7 @@ const [showCards, setShowCards]= useState<boolean>(false);
           <h1 className=" text-3xl mb-3">Notas</h1>
         </div>
         <div className="flex justify-between px-2 text-secondary-text">
-          <p className="text-xs ">{list.length} notas</p>
+          <p className="text-xs ">{list?.length} notas</p>
           <SortIcon />
         </div>
         <div className="flex mt-3 text-secondary-text border-b border-interactive pb-2">
@@ -30,13 +29,13 @@ const [showCards, setShowCards]= useState<boolean>(false);
         </div>
       </div>
       <div className={`overflow-auto max-h-600 ${showCards && 'h-0 overflow-hidden'}`}>
-      {list.map((item: NoteInterface) => (
+      {list?.map((item: NoteI) => (
         <NoteCardPrevisualization
-          key={item.itemId}
+          key={item.title}
           title={item.title}
           date={item.date}
           content={item.content}
-          itemId={item.itemId}
+          id={item.id}
         />
       ))}
       </div>

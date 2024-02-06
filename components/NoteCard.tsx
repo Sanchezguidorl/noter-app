@@ -1,22 +1,40 @@
+"use client";
+import { NoteI } from "@/app/db/dbMock";
 import "../styles/NoteCard.css";
+import Link from "next/link";
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useContext } from "react";
+import { useDeleteNotesPanelContext } from "@/contexts/DeleteNotesPanelContext";
 
-function NoteCard() {
+function NoteCard({id, content, date,title}:NoteI) {
+const {deleteCards}= useDeleteNotesPanelContext();
+
+const readDate=(date:string)=>{
+const fullDate= new Date(date);
+const months= ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
+
+return `${fullDate.getDate()} ${months[fullDate.getMonth()].slice(0,3)}`
+}
+  
   return (
+    <Link href={`/notas/${id}`}>
     <div
       id="NoteCard"
       className=" bg-primary h-full max-h-full w-40 min-w-40 rounded-xl p-2 relative"
     >
-      <p>Title</p>
+{deleteCards &&
+      <DeleteIcon className="absolute right-3 bottom-2 z-10 text-delete hover:text-delete-hover" fontSize="small"/>
+      }
+      <p>{title}</p>
       <div className="content-card overflow-y-hidden h-36">
         <p className="text-sm">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit
-          obcaecati sunt excepturi laboriosam ipsa quod facilis repellendus
-          nobis illum, saepe consectetur recusandae officiis cupiditate deserunt
-          libero molestias debitis ut nemo!
+{content}
         </p>
       </div>
-      <p className=" text-secondary-text absolute bottom-2">3 ene</p>
+      <p className=" text-secondary-text absolute bottom-2">{readDate(date)}</p>
     </div>
+    </Link>
   );
 }
 

@@ -1,12 +1,16 @@
 import React from 'react'
 import NotebookDropDown from './NotebookDropDown'
-import { dbMockNotebooks } from '@/app/db/dbMock'
+ import { NotebookDataI } from '@/app/db/dbMock'
 
-function ListNotebooks() {
-    const notebooksData= dbMockNotebooks.listItems;
+ async function ListNotebooks() {
+    const getNoebooks= await fetch("http://localhost:3000/api/libretas");
+
+    const notebooksData=await getNoebooks?.json();
+
+
   return (
     <div className=' bg-base h-full w-full px-4'>
-    {notebooksData.map((notebook)=>(
+    {notebooksData.map((notebook:NotebookDataI)=>(
             <NotebookDropDown key={notebook.id} id={notebook.id} title={notebook.title} notes={notebook.notes}/>
     ))
         }

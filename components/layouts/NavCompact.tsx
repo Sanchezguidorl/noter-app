@@ -4,14 +4,22 @@ import Link from "next/link";
 import HomeIcon from "@mui/icons-material/Home";
 import AddButton from "../Buttons/AddButton";
 import SearchButton from "../Buttons/SearchButton";
-import { dbMockNotebooks, dbMockNotes } from "@/app/db/dbMock";
 import DropDownNotebooksCompact from "../Buttons/DropDownNotebooksCompact";
 import PageActiveMobile from "../Buttons/PageActiveMobile";
+import DescriptionIcon from '@mui/icons-material/Description';
+import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 
-function NavCompact() {
-  const notebooksData = dbMockNotebooks;
+async function NavCompact() {
+  const getNotebooks=await fetch("http://localhost:3000/api/libretas");
 
-  const notesData = dbMockNotes;
+  const notebooksData= await getNotebooks?.json();
+
+  const getNotes=await fetch("http://localhost:3000/api/notas").catch(() =>
+  console.log("llegaste aca")
+);
+
+  const notesData = await getNotes?.json();
+ 
   return (
     <div className="w-full sm:hidden px-4  py-4 bg-base">
       <div className="flex justify-between items-center">
@@ -23,14 +31,14 @@ function NavCompact() {
           <PageActiveMobile icon={<HomeIcon/>} currentUrl={''}/>
         </Link>
         <DropDownNotesCompact
-          icon={notesData.icon}
-          listItems={notesData.listItems}
+          icon={<DescriptionIcon fontSize="small" />}
+          listItems={notesData}
         />
 
       <DropDownNotebooksCompact
           itemCategoryName={notebooksData.itemCategoryName}
-          icon={notebooksData.icon}
-          listItems={notebooksData.listItems}
+          icon={<CollectionsBookmarkIcon fontSize="small" />}
+          listItems={notebooksData}
   />
         <Link href={"/papelera"}>
           <DeleteIcon fontSize="small" className="hover:text-primary-buttons" />

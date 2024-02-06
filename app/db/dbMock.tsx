@@ -4,7 +4,7 @@ import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import { ReactNode } from 'react';
 export const  dbMockNotes= {
     linkAdd: "notas",
-    icon: <DescriptionIcon fontSize="small" />,
+    icon:'' ,
     listItems: [
       { title: "What is Lorem Ipsum?", itemId: "id1",date:'12/10/2024', content:"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." },
       { title: "Why do we use it?", itemId: "id2",date:'12/10/2024', content:"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)." },
@@ -15,35 +15,6 @@ export const  dbMockNotes= {
   };
 ;
 
-export const  dbMockNotebooks= {
-    linkAdd: "libretas",
-    icon: <CollectionsBookmarkIcon fontSize="small" />,
-    itemCategoryName: "Libretas",
-    listItems: [
-      { title: "Libreta 1", id:'4234', notes:[
-        {
-          title:'What is Lorem Ipsum?', noteId:'id1'
-        },
-        {
-          title:'Why do we use it?', noteId:'id2'
-        },
-        {
-          title:'Where does it come from?', noteId:'id3'
-        },
-      ]
-    },
-      { title: "Libreta 2", id:'4234', notes:[
-        {
-          title:'Where can I get some?', noteId:'id4'
-        },
-        {
-          title:'Where does it come Nota', noteId:'id5'
-        }
-      ]
-    },
-    ],
-  };;
-
 
  export interface NoteInNotebookI{
     
@@ -52,7 +23,7 @@ export const  dbMockNotebooks= {
   }
 
 export interface NoteI{
-  title: string, itemId: string,date:string, content:string
+  title: string, id: string,date:string, content:string
 }
   
  export interface NotesDataI{
@@ -60,6 +31,7 @@ export interface NoteI{
       icon:ReactNode,listItems:NoteI[]
     
   }
+
 
  export interface NotebookDataI{
      title: string, id:string, notes:NoteInNotebookI[]

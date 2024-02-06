@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 import HomeIcon from '@mui/icons-material/Home';
-import { Link } from '@mui/material';
+import Link from 'next/link';
 
 function NotFound() {
   return (

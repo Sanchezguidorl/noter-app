@@ -6,7 +6,7 @@ import { useState } from "react";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { NotebookDataI } from "@/app/db/dbMock";
 
-function NotebookDropDown({ title, id, notes }: NotebookDataI) {
+function NotebookDropDown({ title, notes }: NotebookDataI) {
   const [showNotes, setShowNotes] = useState<boolean>(false);
 
   return (
