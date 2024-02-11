@@ -23,8 +23,7 @@ const notesData= await getNotesData?.json();
       </div>
       </div>
         <ul className='mt-4 flex w-full gap-6'>
-            <li><ButtonSection text={"Recientes"}/></li>
-            <li><ButtonSection text={"Favoritas"}/></li>
+            <li><ButtonSection isActive={true} text={"Recientes"}/></li>
         </ul>
         <div className=' h-full mt-2 flex gap-2 max-w-full overflow-y-hidden overflow-x-auto pb-1 container-cards pr-6'>
          {

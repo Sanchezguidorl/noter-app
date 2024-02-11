@@ -1,8 +1,8 @@
 import React from 'react'
 
-function ButtonSection({text}:{text:string}) {
+function ButtonSection({text, isActive}:{text:string, isActive:boolean}) {
   return (
-    <div className=' hover:text-primary-buttons cursor-pointer border-b-4 border-c-transparent hover:border-primary-buttons'>
+    <div className={`cursor-pointer border-b-4  ${isActive ? "text-primary-buttons border-primary-buttons":"border-c-transparent"}`}>
       {text}
     </div>
   )

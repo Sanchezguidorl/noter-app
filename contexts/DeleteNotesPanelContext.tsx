@@ -1,6 +1,6 @@
 "use client";
 
-import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useEffect, useState } from "react";
 
 
 
@@ -15,8 +15,12 @@ const DeleteNotesPanelContext= createContext<DeleteNotesPanelContextType>({
 export const useDeleteNotesPanelContext=()=> useContext(DeleteNotesPanelContext);
 
 export const DeleteNotesPanelProvider =({children}:{children:ReactNode})=>{
-    const [deleteCards,setDeleteCards]=useState<boolean>(true);
-
+    const [deleteCards,setDeleteCards]=useState<boolean>(false);
+useEffect(()=>{
+if(deleteCards){
+    setDeleteCards(false);
+}
+},[])
 
 
     return (

@@ -5,6 +5,7 @@ import "./DialogOptions";
 import { useState } from "react";
 import { useDeleteNotesPanelContext } from "@/contexts/DeleteNotesPanelContext";
 import Link from "next/link";
+import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 
 function SquareOptions() {
 const [isActive,setIsActive]= useState<boolean>(false);
@@ -21,7 +22,7 @@ const {deleteCards,setDeleteCards}=useDeleteNotesPanelContext();
           </div>
           </Link>
           <div onClick={()=>((setDeleteCards!==null && deleteCards!==null)&& setDeleteCards(!deleteCards))} className="text-center text-xs cursor-pointer p-1 hover:bg-secondary-text">
-            Eliminar notas
+            Eliminar notas <RadioButtonCheckedIcon className={` text-primary-buttons transition-all duration-200 ${deleteCards ? "opacity-100": "opacity-0"}`}/>
           </div>
         </div>
       </div>
