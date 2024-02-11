@@ -1,7 +1,9 @@
 import React from 'react'
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
+import Link from 'next/link';
 function AddNoteCard() {
   return (
+    <Link href={"/notas/agregar"}>
     <div
       id="NoteCard"
       className=" bg-primary h-full max-h-full w-40 min-w-40 rounded-xl p-2 relative"
@@ -14,8 +16,8 @@ function AddNoteCard() {
 Crear nota
         </p>
       </div>
-      <p className=" text-secondary-text absolute bottom-2">3 ene</p>
     </div>
+    </Link>
   )
 }
 

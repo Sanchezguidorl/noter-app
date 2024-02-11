@@ -18,8 +18,12 @@ const config: Config = {
       'secondary-text': '#9A9A9A',
       'focus-text': '#D4D4D4',
       '1p': '1px',
-      'delete-hover': '#F44336',
-      'delete': '#B39DDB'
+      'delete-hover': '#e72d3b',
+      'button-action': '#B39DDB',
+      'success':'#37b070',
+      'warning-alert':'rgba(233, 196, 106, 0.22)',
+      'success-alert':'#37b07032',
+      'delete-alert':'#fb5f6e32'
     },
     extend: {
       backgroundImage: {

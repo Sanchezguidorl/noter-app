@@ -23,7 +23,7 @@ export const  dbMockNotes= {
   }
 
 export interface NoteI{
-  title: string, id: string,date:string, content:string
+  title: string, id: string,date:number, content:string
 }
   
  export interface NotesDataI{
@@ -43,3 +43,6 @@ export interface NoteI{
     icon:ReactNode
   }
   
+  export interface TasksI{
+    id:String, toDo:String, limitDate:number, done:boolean 
+  }

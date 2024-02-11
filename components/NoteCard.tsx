@@ -3,19 +3,11 @@ import { NoteI } from "@/app/db/dbMock";
 import "../styles/NoteCard.css";
 import Link from "next/link";
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useContext } from "react";
 import { useDeleteNotesPanelContext } from "@/contexts/DeleteNotesPanelContext";
+import { readDate } from "@/app/utils/utils";
 
 function NoteCard({id, content, date,title}:NoteI) {
 const {deleteCards}= useDeleteNotesPanelContext();
-
-const readDate=(date:string)=>{
-const fullDate= new Date(date);
-const months= ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-
-
-return `${fullDate.getDate()} ${months[fullDate.getMonth()].slice(0,3)}`
-}
   
   return (
     <Link href={`/notas/${id}`}>
@@ -24,7 +16,7 @@ return `${fullDate.getDate()} ${months[fullDate.getMonth()].slice(0,3)}`
       className=" bg-primary h-full max-h-full w-40 min-w-40 rounded-xl p-2 relative"
     >
 {deleteCards &&
-      <DeleteIcon className="absolute right-3 bottom-2 z-10 text-delete hover:text-delete-hover" fontSize="small"/>
+      <DeleteIcon className="absolute right-3 bottom-2 z-10 text-button-action hover:text-delete-hover" fontSize="small"/>
       }
       <p>{title}</p>
       <div className="content-card overflow-y-hidden h-36">

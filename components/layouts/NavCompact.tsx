@@ -10,11 +10,11 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 
 async function NavCompact() {
-  const getNotebooks=await fetch("http://localhost:3000/api/libretas");
+  const getNotebooks=await fetch("http://localhost:3000/api/libretas",{cache:'no-store'});
 
   const notebooksData= await getNotebooks?.json();
 
-  const getNotes=await fetch("http://localhost:3000/api/notas").catch(() =>
+  const getNotes=await fetch("http://localhost:3000/api/notas",{cache:'no-store', next:{revalidate:10}}).catch(() =>
   console.log("llegaste aca")
 );
 
