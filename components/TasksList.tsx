@@ -1,22 +1,25 @@
-import React from 'react'
-import TaskListItem from './TaskListItem'
-import { TasksI } from '@/app/db/dbMock'
+import TaskListItem from './TaskListItem';
+import { TasksI } from '@/app/db/dbMock';
+import { useGetTasksContext } from '@/contexts/GetTasksContext';
+import { useEffect } from 'react';
 
-async function TasksList() {
-  const getTasks=await fetch("http://localhost:3000/api/tareas", {cache:'no-store'
-  });
+function TasksList() {
+  const {tasksData, refreshData}=useGetTasksContext();
 
-  const tasksData:TasksI[]= await getTasks.json();
+  useEffect(()=>{
+refreshData();
+  },[]);
 
   return (
     <>
-{tasksData.map((task)=>
-(
-    <TaskListItem key={task.id.toString()} id={task.id} toDo={task.toDo} limitDate={task.limitDate} done={task.done} />)
-)
-}
-</>
-)
+      {tasksData?.map((task:TasksI) => (
+        <TaskListItem
+          key={task.id.toString()}
+          task={task}
+        />
+      ))}
+    </>
+  );
 }
 
-export default TasksList
+export default TasksList;

@@ -16,12 +16,13 @@ export const GET = async () => {
   try {
     const getNotesData = await getDocs(notesRef);
 
-    const notesData = getNotesData.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    let notesData=await getNotesData.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
 
-    return NextResponse.json(notesData);
+    if(notesData){
+    return NextResponse.json(notesData);}
   } catch (error) {
     console.log(error);
   }
@@ -29,9 +30,10 @@ export const GET = async () => {
 
 export const POST = async (req: NextRequest) => {
   const data = await req.text();
-  const newData: NoteI = JSON.parse(data);
   try {
+    const newData: NoteI = JSON.parse(data);
     const newNote = doc(notesRef);
+    delete (newData as any).id;
     await setDoc(newNote, newData);
 
     return NextResponse.json({ success: true });

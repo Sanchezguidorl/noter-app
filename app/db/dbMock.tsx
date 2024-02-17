@@ -28,8 +28,8 @@ export interface NoteI{
   
  export interface NotesDataI{
     
-      icon:ReactNode,listItems:NoteI[]
-    
+      icon:ReactNode
+      listItems:NotebookI[]
   }
 
 
@@ -39,10 +39,14 @@ export interface NoteI{
 
   export interface NotebookDropDownMenuI{
     itemCategoryName:string,
-    listItems:NotebookDataI[],
+    listItems:NotebookI[],
     icon:ReactNode
   }
   
   export interface TasksI{
-    id:String, toDo:String, limitDate:number, done:boolean 
+    id:string, toDo:string, limitDate:number, done:boolean 
+  }
+
+  export interface NotebookI{
+    title:string, notes:{id:string, title:string}[]|[], id?:string
   }

@@ -23,7 +23,8 @@ const config: Config = {
       'success':'#37b070',
       'warning-alert':'rgba(233, 196, 106, 0.22)',
       'success-alert':'#37b07032',
-      'delete-alert':'#fb5f6e32'
+      'delete-alert':'#fb5f6e32',
+      'overlay-transparent':'#00000045'
     },
     extend: {
       backgroundImage: {

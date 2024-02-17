@@ -43,15 +43,22 @@ export const POST = async (req: NextRequest) => {
   };
   
   export const PUT = async (req: NextRequest) => {
-      const dataRequest= await req.text();
-      const dataUpdated= JSON.parse(dataRequest)
-      const {id}=dataUpdated;
-      const taskByIdRef = doc(tasksRef,id);
-      try {
-        const updatedTask = await updateDoc(taskByIdRef,dataUpdated);
-        return NextResponse.json({ success: true });
-      } catch (error) {
-        return NextResponse.json({ success: false, error: error });
+    try {
+      const dataRequest = await req.text();
+      const dataUpdated = JSON.parse(dataRequest);
+  
+      if (!dataUpdated || !dataUpdated.id) {
+        return NextResponse.json({ success: false, error: 'Datos inválidos' });
       }
-    };
-    
+  
+      const { id } = dataUpdated;
+      const taskByIdRef = doc(tasksRef, id);
+  
+      const updatedTask = await updateDoc(taskByIdRef, dataUpdated);
+  
+      return NextResponse.json({ success: true });
+    } catch (error) {
+      console.error(error);
+      return NextResponse.json({ success: false, error: 'Hubo un error al actualizar la tarea' });
+    }
+  };

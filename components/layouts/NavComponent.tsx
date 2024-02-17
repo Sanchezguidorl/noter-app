@@ -5,45 +5,36 @@ import DropDownNotebook from "../Buttons/DropDownNotebook";
 import Link from "next/link";
 import AddButtonDropDown from "../Buttons/AddButtonDropDown";
 import DropDownNotes from "../Buttons/DropDownNotes";
-import DescriptionIcon from '@mui/icons-material/Description';
-import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
+import DescriptionIcon from "@mui/icons-material/Description";
+import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
+import SearchDataInput from "./SearchDataInput";
 
 async function NavComponent() {
-    const getNotebooks=await fetch("http://localhost:3000/api/libretas");
-  
-    const notebooksData= await getNotebooks?.json();
+  const getNotebooks = await fetch("http://localhost:3000/api/libretas");
 
-  const getNotes=await fetch("http://localhost:3000/api/notas").catch(() =>
-  console.log("llegaste aca")
-);
+  const notebooksData = await getNotebooks?.json();
 
-  const notesData =await getNotes?.json();
+  const getNotes = await fetch("http://localhost:3000/api/notas").catch(() =>
+    console.log("llegaste aca")
+  );
+
+  const notesData = await getNotes?.json();
+
+  const allData = [...notesData, ...notebooksData];
 
   return (
     <div className=" sm:w-1/3 md:w-1/4 max-w-48 py-4 hidden sm:flex flex-col gap-2 font-semibold text-xs border-interactive border-r-2">
       <div className="px-2 text-xs ">
-        <label
-          htmlFor="SearchInput"
-          className=" h-10 items-center text-base bg-white flex gap-1 rounded-full px-3 mx-2 mb-3 cursor-pointer"
-        >
-          {""}
-          <SearchIcon />
-          <input
-            id="SearchInput"
-            type="text"
-            placeholder="Buscar"
-            className="rounded-full w-full cursor-pointer"
-          />
-        </label>
+        <SearchDataInput data={allData}/>
         <AddButtonDropDown />
       </div>
       <nav>
         <ul className=" text-secondary-text">
-          <li className="h-10 flex items-center hover:bg-primary  pl-6 cursor-pointer uppercase">
-            <Link href={"/"} className="flex items-center gap-1">
+          <Link href={"/"} className="">
+            <li className="h-10 flex items-center gap-1 hover:bg-primary  pl-6 cursor-pointer uppercase">
               <HomeIcon /> Inicio
-            </Link>
-          </li>
+            </li>
+          </Link>
           <li className="relative flex flex-col justify-center">
             <DropDownNotebook
               icon={<CollectionsBookmarkIcon fontSize="small" />}
@@ -54,7 +45,6 @@ async function NavComponent() {
           <li className="relative flex flex-col justify-center">
             <DropDownNotes
               icon={<DescriptionIcon fontSize="small" />}
-              listItems={notesData}
             />
           </li>
           <li className="h-10 hover:bg-primary  pl-6 cursor-pointer uppercase flex items-center">

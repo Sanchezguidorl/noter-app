@@ -37,7 +37,7 @@ function DropDownNotesCompact({ listItems, icon }: NotesDataI) {
         }`}
       >
         <li className=" hover:text-white">
-          <Link href={`/notes/agregar`}>Agregar nuevas notas</Link>
+          <Link href={`/notas/agregar`}>Agregar nuevas notas</Link>
         </li>
         {listItems.length > 0 &&
           listItems.map((note) => (

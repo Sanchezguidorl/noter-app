@@ -16,11 +16,11 @@ function AddButtonDropDown() {
  </div>
  <ul className={`absolute overflow-hidden top-0 text-secondary-text
   left-full uppercase bg-black z-40 transition-all duration-200 rounded-md rounded-l-none ${showOptions ? 'w-28': 'w-0'}`}>
+            <Link href={'/notas/agregar'}>
         <li className='py-1 px-2 hover:text-white'>
-            <Link href={'/'}>
             <AddIcon />  Nota
-            </Link>
         </li>
+            </Link>
         <li className='py-1 px-2 hover:text-white'>
             <Link href={'/'}>
             <AddIcon />  Tarea

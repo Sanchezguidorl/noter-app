@@ -1,4 +1,4 @@
-import { NotebookDataI } from '@/app/db/dbMock';
+import { NotebookDataI, NotebookI, TasksI } from '@/app/db/dbMock';
 import { db } from '@/firebase/config';
 import {collection, deleteDoc, doc, getDocs, setDoc, updateDoc} from 'firebase/firestore';
 import { NextRequest, NextResponse } from 'next/server';
@@ -11,7 +11,6 @@ export const GET=async()=>{
     const getDataNotebooks= await getDocs(notebooksRef);
     
     const notebooksData= getDataNotebooks.docs.map((doc)=>({id:doc.id, ...doc.data()}))
-  
     return NextResponse.json(notebooksData);
 } catch (error) {
     console.log(error)

@@ -1,22 +1,50 @@
-import React from 'react'
-import NotebookDropDown from './NotebookDropDown'
- import { NotebookDataI } from '@/app/db/dbMock'
+"use client";
+import NotebookDropDown from "./NotebookDropDown";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import { NotebookI } from "@/app/db/dbMock";
+import { useGetNotebooksContext } from "@/contexts/GetNotebooksContext";
+import { useEffect, useState } from "react";
+import AddNotebook from "./AddNotebook";
 
- async function ListNotebooks() {
-    const getNoebooks= await fetch("http://localhost:3000/api/libretas");
+function ListNotebooks() {
+  const { notebooksData, refresh } = useGetNotebooksContext();
+  const [addNotebook, setAddNotebook] = useState<boolean>(false);
+  const refreshData = async () => {
+    try {
+      const refreshData = await refresh();
 
-    const notebooksData=await getNoebooks?.json();
+      if (refreshData) {
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  useEffect(() => {
+    refreshData();
+  }, []);
 
   return (
-    <div className=' bg-base h-full w-full px-4'>
-    {notebooksData.map((notebook:NotebookDataI)=>(
-            <NotebookDropDown key={notebook.id} id={notebook.id} title={notebook.title} notes={notebook.notes}/>
-    ))
-        }
-      
+    <div className=" bg-base h-full w-full px-4">
+      <div className="flex justify-between items-center">
+        <h1 className="text-3xl mb-4 mt-3">Libretas</h1>
+        <AddBoxIcon
+          onClick={() => setAddNotebook(true)}
+          className="mr-6 text-3xl hover:text-primary-buttons cursor-pointer"
+        />
+      </div>
+      <AddNotebook selected={addNotebook} unSelect={setAddNotebook} />
+      {notebooksData.map((notebook: NotebookI) => (
+        <NotebookDropDown
+          key={notebook.id}
+          id={notebook.id}
+          title={notebook.title}
+          notes={notebook.notes}
+        />
+      ))}
     </div>
-  )
+  );
 }
 
-export default ListNotebooks
+export default ListNotebooks;

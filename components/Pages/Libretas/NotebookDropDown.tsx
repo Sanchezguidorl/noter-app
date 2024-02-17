@@ -4,15 +4,15 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import Link from "next/link";
 import { useState } from "react";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { NotebookDataI } from "@/app/db/dbMock";
+import { NotebookI } from "@/app/db/dbMock";
 
-function NotebookDropDown({ title, notes }: NotebookDataI) {
+function NotebookDropDown({ title, notes }: NotebookI) {
   const [showNotes, setShowNotes] = useState<boolean>(false);
-
+  console.log(notes);
   return (
     <div className="">
       <div
-        className="flex py-3 bg-primary hover:brightness-125 cursor-pointer"
+        className="flex py-3 mt-2 bg-primary hover:brightness-125 cursor-pointer"
         onClick={() => setShowNotes(!showNotes)}
       >
         <ArrowDropDownIcon
@@ -24,13 +24,13 @@ function NotebookDropDown({ title, notes }: NotebookDataI) {
         <p>{title}</p>
       </div>
       <ul
-        className={`pl-4 pt-2 text-sm text-secondary-text ${
+        className={`pl-4 mt-2 text-sm text-secondary-text ${
           !showNotes && "h-0 overflow-hidden"
         }`}
       >
         {notes.map((note) => (
-          <li key={note.noteId} className="p-1  border-b">
-            <Link href={`/notas/${note.noteId}`}>
+          <li key={note.id} className="p-1  border-b">
+            <Link href={`/notas/${note.id}`}>
               <DescriptionIcon />
               {note.title}
             </Link>
