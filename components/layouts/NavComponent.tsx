@@ -1,6 +1,5 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import HomeIcon from "@mui/icons-material/Home";
-import SearchIcon from "@mui/icons-material/Search";
 import DropDownNotebook from "../Buttons/DropDownNotebook";
 import Link from "next/link";
 import AddButtonDropDown from "../Buttons/AddButtonDropDown";
@@ -8,24 +7,16 @@ import DropDownNotes from "../Buttons/DropDownNotes";
 import DescriptionIcon from "@mui/icons-material/Description";
 import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
 import SearchDataInput from "./SearchDataInput";
+import GetNotebooksContext from "@/contexts/GetNotebooksContext";
+import GetNotesProvider from "@/contexts/GetNotesProvider";
 
 async function NavComponent() {
-  const getNotebooks = await fetch("http://localhost:3000/api/libretas");
-
-  const notebooksData = await getNotebooks?.json();
-
-  const getNotes = await fetch("http://localhost:3000/api/notas").catch(() =>
-    console.log("llegaste aca")
-  );
-
-  const notesData = await getNotes?.json();
-
-  const allData = [...notesData, ...notebooksData];
-
   return (
     <div className=" sm:w-1/3 md:w-1/4 max-w-48 py-4 hidden sm:flex flex-col gap-2 font-semibold text-xs border-interactive border-r-2">
       <div className="px-2 text-xs ">
-        <SearchDataInput data={allData}/>
+        <GetNotesProvider>
+        <SearchDataInput/>
+        </GetNotesProvider>
         <AddButtonDropDown />
       </div>
       <nav>
@@ -36,11 +27,12 @@ async function NavComponent() {
             </li>
           </Link>
           <li className="relative flex flex-col justify-center">
+           <GetNotebooksContext>
             <DropDownNotebook
               icon={<CollectionsBookmarkIcon fontSize="small" />}
               itemCategoryName={"Libretas"}
-              listItems={notebooksData}
             />
+            </GetNotebooksContext>
           </li>
           <li className="relative flex flex-col justify-center">
             <DropDownNotes

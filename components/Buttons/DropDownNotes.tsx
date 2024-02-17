@@ -1,22 +1,22 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Link from "next/link";
 import AddIcon from "@mui/icons-material/Add";
-import { NoteI, NotesDataI } from "@/app/db/dbMock";
+import { NoteI } from "@/app/db/dbMock";
 import { useGetNotesContext } from "@/contexts/GetNotesProvider";
 
-function DropDownNotes({ icon }: NotesDataI) {
+function DropDownNotes({ icon }: {icon:ReactNode}) {
   const [active, setActive] = useState<boolean>(false);
-  const [notes, setNotes] = useState<NoteI[]>([]);
   const { notesData, refreshData } = useGetNotesContext();
   const dropDownRef=useRef(null);
   const getData = async () => {
-    const freshData = await refreshData();
-
-    if (freshData) {
-      setNotes(freshData);
+    try {
+      const freshData = await refreshData();
+      return;
+    } catch (error) {
+      
     }
   };
 
@@ -26,7 +26,6 @@ function DropDownNotes({ icon }: NotesDataI) {
         setActive(false);
 }
 };
-
 
     if (active) {
       document.addEventListener("click",handleClickOutside);
@@ -59,8 +58,8 @@ function DropDownNotes({ icon }: NotesDataI) {
             <div>Nueva nota</div>
           </Link>
         </li>
-        {notes.length > 0 ? (
-          notes.map((note: NoteI) => (
+        {notesData.length > 0 ? (
+          notesData.map((note: NoteI) => (
             <Link href={`/notas/${note.id}`} key={note.id}>
               <li className="px-2 py-1 text-xxs hover:brightness-125 cursor-pointer uppercase">
                 <LibraryBooksIcon fontSize="small" />

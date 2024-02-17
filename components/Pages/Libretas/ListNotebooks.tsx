@@ -38,9 +38,7 @@ function ListNotebooks() {
       {notebooksData.map((notebook: NotebookI) => (
         <NotebookDropDown
           key={notebook.id}
-          id={notebook.id}
-          title={notebook.title}
-          notes={notebook.notes}
+          notebook={notebook}
         />
       ))}
     </div>

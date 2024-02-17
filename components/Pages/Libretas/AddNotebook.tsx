@@ -40,7 +40,7 @@ try {
 };
 
   return (
-    <div className={`bg-primary py-2 px-1 flex gap-1 overflow-hidden transition-all duration-300 ${!selected && "h-0 py-0" }`}>
+    <div className={`bg-primary  px-1 flex gap-1 overflow-hidden transition-all duration-300 ${selected? "py-2" : "h-0 py-0" }`}>
       <CollectionsBookmarkIcon />
       <label htmlFor="addNotebook"></label>
       <input onChange={handleChange} id="addNotebook" className=" bg-primary w-full" placeholder="Escríbe el nombre de tu libreta" type="text" value={notebookDataInput.title} />

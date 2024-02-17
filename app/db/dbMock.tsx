@@ -25,13 +25,6 @@ export const  dbMockNotes= {
 export interface NoteI{
   title: string, id: string,date:number, content:string
 }
-  
- export interface NotesDataI{
-    
-      icon:ReactNode
-      listItems:NotebookI[]
-  }
-
 
  export interface NotebookDataI{
      title: string, id:string, notes:NoteInNotebookI[]
@@ -39,7 +32,6 @@ export interface NoteI{
 
   export interface NotebookDropDownMenuI{
     itemCategoryName:string,
-    listItems:NotebookI[],
     icon:ReactNode
   }
   

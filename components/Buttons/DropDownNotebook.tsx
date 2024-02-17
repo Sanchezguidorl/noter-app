@@ -1,34 +1,33 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Link from "next/link";
 import AddIcon from "@mui/icons-material/Add";
-import { NotebookDataI, NotebookDropDownMenuI } from "@/app/db/dbMock";
+import {
+  NotebookDropDownMenuI,
+  NotebookI,
+} from "@/app/db/dbMock";
+import { useGetNotebooksContext } from "@/contexts/GetNotebooksContext";
 
-function DropDownItemNav({
-  itemCategoryName,
-  listItems,
-  icon,
-}: NotebookDropDownMenuI) {
+function DropDownItemNav({ itemCategoryName, icon }: NotebookDropDownMenuI) {
   const [active, setActive] = useState<boolean>(false);
+  const { notebooksData, refresh } = useGetNotebooksContext();
 
-  const renderedListItems =
-    listItems.length > 0 ? (
-      listItems.map((item: NotebookDataI) => (
-        <Link
-          href={`/${itemCategoryName.toLocaleLowerCase()}/${item.id}`}
-          key={item.id}
-        >
-          <li className="px-2 py-1 text-xxs hover:brightness-125 cursor-pointer uppercase">
-            <LibraryBooksIcon fontSize="small" />
-            {item.title}
-          </li>
-        </Link>
-      ))
-    ) : (
-      <></>
-    );
+  const refreshData = async () => {
+    try {
+      await refresh();
+
+      return;
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    if(active){
+      refreshData();
+    }
+  }, [active]);
+console.log(notebooksData)
 
   return (
     <>
@@ -38,7 +37,7 @@ function DropDownItemNav({
       >
         {icon}
         {itemCategoryName}
-        {listItems.length > 0 && (
+        {notebooksData.length > 0 && (
           <ArrowDropDownIcon
             className={`absolute left-0 duration-500 cursor-pointer ${
               active ? "" : "-rotate-90"
@@ -57,7 +56,18 @@ function DropDownItemNav({
             <div>Nueva {itemCategoryName.replace("s", "")}</div>
           </Link>
         </li>
-        {renderedListItems}
+       {
+         notebooksData.map((item: NotebookI) => (
+          <Link
+            href={`/${itemCategoryName.toLocaleLowerCase()}/${item.id}`}
+            key={item.id}
+          >
+            <li className="px-2 py-1 text-xxs hover:brightness-125 cursor-pointer uppercase">
+              <LibraryBooksIcon fontSize="small" />
+              {item.title}
+            </li>
+          </Link>))
+       }
       </ul>
     </>
   );
