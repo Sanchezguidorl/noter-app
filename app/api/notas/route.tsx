@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 import { NoteI } from "@/app/db/dbMock";
 
-const notesRef = collection(db, "notes");
+const notesRef = collection(db, "notas");
 
 export const GET = async () => {
   try {
@@ -43,10 +43,11 @@ export const POST = async (req: NextRequest) => {
 };
 
 export const DELETE = async (req: NextRequest) => {
-  const id: String = String(req.nextUrl.searchParams.get("id") || "");
+  const id: string = String(req.nextUrl.searchParams.get("id") || "");
   const noteByIdRef = doc(notesRef,id.toString());
   try {
     const deletedNote = await deleteDoc(noteByIdRef);
+    await deleteNoteFromNotebook(id);
     return NextResponse.json({ success: true });
   } catch (error) {
     return NextResponse.json({ success: false, error: error });
@@ -66,3 +67,25 @@ export const PUT = async (req: NextRequest) => {
     }
   };
   
+  const deleteNoteFromNotebook = async (id: string) => {
+    const notebooksRef = collection(db, "libretas");
+    try {
+      const notebooksSnapshot = await getDocs(notebooksRef);
+      const notebooksData =notebooksSnapshot.docs.map((doc)=>({id:doc.id, ...doc.data()}));
+      if (notebooksData) {
+        notebooksData.forEach(async(notebook) => {
+          const noteIndex = notebook.notes.findIndex((note: NoteI) => note.id === id);
+          if (noteIndex !== -1) {
+
+            notebook.notes.splice(noteIndex, 1);
+
+            const notebookById = doc(notebooksRef, notebook.id);
+            await updateDoc(notebookById, { ...notebook,notes: notebook.notes });
+          }
+        });
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };

@@ -47,10 +47,9 @@ function DropDownNotes({ icon }: {icon:ReactNode}) {
           } transition-all duration-200`}
         />
       </div>
+      <div className={`overflow-hidden transition-all duration-300 ${active ? "max-h-96" : "max-h-0"}`}>
       <ul
-        className={`pl-6 text-primary-buttons overflow-hidden ${
-          active ? "max-height-500" : "max-h-0"
-        } transition-all duration-300`}
+        className={`pl-6 text-primary-buttons`}
       >
         <li className="px-2 py-1 hover:brightness-125 cursor-pointer uppercase text-xxs">
           <Link className="flex items-center" href={`/notas/agregar`}>
@@ -63,7 +62,7 @@ function DropDownNotes({ icon }: {icon:ReactNode}) {
             <Link href={`/notas/${note.id}`} key={note.id}>
               <li className="px-2 py-1 text-xxs hover:brightness-125 cursor-pointer uppercase">
                 <LibraryBooksIcon fontSize="small" />
-                {note.title}
+                {note.title.slice(0,42)}
               </li>
             </Link>
           ))
@@ -71,6 +70,7 @@ function DropDownNotes({ icon }: {icon:ReactNode}) {
           <></>
         )}
       </ul>
+      </div>
     </>
   );
 }

@@ -6,9 +6,10 @@ import { useGetNotebooksContext } from "@/contexts/GetNotebooksContext";
 import { useEffect, useState } from "react";
 import AddNotebook from "./AddNotebook";
 
-function ListNotebooks() {
+function ListNotebooks({paramsId}:{paramsId:string}) {
+  const [showNotes, setShowNotes] = useState<string>(paramsId);
   const { notebooksData, refresh } = useGetNotebooksContext();
-  const [addNotebook, setAddNotebook] = useState<boolean>(false);
+  const [addNotebook, setAddNotebook] = useState<boolean>(paramsId==="agregar");
   const refreshData = async () => {
     try {
       const refreshData = await refresh();
@@ -39,6 +40,8 @@ function ListNotebooks() {
         <NotebookDropDown
           key={notebook.id}
           notebook={notebook}
+          showNotes={showNotes===notebook.id}
+          setShowNotes={setShowNotes}
         />
       ))}
     </div>
