@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import NoteCard from './NoteCard';
 import { NoteI } from '@/app/db/dbMock';
 import { useGetNotesContext } from '@/contexts/GetNotesProvider';
+import { Suspense } from 'react';
 
 function ListNoteCards() {
   const {notesData,refreshData}=useGetNotesContext();

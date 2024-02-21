@@ -6,21 +6,13 @@ import AddButton from "../Buttons/AddButton";
 import SearchButton from "../Buttons/SearchButton";
 import DropDownNotebooksCompact from "../Buttons/DropDownNotebooksCompact";
 import PageActiveMobile from "../Buttons/PageActiveMobile";
-import DescriptionIcon from '@mui/icons-material/Description';
-import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
+import DescriptionIcon from "@mui/icons-material/Description";
+import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
 import { NotebookI } from "@/app/db/dbMock";
+import GetNotesProvider from "@/contexts/GetNotesProvider";
+import GetNotebooksContext from "@/contexts/GetNotebooksContext";
 
 async function NavCompact() {
-  const getNotebooks=await fetch("http://localhost:3000/api/libretas",{cache:'no-store'});
-
-  const notebooksData:NotebookI[]= await getNotebooks?.json();
-
-  const getNotes=await fetch("http://localhost:3000/api/notas",{cache:'no-store', next:{revalidate:10}}).catch(() =>
-  console.log("llegaste aca")
-);
-
-  const notesData = await getNotes?.json();
- 
   return (
     <div className="w-full sm:hidden px-4  py-4 bg-base">
       <div className="flex justify-between items-center">
@@ -29,18 +21,16 @@ async function NavCompact() {
           <AddButton />
         </div>
         <Link href={"/"}>
-          <PageActiveMobile icon={<HomeIcon/>} currentUrl={''}/>
+          <PageActiveMobile icon={<HomeIcon />} currentUrl={""} />
         </Link>
-        <DropDownNotesCompact
-          icon={<DescriptionIcon fontSize="small" />}
-          listItems={notesData}
-        />
-
-      <DropDownNotebooksCompact
-          itemCategoryName={"Libretas"}
-          icon={<CollectionsBookmarkIcon fontSize="small" />}
-          listItems={notebooksData}
-  />
+        <GetNotesProvider>
+          <DropDownNotesCompact icon={<DescriptionIcon fontSize="small" />} />
+        </GetNotesProvider>
+        <GetNotebooksContext>
+          <DropDownNotebooksCompact
+            icon={<CollectionsBookmarkIcon fontSize="small" />}
+          />
+        </GetNotebooksContext>
         <Link href={"/papelera"}>
           <DeleteIcon fontSize="small" className="hover:text-primary-buttons" />
         </Link>

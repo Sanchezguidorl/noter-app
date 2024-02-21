@@ -1,12 +1,12 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import "../styles/NotesPanel.css";
 import ButtonSection from "./layouts/ButtonSection";
 import DialogOptions from "./layouts/DialogOptions";
 import AddNoteCard from "./layouts/AddNoteCard";
 import { DeleteNotesPanelProvider } from "@/contexts/DeleteNotesPanelContext";
-import ListNoteCards from "./ListNoteCards";
 
 async function NotesPanel() {
+  const ListCards = lazy(() => import("./ListNoteCards"));
 
   return (
     <DeleteNotesPanelProvider>
@@ -26,7 +26,15 @@ async function NotesPanel() {
           </li>
         </ul>
         <div className=" h-full mt-2 flex gap-2 max-w-full overflow-y-hidden overflow-x-auto pb-1 container-cards pr-6">
-          <ListNoteCards />
+          <Suspense
+            fallback={
+              <div className="text-white w-96 h-96 bg-delete-hover text-5xl relative z-50">
+                cargando
+              </div>
+            }
+          >
+            <ListCards />
+          </Suspense>
           <AddNoteCard />
         </div>
         <div className="absolute right-4  h-60 bottom-2 w-10 overflow-gradient"></div>

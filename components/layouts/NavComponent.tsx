@@ -15,7 +15,7 @@ async function NavComponent() {
     <div className=" sm:w-1/3 md:w-1/4 max-w-48 py-4 hidden sm:flex flex-col gap-2 font-semibold text-xs border-interactive border-r-2">
       <div className="px-2 text-xs ">
         <GetNotesProvider>
-        <SearchDataInput/>
+          <SearchDataInput />
         </GetNotesProvider>
         <AddButtonDropDown />
       </div>
@@ -27,17 +27,17 @@ async function NavComponent() {
             </li>
           </Link>
           <li className="relative flex flex-col justify-center">
-           <GetNotebooksContext>
-            <DropDownNotebook
-              icon={<CollectionsBookmarkIcon fontSize="small" />}
-              itemCategoryName={"Libretas"}
-            />
+            <GetNotebooksContext>
+              <DropDownNotebook
+                icon={<CollectionsBookmarkIcon fontSize="small" />}
+                itemCategoryName={"Libretas"}
+              />
             </GetNotebooksContext>
           </li>
           <li className="relative flex flex-col justify-center">
-            <DropDownNotes
-              icon={<DescriptionIcon fontSize="small" />}
-            />
+            <GetNotesProvider>
+              <DropDownNotes icon={<DescriptionIcon fontSize="small" />} />
+            </GetNotesProvider>
           </li>
           <li className="h-10 hover:bg-primary  pl-6 cursor-pointer uppercase flex items-center">
             <Link href={"/papelera"} className="gap-1 flex items-center">

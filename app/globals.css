@@ -13,9 +13,12 @@ body{
   color: white;
 }
 
-input, textarea{
+ textarea{
+  outline: none;
+  border: none;
+}
+input{
   outline: none !important;
-  border: none !important;
 }
 
 #NotFound{

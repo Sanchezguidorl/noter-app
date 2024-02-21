@@ -1,9 +1,12 @@
+import IdentificationContainer from "@/components/layouts/IdentificationContainer"
 
 function LoginUserLayout({children}:{children:React.ReactNode}) {
   return (
-    <div>
+    <>
+    <IdentificationContainer>
       {children}
-    </div>
+      </IdentificationContainer>
+    </>
   )
 }
 

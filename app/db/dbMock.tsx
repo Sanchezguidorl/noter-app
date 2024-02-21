@@ -42,3 +42,8 @@ export interface NoteI{
   export interface NotebookI{
     title:string, notes:{id:string, title:string}[]|[], id?:string
   }
+
+  export interface UserCreateAndLoginFormInputs {
+    email: string;
+    password: string;
+  }
