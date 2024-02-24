@@ -77,9 +77,9 @@ const handleDeleteNoteInNotebook=async(event:React.MouseEvent,id:string)=>{
         />
       </div>
       <ul
-        className={`pl-4 mt-2 text-sm text-secondary-text ${
-          !showNotes && "h-0 overflow-hidden"
-        }`}
+        className={`pl-4 mt-2 text-sm overflow-auto text-secondary-text transition-all duration-300 ${
+          !showNotes ? "max-h-0 ": "max-h-60"}
+        `}
       >
         <GetNotesProvider>
         <AddNoteToNotebook notebook={notebook} />

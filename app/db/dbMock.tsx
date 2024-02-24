@@ -36,7 +36,7 @@ export interface NoteI{
   }
   
   export interface TasksI{
-    id:string, toDo:string, limitDate:number, done:boolean 
+    id?:string, toDo:string, limitDate:number, done:boolean 
   }
 
   export interface NotebookI{

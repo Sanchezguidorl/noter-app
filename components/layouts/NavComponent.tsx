@@ -9,6 +9,7 @@ import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
 import SearchDataInput from "./SearchDataInput";
 import GetNotebooksContext from "@/contexts/GetNotebooksContext";
 import GetNotesProvider from "@/contexts/GetNotesProvider";
+import AssignmentIcon from '@mui/icons-material/Assignment';
 
 async function NavComponent() {
   return (
@@ -39,11 +40,16 @@ async function NavComponent() {
               <DropDownNotes icon={<DescriptionIcon fontSize="small" />} />
             </GetNotesProvider>
           </li>
-          <li className="h-10 hover:bg-primary  pl-6 cursor-pointer uppercase flex items-center">
-            <Link href={"/papelera"} className="gap-1 flex items-center">
-              <DeleteIcon /> Papelera
-            </Link>
+          <Link href={"/tareas"} className="">
+            <li className="h-10 flex items-center gap-1 hover:bg-primary  pl-6 cursor-pointer uppercase">
+          <AssignmentIcon fontSize="small"/> Tareas
           </li>
+          </Link>
+            <Link href={"/papelera"} className="gap-1 flex items-center">
+          <li className="h-10 hover:bg-primary  pl-6 cursor-pointer uppercase flex items-center">
+              <DeleteIcon /> Papelera
+          </li>
+            </Link>
         </ul>
       </nav>
     </div>

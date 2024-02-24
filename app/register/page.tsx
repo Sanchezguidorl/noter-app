@@ -8,6 +8,7 @@ import GoogleIcon from "/public/googleIcon.svg";
 import HorizontalRule from "@/components/layouts/HorizontalRule";
 import { useAuthUserContext } from "@/contexts/AuthUserProvider";
 import { redirect } from "next/navigation";
+import { UserCreateAndLoginFormInputs } from "../db/dbMock";
 
 interface UserCreateFormInputs {
   email: string;
@@ -15,11 +16,11 @@ interface UserCreateFormInputs {
 }
 
 function RegisterUser() {
-  const [userData, setUser] = useState<UserCreateFormInputs>({
+  const [userData, setUser] = useState<UserCreateAndLoginFormInputs>({
     email: "",
     password: "",
   });
-const {user,register}=useAuthUserContext();
+const {user,register, authWithGoogle}=useAuthUserContext();
 
   const handleChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -60,6 +61,7 @@ if(user.logged){
           </div>
           <div className=" aspect-square w-14 flex justify-center items-center">
             <Image
+              onClick={authWithGoogle}
               alt="Icono de red social Google"
               className="relative transition-all duration-150 cursor-pointer hover:w-20"
               src={GoogleIcon}

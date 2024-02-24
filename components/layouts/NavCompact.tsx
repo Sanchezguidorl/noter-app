@@ -8,9 +8,9 @@ import DropDownNotebooksCompact from "../Buttons/DropDownNotebooksCompact";
 import PageActiveMobile from "../Buttons/PageActiveMobile";
 import DescriptionIcon from "@mui/icons-material/Description";
 import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
-import { NotebookI } from "@/app/db/dbMock";
 import GetNotesProvider from "@/contexts/GetNotesProvider";
 import GetNotebooksContext from "@/contexts/GetNotebooksContext";
+import AssignmentIcon from '@mui/icons-material/Assignment';
 
 async function NavCompact() {
   return (
@@ -31,8 +31,11 @@ async function NavCompact() {
             icon={<CollectionsBookmarkIcon fontSize="small" />}
           />
         </GetNotebooksContext>
+        <Link href={"/tareas"}>
+          <PageActiveMobile icon={<AssignmentIcon />} currentUrl={"tareas"} />
+        </Link>
         <Link href={"/papelera"}>
-          <DeleteIcon fontSize="small" className="hover:text-primary-buttons" />
+          <PageActiveMobile icon={<DeleteIcon />} currentUrl={"papelera"} />
         </Link>
       </div>
     </div>

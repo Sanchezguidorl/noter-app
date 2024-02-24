@@ -8,13 +8,14 @@ import HorizontalRule from "@/components/layouts/HorizontalRule";
 import { UserCreateAndLoginFormInputs } from '../db/dbMock';
 import { useAuthUserContext } from '@/contexts/AuthUserProvider';
 import { redirect } from 'next/navigation';
+import IdentificationContainer from '@/components/layouts/IdentificationContainer';
 
 function LoginUser() {
   const [userData, setUser] = useState<UserCreateAndLoginFormInputs>({
     email: "",
     password: "",
   });
-const {user,authUser}=useAuthUserContext();
+const {user,authUser, authWithGoogle}=useAuthUserContext();
 
   const handleChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -40,6 +41,7 @@ if(user.logged){
 },[user.logged]);
 
   return (
+    <IdentificationContainer>
     <div>
       <div className="flex flex-col">
         <p className="uppercase text-center text-xs px-4 font-semibold">
@@ -55,6 +57,7 @@ if(user.logged){
           </div>
           <div className=" aspect-square w-14 flex justify-center items-center">
             <Image
+            onClick={authWithGoogle}
               alt="Icono de red social Google"
               className="relative transition-all duration-150 cursor-pointer hover:w-20"
               src={GoogleIcon}
@@ -83,6 +86,7 @@ if(user.logged){
         </Link>
       </div>
     </div>
+    </IdentificationContainer>
   );
 }
 

@@ -5,23 +5,24 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import { useState } from "react";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { NoteI } from "@/app/db/dbMock";
+import { useGetNotesContext } from "@/contexts/GetNotesProvider";
 
-function ListNotes({ list }: { list: NoteI[] }) {
+function ListNotes({id}:{id:string|undefined}) {
   const [showCards, setShowCards] = useState<boolean>(false);
-
+  const {notesData}=useGetNotesContext();
   return (
-    <div className={`bg-base h-fit w-full sm:w-80 p-2 pt-6`}>
+    <div className={`bg-base h-fit w-full sm:w-80 p-1 pt-6`}>
       <div>
         <div className="flex gap-1 relative">
           <DescriptionIcon fontSize="large" />
           <h1 className=" text-3xl mb-3">Notas</h1>
         </div>
         <div className="flex justify-between px-2 text-secondary-text">
-          <p className="text-xs ">{list?.length} notas</p>
+          <p className="text-xs ">{notesData?.length} notas</p>
           <SortIcon />
         </div>
         <div className="flex mt-3 text-secondary-text border-b border-interactive pb-2">
-          {list.length > 0 && (
+          {notesData.length > 0 && (
             <div
               className="flex items-center cursor-pointer select-none"
               onClick={() => setShowCards(!showCards)}
@@ -39,17 +40,18 @@ function ListNotes({ list }: { list: NoteI[] }) {
         </div>
       </div>
       <div
-        className={`overflow-auto max-h-600 ${
-          showCards && "h-0 overflow-hidden"
+        className={`overflow-auto transition-all duration-300 ${
+          showCards ? "max-h-0" : "max-h-600"
         }`}
       >
-        {list?.map((item: NoteI) => (
+        {notesData?.map((item: NoteI) => (
           <NoteCardPrevisualization
             key={item.title}
             title={item.title}
             date={item.date}
             content={item.content}
             id={item.id}
+            selected={item.id===id}
           />
         ))}
       </div>

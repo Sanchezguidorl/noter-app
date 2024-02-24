@@ -6,13 +6,13 @@ import GetNotesProvider from '@/contexts/GetNotesProvider';
 import NotesPanel from '@/components/NotesPanel';
 import BlogNotes from '@/components/BlogNotes';
 import TasksPanel from '@/components/TasksPanel';
+import UserLogged from '@/components/UserLogged';
 
 function HomeContent() {
-  return (
-    <div className="flex flex-col sm:flex-row h-full">
-    <NavCompact />
-    <NavComponent />
+  return (<>
+
     <div className="w-full relative">
+      <UserLogged/>
       <HeaderHome />
       <main className="top-1/4 absolute w-full p-6">
         <div className=" w-full flex gap-2 mb-6 flex-wrap sm:flex-nowrap items-center justify-center">
@@ -24,7 +24,7 @@ function HomeContent() {
         <TasksPanel />
       </main>
     </div>
-    </div>
+    </>
   )
 }
 

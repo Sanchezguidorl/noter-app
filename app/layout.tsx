@@ -1,26 +1,23 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import './globals.css'
-import AuthUserProvider from '@/contexts/AuthUserProvider'
-
-const inter = Inter({ subsets: ['latin'] })
-
-export const metadata: Metadata = {
-  title: 'Noter',
-  description: 'Tu aplicación web de notas favorita',
-}
-
+import AuthUserProvider from "@/contexts/AuthUserProvider";
+import "./globals.css";
+import NavCompact from "@/components/layouts/NavCompact";
+import NavComponent from "@/components/layouts/NavComponent";
 export default function RootLayout({
-  children
+  children,
 }: {
-  children: React.ReactNode}) {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-      <AuthUserProvider>
-        {children}
+      <body>
+        <AuthUserProvider>
+          <div className="flex flex-col sm:flex-row h-full">
+            <NavCompact />
+            <NavComponent />
+            {children}
+          </div>
         </AuthUserProvider>
-        </body>
+      </body>
     </html>
-  )
+  );
 }

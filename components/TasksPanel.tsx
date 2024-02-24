@@ -1,12 +1,20 @@
 "use client";
-import { Suspense, useState } from "react";
+import { useEffect, useState } from "react";
 import ButtonSection from "./layouts/ButtonSection";
 import TasksList from "./TasksList";
 import GetTasksProvider from "@/contexts/GetTasksContext";
 
 function TasksPanel() {
-  const [sectionActive, setSectionActive] = useState("texto");
+  const [sectionActive, setSectionActive] = useState<string>("texto");
+  const [refresh,setRefresh]= useState<boolean>(true)
 
+  useEffect(()=>{
+if(refresh){
+
+  setTimeout(()=>{
+  setRefresh(false);},500)
+}
+  },[])
   return (
     <div
       id="TasksPanel"
@@ -25,7 +33,7 @@ function TasksPanel() {
       </ul>
       <div className="mt-3 overflow-y-scroll px-2 pb-3">
         <GetTasksProvider>
-          <TasksList />
+          <TasksList shouldRefresh={refresh}/>
           </GetTasksProvider>
       </div>
     </div>

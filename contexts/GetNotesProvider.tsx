@@ -1,7 +1,7 @@
 "use client";
 
 import { NoteI } from "@/app/db/dbMock";
-import { ReactNode, useContext, useState } from "react";
+import { ReactNode, useContext, useEffect, useState } from "react";
 import { createContext } from "react";
 
 interface GetNotesContext {

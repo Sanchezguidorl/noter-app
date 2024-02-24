@@ -1,3 +1,4 @@
+"use client";
 import TaskListItem from './TaskListItem';
 import { TasksI } from '@/app/db/dbMock';
 import { useGetTasksContext } from '@/contexts/GetTasksContext';
@@ -14,7 +15,7 @@ refreshData();
     <>
       {tasksData?.map((task:TasksI) => (
         <TaskListItem
-          key={task.id.toString()}
+          key={task.id?.toString()}
           task={task}
         />
       ))}

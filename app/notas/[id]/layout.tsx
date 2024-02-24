@@ -1,19 +1,44 @@
-import NavCompact from "@/components/layouts/NavCompact"
-import NavComponent from "@/components/layouts/NavComponent"
+"use client";
+import UserLogged from "@/components/UserLogged";
+import { useAuthUserContext } from "@/contexts/AuthUserProvider";
+import React, { useEffect, useState } from "react";
+import Loading from "@/app/loading";
 
+function NoteLayout({
+  children,
+  loginUser,
+}: {
+  children: React.ReactNode;
+  loginUser: React.ReactNode;
+}) {
+  const { user } = useAuthUserContext();
+  const [loading, setLoading] = useState(true);
 
-function NoteLayout({children}: {
-    children: React.ReactNode
-  }) {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [user.logged]);
+
+  if (loading) {
+    return <Loading text="Cargando sección..." />;
+  }
   return (
-    <div className="flex flex-col sm:flex-row h-full">
-    <NavCompact />
-    <NavComponent />
-    <div className="flex flex-col sm:flex-row w-full h-fit gap-2 sm:gap-0 justify-center items-center sm:items-start pt-4">
-      {children}
-    </div>
-      </div>
-  )
+    <>
+      {user.logged ? (
+        <div className="w-full">
+          <UserLogged />
+          <div className="flex flex-col sm:flex-row w-full h-fit gap-2 sm:gap-0 justify-center items-center sm:items-start bg-base">
+            {children}
+          </div>
+        </div>
+      ) : (
+        loginUser
+      )}
+    </>
+  );
 }
 
-export default NoteLayout
+export default NoteLayout;
