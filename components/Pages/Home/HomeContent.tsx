@@ -1,7 +1,5 @@
-import NavCompact from '@/components/layouts/NavCompact'
 import React from 'react'
 import HeaderHome from '@/components/layouts/HeaderHome';
-import NavComponent from '@/components/layouts/NavComponent';
 import GetNotesProvider from '@/contexts/GetNotesProvider';
 import NotesPanel from '@/components/NotesPanel';
 import BlogNotes from '@/components/BlogNotes';

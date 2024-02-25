@@ -8,20 +8,12 @@ import {
   NotebookDropDownMenuI,
   NotebookI,
 } from "@/app/db/dbMock";
-import { useGetNotebooksContext } from "@/contexts/GetNotebooksContext";
+import { useGetNotebooksContext } from "@/contexts/GetNotebooksProvider";
 
 function DropDownItemNav({ itemCategoryName, icon }: NotebookDropDownMenuI) {
   const [active, setActive] = useState<boolean>(false);
-  const { notebooksData, refresh } = useGetNotebooksContext();
+  const { notebooksData } = useGetNotebooksContext();
   const refElement=useRef(null);
-
-  const refreshData = async () => {
-    try {
-      await refresh();
-
-      return;
-    } catch (error) {}
-  };
 
   const handleClickOutSide=(event:MouseEvent)=>{
     if(refElement.current && !refElement.current.contains(event.target as Node)){
@@ -32,7 +24,6 @@ function DropDownItemNav({ itemCategoryName, icon }: NotebookDropDownMenuI) {
   useEffect(() => {
     if(active){
       document.addEventListener("click", handleClickOutSide);
-      refreshData();
     }
 
     return ()=>document.removeEventListener("click", handleClickOutSide);
@@ -55,7 +46,7 @@ function DropDownItemNav({ itemCategoryName, icon }: NotebookDropDownMenuI) {
       </div>
       <div className={`overflow-hidden transition-all duration-300 ${active ? "max-h-96" : "max-h-0"}`}>
       <ul
-        className={`pl-6 text-primary-buttons`}
+        className={`pl-6 text-button-action`}
         >
         <li className="px-2 py-1 hover:brightness-125 cursor-pointer uppercase text-xxs">
           <Link className="flex items-center" href={`/libretas/agregar`}>
@@ -69,7 +60,7 @@ function DropDownItemNav({ itemCategoryName, icon }: NotebookDropDownMenuI) {
            href={`/${itemCategoryName.toLocaleLowerCase()}/${item.id}`}
            key={item.id}
            >
-            <li className="px-2 py-1 text-xxs hover:brightness-125 cursor-pointer uppercase">
+            <li className="px-2 py-1 text-xxs hover:brightness-125 cursor-pointer uppercase ">
               <LibraryBooksIcon fontSize="small" />
               {item.title}
             </li>

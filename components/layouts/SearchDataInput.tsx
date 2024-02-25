@@ -7,7 +7,7 @@ import ResultsNotesData from "./ResultsNotesData";
 function SearchDataInput() {
   const [noteSearch, setNoteSearch] = useState<string>("");
   const [active, setActive] = useState<boolean>(false);
-  const { notesData, refreshData } = useGetNotesContext();
+  const { notesData } = useGetNotesContext();
   const inputRef = useRef(null);
 
   const handleClickOutSide = (event: MouseEvent) => {
@@ -20,20 +20,9 @@ function SearchDataInput() {
     setNoteSearch(event.target.value);
   };
 
-  const getData = async () => {
-    try {
-      await refreshData();
-
-      return;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
     if (active) {
       document.addEventListener("click", handleClickOutSide);
-      getData();
     }
 
     return () => document.removeEventListener("click", handleClickOutSide);

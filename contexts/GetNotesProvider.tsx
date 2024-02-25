@@ -32,6 +32,10 @@ function GetNotesProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  useEffect(()=>{
+    refreshData();
+  },[])
+
   return (
     <GetNotesContext.Provider value={{ notesData: notesData, refreshData: refreshData }}>
       {children}

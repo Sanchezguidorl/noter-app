@@ -1,5 +1,5 @@
 import { NoteI, NotebookI } from "@/app/db/dbMock"
-import { useGetNotebooksContext } from "@/contexts/GetNotebooksContext";
+import { useGetNotebooksContext } from "@/contexts/GetNotebooksProvider";
 import { Dispatch, SetStateAction } from "react"
 
 function NotesAddToNotebook({data, clases, input, setActive,setInput, notebookData}:{data:NoteI[], clases:string,input:string, notebookData:NotebookI,setActive:Dispatch<SetStateAction<boolean>>, setInput:Dispatch<SetStateAction<string>>} ) {

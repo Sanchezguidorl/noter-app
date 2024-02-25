@@ -30,12 +30,12 @@ return ()=> document.removeEventListener('click',handleOutClick)
                     </div>
                 <ul className={`absolute transition-all duration-200 overflow-hidden top-full z-30 bg-base text-xs w-40 mt-3 -left-1/2 text-secondary-text rounded-bl-md rounded-br-md border border-t-0 border-secondary-text ${showOptions ? ' p-2 max-h-500': 'h-0 p-0 border-none'}`} >
                     <li className='py-1 hover:text-white'> 
-                        <Link href={'/hio'}>
+                        <Link href={'/notas/agregar'}>
                         <AddIcon/> Agregar nueva nota
                         </Link>
                     </li>
                     <li className='py-1 hover:text-white'> 
-                        <Link href={'/'}>
+                        <Link href={'/tareas'}>
                         <AddIcon/>Agregar nueva tarea
                     </Link>
                     </li>

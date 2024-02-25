@@ -7,7 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ModalDeleteElement from "@/components/modals/ModalDeleteElement";
 import { useGetNotesContext } from "@/contexts/GetNotesProvider";
 
-function NoteContent({ id }: { id: string | null }) {
+function NoteContent({ id }: { id: string }) {
   const { notesData, refreshData } = useGetNotesContext();
   const [noteData, setNoteData] = useState<NoteI>({
     title: "",
@@ -19,13 +19,8 @@ function NoteContent({ id }: { id: string | null }) {
   const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
 
   useEffect(() => {
-    refresh();
-  }, []);
-
-  useEffect(() => {
     if (notesData.length > 0) {
       const noteSelected = notesData.find((note) => {
-        console.log(note.id);
         return note.id === id;
       });
       if (noteSelected) {
@@ -37,7 +32,7 @@ function NoteContent({ id }: { id: string | null }) {
         });
       }
     }
-  }, [notesData]);
+  }, [id, notesData]);
 
   const handleChangeTitle = (
     input: React.ChangeEvent<HTMLInputElement>

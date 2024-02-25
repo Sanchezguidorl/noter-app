@@ -4,7 +4,7 @@ import Link from "next/link";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { NotebookI } from "@/app/db/dbMock";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useGetNotebooksContext } from "@/contexts/GetNotebooksContext";
+import { useGetNotebooksContext } from "@/contexts/GetNotebooksProvider";
 import AddNoteToNotebook from "./AddNoteToNotebook";
 import GetNotesProvider from '@/contexts/GetNotesProvider';
 import { Dispatch, SetStateAction } from "react";

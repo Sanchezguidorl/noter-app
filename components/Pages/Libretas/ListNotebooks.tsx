@@ -1,11 +1,11 @@
 "use client";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import { NotebookI } from "@/app/db/dbMock";
-import { useGetNotebooksContext } from "@/contexts/GetNotebooksContext";
 import { Suspense, lazy, useEffect, useState } from "react";
 import AddNotebook from "./AddNotebook";
 import Loading from "@/app/loading";
 const NotebookDropDown = lazy(() => import("./NotebookDropDown"));
+import { useGetNotebooksContext } from '@/contexts/GetNotebooksProvider';
 
 function ListNotebooks({ paramsId }: { paramsId: string }) {
   const [showNotes, setShowNotes] = useState<string>(paramsId);

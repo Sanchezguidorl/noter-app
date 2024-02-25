@@ -2,7 +2,7 @@ import React, { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
 import SaveIcon from '@mui/icons-material/Save';
 import { NotebookI } from "@/app/db/dbMock";
-import { useGetNotebooksContext } from "@/contexts/GetNotebooksContext";
+import { useGetNotebooksContext } from "@/contexts/GetNotebooksProvider";
 import CloseIcon from '@mui/icons-material/Close';
 
 const emptyNotebook={

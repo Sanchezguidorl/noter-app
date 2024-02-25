@@ -8,12 +8,11 @@ import DropDownNotebooksCompact from "../Buttons/DropDownNotebooksCompact";
 import PageActiveMobile from "../Buttons/PageActiveMobile";
 import DescriptionIcon from "@mui/icons-material/Description";
 import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
-import GetNotesProvider from "@/contexts/GetNotesProvider";
-import GetNotebooksContext from "@/contexts/GetNotebooksContext";
 import AssignmentIcon from '@mui/icons-material/Assignment';
 
 async function NavCompact() {
   return (
+
     <div className="w-full sm:hidden px-4  py-4 bg-base">
       <div className="flex justify-between items-center">
         <SearchButton />
@@ -23,14 +22,10 @@ async function NavCompact() {
         <Link href={"/"}>
           <PageActiveMobile icon={<HomeIcon />} currentUrl={""} />
         </Link>
-        <GetNotesProvider>
           <DropDownNotesCompact icon={<DescriptionIcon fontSize="small" />} />
-        </GetNotesProvider>
-        <GetNotebooksContext>
           <DropDownNotebooksCompact
             icon={<CollectionsBookmarkIcon fontSize="small" />}
-          />
-        </GetNotebooksContext>
+            />
         <Link href={"/tareas"}>
           <PageActiveMobile icon={<AssignmentIcon />} currentUrl={"tareas"} />
         </Link>

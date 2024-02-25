@@ -6,7 +6,7 @@ import { useGetNotesContext } from "@/contexts/GetNotesProvider";
 
 function DropDownNotesCompact({ icon }:{icon:React.ReactNode}) {
   const [active, setActive] = useState<boolean>(false);
-  const {notesData,refreshData}=useGetNotesContext();
+  const {notesData}=useGetNotesContext();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -18,19 +18,9 @@ function DropDownNotesCompact({ icon }:{icon:React.ReactNode}) {
     }
   };
 
-  const getData=async()=>{
-    try {
-      await refreshData();
-      return;
-    } catch (error) {
-      
-    }
-  }
-
   useEffect(() => {
 if(active){
     document.addEventListener("click", handleClickOutside);
-    getData();
 }
     return () => document.removeEventListener("click", handleClickOutside);
   }, [active]);

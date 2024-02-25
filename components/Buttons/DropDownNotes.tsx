@@ -9,16 +9,8 @@ import { useGetNotesContext } from "@/contexts/GetNotesProvider";
 
 function DropDownNotes({ icon }: {icon:ReactNode}) {
   const [active, setActive] = useState<boolean>(false);
-  const { notesData, refreshData } = useGetNotesContext();
+  const { notesData } = useGetNotesContext();
   const dropDownRef=useRef(null);
-  const getData = async () => {
-    try {
-      const freshData = await refreshData();
-      return;
-    } catch (error) {
-      
-    }
-  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -29,7 +21,6 @@ function DropDownNotes({ icon }: {icon:ReactNode}) {
 
     if (active) {
       document.addEventListener("click",handleClickOutside);
-      getData();
     }
   }, [active]);
 
@@ -49,7 +40,7 @@ function DropDownNotes({ icon }: {icon:ReactNode}) {
       </div>
       <div className={`overflow-hidden transition-all duration-300 ${active ? "max-h-96" : "max-h-0"}`}>
       <ul
-        className={`pl-6 text-primary-buttons`}
+        className={`pl-6 text-button-action`}
       >
         <li className="px-2 py-1 hover:brightness-125 cursor-pointer uppercase text-xxs">
           <Link className="flex items-center" href={`/notas/agregar`}>

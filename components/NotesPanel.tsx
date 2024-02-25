@@ -5,7 +5,7 @@ import DialogOptions from "./layouts/DialogOptions";
 import AddNoteCard from "./layouts/AddNoteCard";
 import { DeleteNotesPanelProvider } from "@/contexts/DeleteNotesPanelContext";
 
-async function NotesPanel() {
+ function NotesPanel() {
   const ListCards = lazy(() => import("./ListNoteCards"));
 
   return (

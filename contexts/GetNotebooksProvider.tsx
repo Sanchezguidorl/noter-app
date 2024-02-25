@@ -6,7 +6,7 @@ const CreateGetNotebooksContext = createContext<{notebooksData:NotebookI[]|[], r
 
 export const useGetNotebooksContext = () => useContext(CreateGetNotebooksContext);
 
-function GetNotebooksContext({children}:{children:ReactNode}) {
+function GetNotebooksProvider({children}:{children:ReactNode}) {
   const [notebooksData, setNotebooksData] = useState<NotebookI[]>([]);
   
   const refresh = async () => {
@@ -22,6 +22,10 @@ function GetNotebooksContext({children}:{children:ReactNode}) {
     }
   };
 
+useEffect(()=>{
+  refresh();
+},[])
+
   return (
     <CreateGetNotebooksContext.Provider value={{notebooksData:notebooksData, refresh}} >
       {children}
@@ -29,4 +33,4 @@ function GetNotebooksContext({children}:{children:ReactNode}) {
   )
 }
 
-export default GetNotebooksContext;
+export default GetNotebooksProvider;

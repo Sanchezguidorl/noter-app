@@ -7,9 +7,9 @@ import DropDownNotes from "../Buttons/DropDownNotes";
 import DescriptionIcon from "@mui/icons-material/Description";
 import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
 import SearchDataInput from "./SearchDataInput";
-import GetNotebooksContext from "@/contexts/GetNotebooksContext";
+import GetNotebooksContext from "@/contexts/GetNotebooksProvider";
 import GetNotesProvider from "@/contexts/GetNotesProvider";
-import AssignmentIcon from '@mui/icons-material/Assignment';
+import AssignmentIcon from "@mui/icons-material/Assignment";
 
 async function NavComponent() {
   return (
@@ -42,14 +42,14 @@ async function NavComponent() {
           </li>
           <Link href={"/tareas"} className="">
             <li className="h-10 flex items-center gap-1 hover:bg-primary  pl-6 cursor-pointer uppercase">
-          <AssignmentIcon fontSize="small"/> Tareas
-          </li>
+              <AssignmentIcon fontSize="small" /> Tareas
+            </li>
           </Link>
-            <Link href={"/papelera"} className="gap-1 flex items-center">
-          <li className="h-10 hover:bg-primary  pl-6 cursor-pointer uppercase flex items-center">
-              <DeleteIcon /> Papelera
-          </li>
-            </Link>
+          <Link href={"/papelera"} className="">
+            <li className="h-10 flex items-center gap-1 hover:bg-primary  pl-6 cursor-pointer uppercase">
+              <DeleteIcon fontSize="small" /> Papelera
+            </li>
+          </Link>
         </ul>
       </nav>
     </div>

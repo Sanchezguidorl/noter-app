@@ -2,20 +2,12 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import PageActiveMobile from "./PageActiveMobile";
-import { useGetNotebooksContext } from "@/contexts/GetNotebooksContext";
+import { useGetNotebooksContext } from "@/contexts/GetNotebooksProvider";
 
 function DropDownNotebooksCompact({ icon }: { icon: React.ReactNode }) {
   const [active, setActive] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const { notebooksData, refresh } = useGetNotebooksContext();
-
-  const getData = async () => {
-    try {
-      await refresh();
-
-      return;
-    } catch (error) {}
-  };
+  const { notebooksData} = useGetNotebooksContext();
 
   const handleClickOutside = (event: MouseEvent) => {
     if (
@@ -29,7 +21,6 @@ function DropDownNotebooksCompact({ icon }: { icon: React.ReactNode }) {
   useEffect(() => {
     if (active) {
       document.addEventListener("click", handleClickOutside);
-      getData();
     }
     return () => document.removeEventListener("click", handleClickOutside);
   }, [active]);

@@ -7,7 +7,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { NoteI } from "@/app/db/dbMock";
 import { useGetNotesContext } from "@/contexts/GetNotesProvider";
 
-function ListNotes({id}:{id:string|undefined}) {
+function ListNotes({id,selectId}:{id:string|undefined, selectId:(id:string)=>void}) {
   const [showCards, setShowCards] = useState<boolean>(false);
   const {notesData}=useGetNotesContext();
   return (
@@ -46,6 +46,7 @@ function ListNotes({id}:{id:string|undefined}) {
       >
         {notesData?.map((item: NoteI) => (
           <NoteCardPrevisualization
+            selectId={selectId}
             key={item.title}
             title={item.title}
             date={item.date}
