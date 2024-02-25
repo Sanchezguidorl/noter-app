@@ -6,11 +6,11 @@ import { useGetNotebooksContext } from "@/contexts/GetNotebooksProvider";
 import CloseIcon from '@mui/icons-material/Close';
 
 const emptyNotebook={
-    title:"", notes:[]
+    title:"", notes:[{id:"", title:""}]
 };
 
 function AddNotebook({selected, unSelect}:{selected:boolean, unSelect:Dispatch<SetStateAction<boolean>>}) {
-const [notebookDataInput, setNotebookDataInput]=useState<NotebookI>(emptyNotebook);
+const [notebookDataInput, setNotebookDataInput]=useState<{title:string, notes:{id:string, title:string}[]}>(emptyNotebook);
 
 const handleChange=(event:React.ChangeEvent<HTMLInputElement>)=>{
 const value=event.target.value;

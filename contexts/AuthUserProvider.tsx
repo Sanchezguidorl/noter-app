@@ -60,7 +60,7 @@ await signInWithPopup(auth,provider);
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUser({ logged: true, email: user.email, uid: user.uid });
+        setUser({ logged: true, email: user.email||"", uid: user.uid });
       } else {
         setUser({ logged: false, email: "", uid: "" });
       }

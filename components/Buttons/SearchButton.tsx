@@ -8,11 +8,11 @@ function SearchButton(){
 const [activeSearch, setActveSearch]= useState<boolean>(false)
 const [noteSearch,setNoteSearch] = useState<string>("");
 const {notesData}=useGetNotesContext();
-const refElement=useRef(null)
+const refElement=useRef<HTMLDivElement>(null)
 
 
 const handleClickOutside=(event:MouseEvent)=>{
-  if(refElement.current &&  !refElement.current.contains(event.target as Node)){
+  if(!refElement.current?.contains(event.target as Node)){
     setActveSearch(false);}
 }
 

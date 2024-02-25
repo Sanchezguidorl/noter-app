@@ -13,10 +13,10 @@ import { useGetNotebooksContext } from "@/contexts/GetNotebooksProvider";
 function DropDownItemNav({ itemCategoryName, icon }: NotebookDropDownMenuI) {
   const [active, setActive] = useState<boolean>(false);
   const { notebooksData } = useGetNotebooksContext();
-  const refElement=useRef(null);
+  const refElement=useRef<HTMLDivElement>(null);
 
   const handleClickOutSide=(event:MouseEvent)=>{
-    if(refElement.current && !refElement.current.contains(event.target as Node)){
+    if(!refElement.current?.contains(event.target as Node)){
       setActive(false);
     }
 }

@@ -8,10 +8,11 @@ function SearchDataInput() {
   const [noteSearch, setNoteSearch] = useState<string>("");
   const [active, setActive] = useState<boolean>(false);
   const { notesData } = useGetNotesContext();
-  const inputRef = useRef(null);
+  const inputRef= useRef<HTMLInputElement>(null);
 
   const handleClickOutSide = (event: MouseEvent) => {
-    if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
+
+    if (!inputRef.current?.contains(event.target as Node)) {
       setActive(false);
     }
   };

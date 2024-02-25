@@ -9,7 +9,7 @@ function AddNoteToNotebook({notebook}:{notebook:NotebookI}) {
   const [active,setActive]=useState<boolean>(false);
   const [noteSearched,setNoteSearched]=useState<string>("");
   const {notesData,refreshData}= useGetNotesContext();
-  const refElement=useRef(null);
+  const refElement=useRef<HTMLLIElement>(null);
   
   const handleChange=(event:React.ChangeEvent<HTMLInputElement>)=>{
     setNoteSearched(event.target.value);
@@ -25,7 +25,7 @@ function AddNoteToNotebook({notebook}:{notebook:NotebookI}) {
   };
 
   const handleClickOutSide=(event:MouseEvent)=>{
-    if(refElement.current && !refElement.current.contains(event.target as Node)){
+    if(!refElement.current?.contains(event.target as Node)){
       setActive(false);
     }
 }

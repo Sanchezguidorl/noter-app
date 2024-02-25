@@ -10,11 +10,11 @@ import { useGetNotesContext } from "@/contexts/GetNotesProvider";
 function DropDownNotes({ icon }: {icon:ReactNode}) {
   const [active, setActive] = useState<boolean>(false);
   const { notesData } = useGetNotesContext();
-  const dropDownRef=useRef(null);
+  const dropDownRef=useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropDownRef.current && !dropDownRef.current.contains(event.target as Node)) {
+      if (!dropDownRef.current?.contains(event.target as Node)) {
         setActive(false);
 }
 };

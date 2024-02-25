@@ -8,7 +8,7 @@ import {
   deleteDoc,
   updateDoc,
 } from "firebase/firestore";
-import { NoteI } from "@/app/db/dbMock";
+import { NoteI, NotebookI } from "@/app/db/dbMock";
 
 const notesRef = collection(db, "notas");
 
@@ -71,10 +71,10 @@ export const PUT = async (req: NextRequest) => {
     const notebooksRef = collection(db, "libretas");
     try {
       const notebooksSnapshot = await getDocs(notebooksRef);
-      const notebooksData =notebooksSnapshot.docs.map((doc)=>({id:doc.id, ...doc.data()}));
+      const notebooksData =notebooksSnapshot.docs.map((doc)=>({...doc.data()}));
       if (notebooksData) {
         notebooksData.forEach(async(notebook) => {
-          const noteIndex = notebook.notes.findIndex((note: NoteI) => note.id === id);
+          const noteIndex = notebook.notes.findIndex((note: NoteI)=> note.id === id);
           if (noteIndex !== -1) {
 
             notebook.notes.splice(noteIndex, 1);

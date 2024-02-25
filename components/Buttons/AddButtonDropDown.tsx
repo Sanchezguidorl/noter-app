@@ -5,10 +5,10 @@ import Link from 'next/link';
 
 function AddButtonDropDown() {
   const [showOptions, setShowOptions] = useState(false);
-  const dropDownRef = useRef(null); 
+  const dropDownRef = useRef<HTMLDivElement>(null); 
   useEffect(() => {
     const handleClickOutside = (event:MouseEvent) => {
-      if (dropDownRef.current && !dropDownRef.current.contains(event.target)) {
+      if ( !dropDownRef.current?.contains(event.target as Node)) {
         setShowOptions(false);
       }
     };
