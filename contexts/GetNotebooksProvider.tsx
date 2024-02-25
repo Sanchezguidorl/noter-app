@@ -11,7 +11,7 @@ function GetNotebooksProvider({children}:{children:ReactNode}) {
   
   const refresh = async () => {
     try {
-      const getNotebooks = await fetch("http://localhost:3000/api/libretas");
+      const getNotebooks = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/libretas`);
       const notebooksDataParse = await getNotebooks.json();
       if(notebooksDataParse){
         setNotebooksData(notebooksDataParse);

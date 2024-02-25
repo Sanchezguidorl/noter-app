@@ -21,7 +21,7 @@ function GetTasksProvider({ children }: { children: ReactNode }) {
 
   const refreshData = async () => {
     try {
-      const getTasksNotes = await fetch("http://localhost:3000/api/tareas", {
+      const getTasksNotes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/tareas`, {
         cache: "no-store",
       });
       const data = await getTasksNotes?.json();

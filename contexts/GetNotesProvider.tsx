@@ -21,7 +21,7 @@ function GetNotesProvider({ children }: { children: ReactNode }) {
 
   const refreshData = async () => {
     try {
-      const getDataNotes = await fetch("http://localhost:3000/api/notas", {
+      const getDataNotes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/notas`, {
         cache: "no-store",
       });
       const data = await getDataNotes?.json();
