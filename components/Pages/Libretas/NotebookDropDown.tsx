@@ -16,7 +16,7 @@ function NotebookDropDown({ notebook, showNotes, setShowNotes }: { notebook: Not
   const handleDeleteNotebook = async (id?: string) => {
     try {
       const notebookDeleted = await fetch(
-        `http://localhost:3000/api/libretas?id=${id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/libretas?id=${id}`,
         {
           method: "DELETE",
         }
@@ -40,7 +40,7 @@ const handleDeleteNoteInNotebook=async(event:React.MouseEvent,id:string)=>{
     if(noteInNotebookIndex !==-1){
       notebookData.notes.splice(noteInNotebookIndex,1);
       try {
-        const deleteNoteInNotebook= await fetch("http://localhost:3000/api/libretas",{
+        const deleteNoteInNotebook= await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/libretas`,{
           method:"PUT", body: JSON.stringify(notebookData)
         });
         if(deleteNoteInNotebook){

@@ -26,7 +26,7 @@ function CreateTasks({selected, unselect}:{selected:boolean, unselect:Dispatch<S
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const createTask = await fetch("http://localhost:3000/api/tareas", {
+      const createTask = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/tareas`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

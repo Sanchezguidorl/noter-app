@@ -8,7 +8,7 @@ const {refresh}=useGetNotebooksContext();
 const handleAddNoteToNotebook=async(note:NoteI)=>{
 try {
     console.log("en metodo")
- const addNote=await fetch("http://localhost:3000/api/libretas",{
+ const addNote=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/libretas`,{
         method:"PUT",
         body: JSON.stringify({...notebookData, notes:[...notebookData.notes,{id:note.id, title:note.title}]})
     })

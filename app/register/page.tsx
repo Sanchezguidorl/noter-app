@@ -13,19 +13,54 @@ import { UserCreateAndLoginFormInputs } from "../db/dbMock";
 interface UserCreateFormInputs {
   email: string;
   password: string;
+  passwordValidation: string;
 }
 
 function RegisterUser() {
-  const [userData, setUser] = useState<UserCreateAndLoginFormInputs>({
+  const [userData, setUser] = useState<UserCreateFormInputs>({
     email: "",
     password: "",
+    passwordValidation:""
   });
-const {user,register, authWithGoogle}=useAuthUserContext();
+
+  const [errorInputs, setErrorInputs] = useState({
+    email: { valid: false, message: "" },
+    password: { valid: false, message: "" },
+  });
+
+  const validateInputs = (): boolean => {
+    const validEmail = userData.email.length >= 12;
+    const validPassword = userData.password.length >= 8;
+
+    const messageEmail = !validEmail
+      ? "Tu email debe tener u mínimo de 12 caracteres."
+      : "";
+    const messagePassword = !validPassword
+      ? "Tu contraseña debe tener 8 o más caracteres."
+      : "";
+
+    setErrorInputs({
+      email: { valid: validEmail, message: messageEmail },
+      password: { valid: validPassword, message: messagePassword },
+    });
+
+    const passworRepeatValid=userData.password!==userData.passwordValidation;
+
+    return validEmail && validPassword && passworRepeatValid;
+  };
+
+  const { user, register, authWithGoogle } = useAuthUserContext();
 
   const handleChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
 
     setUser({ ...userData, password: value });
+  };
+
+  const handleChangePasswordValidation = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+
+    setUser({ ...userData, passwordValidation: value });
   };
 
   const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,16 +69,18 @@ const {user,register, authWithGoogle}=useAuthUserContext();
     setUser({ ...userData, email: value });
   };
 
-  const handleSubmit=async(event:React.ChangeEvent<HTMLFormElement>)=>{
-event.preventDefault();
-await register(userData)
-  }
+  const handleSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (validateInputs()) {
+      await register({email:userData.email, password:userData.password});
+    }
+  };
 
-useEffect(()=>{
-if(user.logged){
-  redirect("/");
-}
-},[user.logged]);
+  useEffect(() => {
+    if (user.logged) {
+      redirect("/");
+    }
+  }, [user.logged]);
 
   return (
     <div>
@@ -71,38 +108,53 @@ if(user.logged){
         <HorizontalRule />
       </div>
       <div>
-        <form action="" className="flex flex-col text-xs" onSubmit={handleSubmit}>
-          <label className="mt-8 mb-2" htmlFor="inputUser">
-            Email
-          </label>
-          <input
-            onChange={handleChangeEmail}
-            value={userData.email}
-            className="bg-c-transparent border-b outline-none border-secondary-text"
-            id="inputUser"
-            type="text"
-            placeholder="Ingresa tu email"
-          />
-          <label className="mt-8 mb-2" htmlFor="inputPassword">
-            Contraseña
-          </label>
-          <input
-            value={userData.password}
-            onChange={handleChangePassword}
-            className="bg-c-transparent border-b outline-none border-secondary-text"
-            id="inputPassword"
-            type="text"
-            placeholder="Ingresa tu contraseña"
-          />
-          <label className="mt-8 mb-2" htmlFor="inputPassword">
-            Verificar Contraseña
-          </label>
-          <input
-            className="bg-c-transparent border-b outline-none border-secondary-text"
-            id="inputPassword"
-            type="text"
-            placeholder="Pepite tu contraseña"
-          />
+        <form
+          action=""
+          className="flex flex-col text-xs"
+          onSubmit={handleSubmit}
+        >
+          <div className="relative flex flex-col">
+            <label className="mt-8 mb-2" htmlFor="inputUser">
+              Email
+            </label>
+            <input required
+              onChange={handleChangeEmail}
+              value={userData.email}
+              className="bg-c-transparent border-b outline-none border-secondary-text"
+              id="inputUser"
+              type="text"
+              placeholder="Ingresa tu email"
+            />
+            <p className={` text-delete-hover text-xs absolute top-full ${!errorInputs.email.valid?"visible":"invisible"}`}>{errorInputs.email.message}</p>
+          </div>
+          <div className="relative flex flex-col">
+            <label className="mt-8 mb-2" htmlFor="inputPassword">
+              Contraseña
+            </label>
+            <input required
+              value={userData.password}
+              onChange={handleChangePassword}
+              className="bg-c-transparent border-b outline-none border-secondary-text"
+              id="inputPassword"
+              type="password"
+              placeholder="Ingresa tu contraseña"
+            />
+            <p className={` text-delete-hover text-xs absolute top-full ${!errorInputs.password.valid?"visible":"invisible"}`}>{errorInputs.password.message}</p>
+          </div>
+          <div className="relative flex flex-col">
+            <label className="mt-8 mb-2" htmlFor="inputPasswordValidation">
+              Verificar Contraseña
+            </label>
+            <input required
+              className="bg-c-transparent border-b outline-none border-secondary-text"
+              id="inputPasswordValidation"
+              type="password"
+              placeholder="Pepite tu contraseña"
+              onChange={handleChangePasswordValidation}
+            />
+            <p className={` text-delete-hover text-xs absolute top-full ${(userData.passwordValidation!=="") && userData.password!==userData.passwordValidation?"visible": "invisible"}`}>La contraseña debe coincidir con la ingresada</p>
+            <p className={` text-success text-xs absolute top-full ${(userData.passwordValidation!=="") && userData.password===userData.passwordValidation?"visible": "invisible"}`}>Verificado</p>
+          </div>
           <input
             type="submit"
             value="Crear Cuenta"

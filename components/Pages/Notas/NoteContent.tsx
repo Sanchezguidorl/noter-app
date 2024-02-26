@@ -54,7 +54,7 @@ function NoteContent({ id }: { id: string }) {
     setLoading(true);
     try {
       console.log(noteData);
-      const savedNote = await fetch("http://localhost:3000/api/notas", {
+      const savedNote = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/notas`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -75,7 +75,7 @@ function NoteContent({ id }: { id: string }) {
   const updateData = async () => {
     setLoading(true);
     try {
-      const updatedNote = await fetch("http://localhost:3000/api/notas", {
+      const updatedNote = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/notas`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

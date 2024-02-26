@@ -15,6 +15,7 @@ body{
  textarea{
   outline: none;
   border: none;
+  resize:none !important;
 }
 input{
   outline: none !important;

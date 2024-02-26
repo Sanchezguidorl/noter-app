@@ -1,14 +1,13 @@
-import Link from "next/link";
-import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
-import TaskItemButtons from "./Buttons/TaskItemButtons";
-import { readDate } from "./../app/utils/utils";
 import { TasksI } from "@/app/db/dbMock";
+import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import { useState } from "react";
+import { readDate } from "./../app/utils/utils";
+import TaskItemButtons from "./Buttons/TaskItemButtons";
 
-function TaskListItem({ task}: {task:TasksI}) {
+function TaskListItem({ task }: { task: TasksI }) {
   const [isActive, setIsActive] = useState<boolean>(false);
   const [editTask, setEditTask] = useState<boolean>(false);
-  const [inputData, setInputData]= useState<string>(task.toDo);
+  const [inputData, setInputData] = useState<string>(task.toDo);
   const isExpire = (date: number): boolean => {
     const dateNow = new Date().getTime();
     return dateNow > date;
@@ -27,9 +26,9 @@ function TaskListItem({ task}: {task:TasksI}) {
     return className;
   };
 
-const handleChange=(event:React.ChangeEvent<HTMLTextAreaElement>)=>{
-setInputData(event.target.value);
-}
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInputData(event.target.value);
+  };
 
   return (
     <div
@@ -37,19 +36,36 @@ setInputData(event.target.value);
       className={`p-4 pt-8 ${bgByLimitDate()} rounded-lg mt-3 relative cursor-pointer`}
     >
       <div className="flex items-center justify-between">
-        <div className="w-full">
-{editTask ?
-<textarea onChange={handleChange} className=" pt-1 bg-c-transparent w-full h-fit min-h-28" placeholder="Agrega una tarea">{task.toDo}</textarea>
-
-:
-            <p className={` pt-1 ${!isActive && "text-nowrap whitespace-nowrap overflow-hidden"} text-ellipsis `}>
-            {task.toDo}
-          </p>
-}
-        </div>
-        <TaskItemButtons inputData={inputData} isExpired={isExpire(task.limitDate)} task={task} handleEdit={setEditTask} editTask={editTask}/>
+          {editTask ? (
+            <div className={`relative w-full p-1 ${inputData.length===0?" border border-delete-hover":""}`}>
+            <textarea
+              onChange={handleChange}
+              className={`pt-1 bg-c-transparent w-full h-full min-h-28 resize-none`}
+              placeholder="Agrega una tarea"
+            >
+              {task.toDo}
+            </textarea>
+            <p className={`text-delete-hover text-xs abslute top-full ${inputData.length===0?"visible":"invisible"}`}>La tarea no puede estar vacía</p>
+            </div>
+          ) : (
+            <p
+              className={` pt-1 ${
+                !isActive ?"overflow-hidden text-ellipsis text-nowrap":"text-wrap break-words"
+              }`}
+            >{ task.toDo}
+            </p>
+          )}
+        <TaskItemButtons
+          inputData={inputData}
+          isExpired={isExpire(task.limitDate)}
+          task={task}
+          handleEdit={setEditTask}
+          editTask={editTask}
+        />
       </div>
-      <p className={` flex items-center gap-1 text-button-action absolute top-2 left-4  `}>
+      <p
+        className={` flex items-center gap-1 text-button-action absolute top-2 left-4  `}
+      >
         {readDate(task.limitDate)} <AccessAlarmIcon />
       </p>
     </div>

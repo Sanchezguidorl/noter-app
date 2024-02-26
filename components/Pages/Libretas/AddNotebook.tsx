@@ -1,9 +1,8 @@
-import React, { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
-import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
-import SaveIcon from '@mui/icons-material/Save';
-import { NotebookI } from "@/app/db/dbMock";
 import { useGetNotebooksContext } from "@/contexts/GetNotebooksProvider";
 import CloseIcon from '@mui/icons-material/Close';
+import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
+import SaveIcon from '@mui/icons-material/Save';
+import React, { Dispatch, SetStateAction, useState } from "react";
 
 const emptyNotebook={
     title:"", notes:[{id:"", title:""}]
@@ -25,7 +24,7 @@ const closeInput=()=>{
 
 const handleSave=async()=>{
 try {
-    const notebookSaved= await fetch("http://localhost:3000/api/libretas",{
+    const notebookSaved= await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/libretas`,{
         "method":"POST", body: JSON.stringify(notebookDataInput), cache:"no-cache"
     });
     if(notebookSaved){

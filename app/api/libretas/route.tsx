@@ -1,6 +1,6 @@
-import { NotebookDataI, NotebookI, TasksI } from '@/app/db/dbMock';
+import { NotebookDataI } from '@/app/db/dbMock';
 import { db } from '@/firebase/config';
-import {collection, deleteDoc, doc, getDocs, setDoc, updateDoc} from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
 import { NextRequest, NextResponse } from 'next/server';
 
 const notebooksRef= collection(db,'libretas');
