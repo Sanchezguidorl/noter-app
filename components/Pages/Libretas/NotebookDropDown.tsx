@@ -7,30 +7,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useGetNotebooksContext } from "@/contexts/GetNotebooksProvider";
 import AddNoteToNotebook from "./AddNoteToNotebook";
 import GetNotesProvider from '@/contexts/GetNotesProvider';
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import CloseIcon from '@mui/icons-material/Close';
+import ModalDeleteNotebook from "@/components/modals/ModalDeleteNotebook";
 
 function NotebookDropDown({ notebook, showNotes, setShowNotes }: { notebook: NotebookI, showNotes:boolean, setShowNotes:Dispatch<SetStateAction<string>> }) {
   const { refresh } = useGetNotebooksContext();
-
-  const handleDeleteNotebook = async (id?: string) => {
-    try {
-      const notebookDeleted = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/libretas?id=${id}`,
-        {
-          method: "DELETE",
-        }
-      );
-
-      if (notebookDeleted) {
-        await refresh();
-      }
-
-      return;
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [showModalDelete,setShowModalDelete]=useState<boolean>(false);
 
 const handleDeleteNoteInNotebook=async(event:React.MouseEvent,id:string)=>{
   event.preventDefault();
@@ -54,8 +37,20 @@ const handleDeleteNoteInNotebook=async(event:React.MouseEvent,id:string)=>{
     }
 }
 
+const closeModal = () => {
+  setShowModalDelete(false);
+};
+
+
+const refreshData=async()=>{
+  await refresh();
+}
+
   return (
-    <div className="">
+    <div className="relative">
+            {
+        showModalDelete && <ModalDeleteNotebook useIcon={false} idNotebook={notebook.id} refreshData={refreshData} closeModalDelete={closeModal}/>
+      }
       <div
         className="flex py-3 mt-2 bg-primary hover:brightness-125 cursor-pointer"
         onClick={() => showNotes?setShowNotes(""):setShowNotes(notebook.id?notebook.id:"")}
@@ -71,7 +66,7 @@ const handleDeleteNoteInNotebook=async(event:React.MouseEvent,id:string)=>{
           fontSize="small"
           onClick={(event) => {
             event.stopPropagation();
-            handleDeleteNotebook(notebook?.id);
+            setShowModalDelete(true);
           }}
           className="mr-3 cursor-pointer hover:text-delete-hover"
         />

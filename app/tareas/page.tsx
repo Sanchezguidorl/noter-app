@@ -11,7 +11,7 @@ function TaksRoute() {
   const [createTask, setCreateTask] = useState<boolean>(false);
 
   return (
-    <div className="md:max-w-[700px] lg:max-w-[900px]">
+    <div className="">
       <div className="relative mb-3">
         <h1 className="text-3xl">Tareas</h1>
         <AddToPhotosIcon className='absolute top-1 right-4 cursor-pointer text-3xl hover:text-button-action hover:scale-110 transition-all duration-200' onClick={() => setCreateTask(true)} />

@@ -4,16 +4,12 @@ import Link from "next/link";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDeleteNotesPanelContext } from "@/contexts/DeleteNotesPanelContext";
 import { readDate } from "@/app/utils/utils";
-import ModalDeleteElement from "./modals/ModalDeleteElement";
+import ModalDeleteNote from "./modals/ModalDeleteNote";
 import { useState } from "react";
+import { useGetNotesContext } from "@/contexts/GetNotesProvider";
 
-function NoteCard({
-  data,
-  refreshData,
-}: {
-  data: NoteI;
-  refreshData: () => void;
-}) {
+function NoteCard({ data }: { data: NoteI }) {
+  const { refreshData } = useGetNotesContext();
   const { deleteCards } = useDeleteNotesPanelContext();
   const [showModalDeleteElement, setShowModalDeleteElement] =
     useState<boolean>(false);
@@ -36,10 +32,15 @@ function NoteCard({
     setShowModalDeleteElement(true);
   };
 
-  const handleModal = () => {
+  const handleCloseModal = () => {
     enableScroll();
 
     setShowModalDeleteElement(false);
+  };
+
+  const refresh = async () => {
+    await refreshData();
+    return;
   };
 
   return (
@@ -49,10 +50,10 @@ function NoteCard({
         className=" bg-primary h-full max-h-full w-40 min-w-40 rounded-xl p-2 relative"
       >
         {showModalDeleteElement && (
-          <ModalDeleteElement
+          <ModalDeleteNote
             idNote={data.id}
-            refreshData={refreshData}
-            closeModal={handleModal}
+            refreshData={refresh}
+            closeModal={handleCloseModal}
           />
         )}
         {deleteCards && (

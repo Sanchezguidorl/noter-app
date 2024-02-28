@@ -6,6 +6,7 @@ import { useState } from "react";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { NoteI } from "@/app/db/dbMock";
 import { useGetNotesContext } from "@/contexts/GetNotesProvider";
+import AddIcon from '@mui/icons-material/Add';
 
 function ListNotes({id,selectId}:{id:string|undefined, selectId:(id:string)=>void}) {
   const [showCards, setShowCards] = useState<boolean>(false);
@@ -44,10 +45,14 @@ function ListNotes({id,selectId}:{id:string|undefined, selectId:(id:string)=>voi
           showCards ? "max-h-0" : "max-h-600"
         }`}
       >
+        <div className="flex gap-1 text-sm text-secondary-text items-center my-2 p-1 cursor-pointer hover:brightness-125" onClick={()=>selectId("agregar")}>
+          <AddIcon/>
+          <p>Nueva nota</p>
+        </div>
         {notesData?.map((item: NoteI) => (
           <NoteCardPrevisualization
             selectId={selectId}
-            key={item.title}
+            key={item.id}
             title={item.title}
             date={item.date}
             content={item.content}

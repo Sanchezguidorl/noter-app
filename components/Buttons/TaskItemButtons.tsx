@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CloseIcon from "@mui/icons-material/Close";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -6,6 +6,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import { TasksI } from "@/app/db/dbMock";
 import { useGetTasksContext } from "@/contexts/GetTasksContext";
+import ModalDeleteTask from "../modals/ModalDeleteTask";
 
 function TaskItemButtons({
   isExpired,
@@ -21,6 +22,11 @@ function TaskItemButtons({
   inputData: string;
 }) {
   const { refreshData } = useGetTasksContext();
+  const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
+
+  const closeModal = () => {
+    setShowModalDelete(false);
+  };
 
   const handleSave = async (event: React.MouseEvent) => {
     event.preventDefault();
@@ -87,11 +93,14 @@ function TaskItemButtons({
 
   return (
     <>
+    {showModalDelete &&
+      <ModalDeleteTask idTask={task.id} closeModalDelete={closeModal} refreshData={async()=>await refreshData()}/>
+    }
       {!task.done ? (
         <div className="flex gap-3">
           {isExpired ? (
             <div
-              onClick={(event) => handleDelete(task.id, event)}
+              onClick={(event) =>{event.stopPropagation(); setShowModalDelete(true)}}
               className={"p-3"}
             >
               <CloseIcon className=" text-button-action hover:text-delete-hover" />
@@ -121,7 +130,7 @@ function TaskItemButtons({
       ) : (
         <div className={"p-3 flex flex-col justify-between gap-3"}>
           <CloseIcon
-            onClick={(event) => handleDelete(task.id, event)}
+            onClick={(event) =>{event.stopPropagation(); setShowModalDelete(true)}}
             className=" text-button-action hover:text-delete-hover"
           />
           <CheckCircleIcon className=" text-success" />

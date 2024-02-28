@@ -6,6 +6,7 @@ import AddNotebook from "./AddNotebook";
 import Loading from "@/app/loading";
 const NotebookDropDown = lazy(() => import("./NotebookDropDown"));
 import { useGetNotebooksContext } from '@/contexts/GetNotebooksProvider';
+import ModalDeleteNotebook from "@/components/modals/ModalDeleteNotebook";
 
 function ListNotebooks({ paramsId }: { paramsId: string }) {
   const [showNotes, setShowNotes] = useState<string>(paramsId);
@@ -29,8 +30,10 @@ function ListNotebooks({ paramsId }: { paramsId: string }) {
     refreshData();
   }, []);
 
+
+
   return (
-    <div className=" bg-base h-full w-full px-4">
+    <div className=" bg-base h-full w-full px-4 relative">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl mb-4 mt-3">Libretas</h1>
         <AddBoxIcon

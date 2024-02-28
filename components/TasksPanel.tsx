@@ -1,3 +1,4 @@
+import Link from "next/link";
 import ButtonSection from "./layouts/ButtonSection";
 import TasksList from "./TasksList";
 import GetTasksProvider from "@/contexts/GetTasksContext";
@@ -10,7 +11,9 @@ function TasksPanel() {
     >
       <ul className="flex w-full gap-6">
         <li>
+          <Link href="/tareas">
           <ButtonSection isActive={true} text={"Tareas"} />
+          </Link>
         </li>
         {/*
           <li>

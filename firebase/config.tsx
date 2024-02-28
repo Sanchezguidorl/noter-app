@@ -4,7 +4,7 @@ import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAPovfMJIf9a_q-FSiR_O8WurysU65b7Do",
-  authDomain: "https://noter-app-coder.netlify.app",
+  authDomain: "noterapp-d16cc.firebaseapp.com",
   projectId: "noterapp-d16cc",
   storageBucket: "noterapp-d16cc.appspot.com",
   messagingSenderId: "853855766286",

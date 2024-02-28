@@ -25,9 +25,9 @@ if (loading) {
 return ( 
   <>
   {user.logged ?
-      <div className="w-full">
+      <div className="w-full relative overflow-hidden flex flex-col">
       <UserLogged/>
-    <div className="p-4 bg-base">
+    <div className="p-4 bg-base w-full">
     {children}
     </div>
     </div>

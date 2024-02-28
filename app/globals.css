@@ -64,8 +64,8 @@ font-size: 10px;
 }
 
 .loader {
-  width: 84px;
-  height: 84px;
+  width: 60px;
+  height: 60px;
   position: relative;
 }
 .loader:before , .loader:after {

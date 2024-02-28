@@ -17,7 +17,7 @@ function ListNoteCards() {
     <>
       {
         notesData.map((note:NoteI)=>(
-          <NoteCard key={note.id} refreshData={getData} data={note}/>
+          <NoteCard key={note.id} data={note}/>
         ))
       }
     </>
