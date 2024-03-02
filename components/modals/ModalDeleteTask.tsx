@@ -34,7 +34,7 @@ function ModalDeleteTask({
 
   return (
     <>
-      {loading && <Loading text={"Eliminando..."} />}
+      {loading && <Loading useIcon={true} text={"Eliminando..."} />}
       <div
         onClick={(event: React.MouseEvent) => event.preventDefault()}
         className="fixed bg-overlay-transparent z-40 w-full h-full top-0 left-0 flex justify-center items-center cursor-default"

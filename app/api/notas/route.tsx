@@ -44,7 +44,7 @@ export const POST = async (req: NextRequest) => {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json({ success: false, error:{message:error.message} });
+    return NextResponse.json({ success: false, error:{message:(error as Error).message} });
   }
 };
 
@@ -73,7 +73,7 @@ export const PUT = async (req: NextRequest) => {
       const updatedNote = await updateDoc(noteByIdRef,dataUpdated);
       return NextResponse.json({ success: true });
     } catch (error) {
-      return NextResponse.json({ success: false, error:{message:error.message} });
+      return NextResponse.json({ success: false, error:{message:(error as Error).message} });
     }
   };
   

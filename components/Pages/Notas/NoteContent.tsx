@@ -141,7 +141,7 @@ function NoteContent({ id }: { id: string }) {
       setErrorMessage({
         show: true,
         message:
-          error.message
+        (error as Error).message
       });
     }
   };
@@ -186,7 +186,7 @@ const response=await updatedNote.json();
       setErrorMessage({
         show: true,
         message:
-          error?.message,
+        (error as Error).message,
       });
     }
   };

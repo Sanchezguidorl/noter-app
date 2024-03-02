@@ -32,7 +32,7 @@ export const POST = async (req: NextRequest) => {
     } catch (error) {
       return NextResponse.json({
         error: {
-          message: error.message,
+          message: (error as Error).message,
         },success: false
       });
     }

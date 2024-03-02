@@ -16,7 +16,7 @@ interface UserI {
   uid: string;
 }
 
-const AuthUserContext =createContext<{
+const AuthUserContext = createContext<{
   user: UserI;
   register: (value: { email: string; password: string }) => Promise<void>;
   authUser: (value: { email: string; password: string }) => Promise<void>;
@@ -26,8 +26,8 @@ const AuthUserContext =createContext<{
   user: { logged: false, email: "", uid: "" },
   register: async () => {},
   authUser: async () => {},
-  logout: async ()=> {},
-  authWithGoogle: async ()=> {}
+  logout: async () => {},
+  authWithGoogle: async () => {},
 });
 
 export const useAuthUserContext = () => useContext(AuthUserContext);
@@ -49,18 +49,18 @@ function AuthUserProvider({ children }: { children: React.ReactNode }) {
     return;
   };
 
-  const logout=async()=>{
-await signOut(auth);
+  const logout = async () => {
+    await signOut(auth);
   };
 
-const authWithGoogle=async()=>{
-await signInWithPopup(auth, provider);
-};
+  const authWithGoogle = async () => {
+    await signInWithPopup(auth, provider);
+  };
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUser({ logged: true, email: user.email||"", uid: user.uid });
+        setUser({ logged: true, email: user.email || "", uid: user.uid });
       } else {
         setUser({ logged: false, email: "", uid: "" });
       }
@@ -69,7 +69,13 @@ await signInWithPopup(auth, provider);
 
   return (
     <AuthUserContext.Provider
-      value={{ user: user, register: register, authUser: authUser,logout:logout, authWithGoogle: authWithGoogle }}
+      value={{
+        user: user,
+        register: register,
+        authUser: authUser,
+        logout: logout,
+        authWithGoogle: authWithGoogle,
+      }}
     >
       {children}
     </AuthUserContext.Provider>

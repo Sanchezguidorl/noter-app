@@ -61,7 +61,7 @@ if(response.success){
       setErrorMessage({
         show: true,
         message:
-          error.message
+        (error as Error).message
       });
     }
   };

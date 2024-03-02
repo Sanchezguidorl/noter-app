@@ -85,7 +85,7 @@ const response= await createTask.json();
     } catch (error) {
       setErrorMessage({
         show: true,
-        message: error.message
+        message: (error as Error).message
       });
     }
   };

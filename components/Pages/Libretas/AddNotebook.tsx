@@ -66,7 +66,7 @@ function AddNotebook({
         throw new Error(response.error.message);
       }
     } catch (error) {
-      setErrorMessage({ show: true, message: error.message });
+      setErrorMessage({ show: true, message: (error as Error).message });
     }
   };
 
