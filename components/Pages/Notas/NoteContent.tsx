@@ -6,6 +6,7 @@ import LoadingTransparent from "@/components/layouts/LoadingTransparent";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModalDeleteNote from "@/components/modals/ModalDeleteNote";
 import { useGetNotesContext } from "@/contexts/GetNotesProvider";
+import ErrorMessage from "@/components/layouts/ErrorMessage";
 
 function NoteContent({ id }: { id: string }) {
   const { notesData, refreshData } = useGetNotesContext();
@@ -16,11 +17,15 @@ function NoteContent({ id }: { id: string }) {
     date: Date.now(),
   });
   const [errorInputs, setErrorInputs] = useState({
-    title: { valid: false, message: "El título no puede estar vacío" },
-    content: { valid: false, message: "" },
+    title: { valid: false },
+    content: { valid: false },
   });
   const [loading, setLoading] = useState<boolean>(false);
   const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<{
+    show: boolean;
+    message: string;
+  }>({ show: false, message: "" });
 
   useEffect(() => {
     if (notesData.length > 0) {
@@ -34,6 +39,10 @@ function NoteContent({ id }: { id: string }) {
           id: noteSelected.id,
           date: noteSelected.date,
         });
+        setErrorInputs({
+          title: { valid: true },
+          content: { valid: true },
+        })
       } else {
         setNoteData({
           title: "",
@@ -43,70 +52,36 @@ function NoteContent({ id }: { id: string }) {
         });
       }
     }
+
   }, [id, notesData]);
 
   useEffect(() => {
-    console.log(errorInputs.title.message);
-    if (noteData.title.length ===0) {
+    if (
+      noteData.title.length === 0 ||
+      noteData.title.length < 4 ||
+      noteData.title.length > 80
+    ) {
       setErrorInputs({
         ...errorInputs,
         title: {
           valid: false,
-          message: "El título no puede estar vacío",
         },
       });
-    }
-    else if (noteData.title.length < 4) {
-      setErrorInputs({
-        ...errorInputs,
-        title: {
-          valid: false,
-          message: "El título no puede tener menos de 4 caracteres",
-        },
-      });
-    } else if (noteData.title.length <= 80 && noteData.title.length > 3) {
-      setErrorInputs({ ...errorInputs, title: { valid: true, message: "" } });
     } else {
-      setErrorInputs({
-        ...errorInputs,
-        title: {
-          valid: false,
-          message: "El título no puede tener más de 80 caracteres",
-        },
-      });
+      setErrorInputs({ ...errorInputs, title: { valid: true } });
     }
   }, [noteData.title]);
 
   useEffect(() => {
-    if (noteData.content.length === 0) {
+    if (noteData.content.length === 0 || noteData.content.length > 2000) {
       setErrorInputs({
         ...errorInputs,
-        content: { valid: false, message: "El contenido no puede estar vacío" },
+        content: { valid: false },
       });
-    } else if (noteData.content.length <= 2000 && noteData.content.length > 0) {
-      setErrorInputs({ ...errorInputs, content: { valid: true, message: "" } });
     } else {
-      setErrorInputs({
-        ...errorInputs,
-        content: {
-          valid: false,
-          message: "El contenido no puede tener más de 2000 caracteres",
-        },
-      });
+      setErrorInputs({ ...errorInputs, content: { valid: true } });
     }
   }, [noteData.content]);
-
-  const validateInputs = () => {
-    const contentLength = noteData.content.length;
-    const titleLength = noteData.title.length;
-    const inputsValid =
-      contentLength > 0 &&
-      contentLength <= 2000 &&
-      titleLength > 4 &&
-      titleLength <= 80;
-
-    return inputsValid;
-  };
 
   const handleChangeTitle = (
     input: React.ChangeEvent<HTMLInputElement>
@@ -125,12 +100,21 @@ function NoteContent({ id }: { id: string }) {
   };
 
   const saveData = async () => {
-    if (!validateInputs()) {
-      return;
+       try {
+    if (
+      !(
+        noteData.title.length > 3 &&
+        noteData.title.length < 81 &&
+        noteData.content.length > 0 &&
+        noteData.content.length < 2001
+      )
+    ) {
+      throw new Error("Los campos deben ser completados de manera correcta");
     }
 
+
     setLoading(true);
-    try {
+
       const savedNote = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/notas`,
         {
@@ -141,24 +125,42 @@ function NoteContent({ id }: { id: string }) {
           body: JSON.stringify(noteData),
         }
       );
-      if (savedNote) {
+
+        const response= await savedNote.json();
+
+      if (response.success) {
         refresh();
         setNoteData({ ...noteData, title: "", content: "" });
         setLoading(false);
         return;
+      }else{
+        setLoading(false);
+        throw new Error(response.error.message);
       }
     } catch (error) {
-      console.log(error);
+      setErrorMessage({
+        show: true,
+        message:
+          error.message
+      });
     }
   };
 
   const updateData = async () => {
-    if (!validateInputs()) {
-      return;
+    try {
+    if (
+      !(
+        noteData.title.length > 3 &&
+        noteData.title.length < 81 &&
+        noteData.content.length > 0 &&
+        noteData.content.length < 2001
+      )
+    ) {
+      throw new Error("Los campos deben ser completados de manera correcta");
     }
 
     setLoading(true);
-    try {
+
       const updatedNote = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/notas`,
         {
@@ -169,13 +171,23 @@ function NoteContent({ id }: { id: string }) {
           body: JSON.stringify(noteData),
         }
       );
-      if (updatedNote) {
+
+const response=await updatedNote.json();
+
+      if (response.success) {
         refresh();
         setLoading(false);
         return;
+      }else{
+        setLoading(false);
+        throw new Error(response.error.message);
       }
     } catch (error) {
-      console.log(error);
+      setErrorMessage({
+        show: true,
+        message:
+          error?.message,
+      });
     }
   };
 
@@ -197,9 +209,21 @@ function NoteContent({ id }: { id: string }) {
               onChange={handleChangeTitle}
               placeholder="Escribe un título"
             />
-            <p className="absolute top-full left-0 text-delete-hover text-xs">
-              {!errorInputs.title.valid && errorInputs.title.message}
-            </p>
+            {!errorInputs.title.valid && noteData.title.length === 0 ? (
+              <p className="absolute top-full left-0 text-delete-hover text-xs">
+                El título no debe estar vacío
+              </p>
+            ) : noteData.title.length < 4 && noteData.title.length > 0 ? (
+              <p className="absolute top-full left-0 text-delete-hover text-xs">
+                El título no debe tener menos de 4 caracteres
+              </p>
+            ) : (
+              noteData.title.length > 80 && (
+                <p className="absolute top-full left-0 text-delete-hover text-xs">
+                  El título no debe tener más de 80 caracteres
+                </p>
+              )
+            )}
           </div>
           <div className="relative mb-6">
             <p className="mt-6">
@@ -210,9 +234,17 @@ function NoteContent({ id }: { id: string }) {
                 onChange={handleChangeContent}
               ></textarea>
             </p>
-            <p className="absolute top-full left-0 text-delete-hover text-xs">
-              {!errorInputs.content.valid && errorInputs.content.message}
-            </p>
+            {!errorInputs.content.valid && noteData.content.length === 0 ? (
+              <p className="absolute top-full left-0 text-delete-hover text-xs">
+                El contenido no debe estar vacío
+              </p>
+            ) : (
+              noteData.content.length > 2000 && (
+                <p className="absolute top-full left-0 text-delete-hover text-xs">
+                  El contenido no debe tener más de 2000 caracteres
+                </p>
+              )
+            )}
           </div>
           {noteData.id !== "" && (
             <button
@@ -223,21 +255,50 @@ function NoteContent({ id }: { id: string }) {
               <DeleteIcon />
             </button>
           )}
-          <button
-            disabled={!validateInputs()}
-            onClick={noteData.id === "" ? saveData : updateData}
-            className={`transition-all duration-200 py-3 px-6 rounded-xl float-right hover:brightness-125 ${validateInputs()?"bg-primary-buttons":" bg-secondary-text"}`}
-          >
-            Guardar
-          </button>
+          {noteData.id === "" ? (
+            <button
+              disabled={!(errorInputs.content.valid && errorInputs.title.valid)}
+              onClick={saveData}
+              className={`transition-all duration-200 py-3 px-6 rounded-xl float-right hover:brightness-125 ${
+                errorInputs.content.valid && errorInputs.title.valid
+                  ? "bg-primary-buttons"
+                  : " bg-secondary-text"
+              }`}
+            >
+              Guardar
+            </button>
+          ) : (
+            <button
+              disabled={(errorInputs.content.valid===false || errorInputs.title.valid===false)}
+              onClick={updateData}
+              className={`transition-all duration-200 py-3 px-6 rounded-xl float-right hover:brightness-125 ${
+                (errorInputs.content.valid===false || errorInputs.title.valid===false)
+                  ?" bg-secondary-text"
+                  :  "bg-primary-buttons"
+              }`}
+            >
+              Actualizar
+            </button>
+          )}
         </div>
+        {errorMessage.show && (
+          <ErrorMessage
+            message={errorMessage.message}
+            closeMessage={setErrorMessage}
+          />
+        )}
       </div>
       {loading && <LoadingTransparent text={"Guardando datos..."} />}
       {showModalDelete && (
         <ModalDeleteNote
-          vacuumInput={setNoteData}
+          vacuumInput={() => setNoteData}
           closeModal={closeModal}
-          refreshData={refresh}
+          refreshData={()=>{refresh();setNoteData({
+            title: "",
+            content: "",
+            id: "",
+            date: Date.now(),
+          });}}
           idNote={noteData.id}
         />
       )}

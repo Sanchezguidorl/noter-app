@@ -51,6 +51,7 @@ function NoteCard({ data }: { data: NoteI }) {
       >
         {showModalDeleteElement && (
           <ModalDeleteNote
+            vacuumInput={(data)=>{}}
             idNote={data.id}
             refreshData={refresh}
             closeModal={handleCloseModal}
@@ -63,10 +64,8 @@ function NoteCard({ data }: { data: NoteI }) {
             fontSize="small"
           />
         )}
-        <p>
-          {data.title.length > 22
-            ? data.title.substring(0, 22) + "..."
-            : data.title}
+        <p className="overflow-hidden text-ellipsis text-nowrap mb-2">
+          {data.title}
         </p>
         <div className="content-card overflow-y-hidden h-36">
           <p className="text-sm break-words">

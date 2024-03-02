@@ -24,7 +24,7 @@ function TasksPanel() {
         </li>
   */}
       </ul>
-      <div className="mt-3 overflow-y-scroll px-2 pb-3">
+      <div className="mt-3 overflow-y-auto px-2 pb-3 h-full relative">
         <GetTasksProvider>
           <TasksList />
         </GetTasksProvider>

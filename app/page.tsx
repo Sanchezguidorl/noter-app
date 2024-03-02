@@ -18,7 +18,7 @@ useEffect(() => {
 }, [user.logged]);
 
 if (loading) {
-  return <Loading text="Cargando sección..."/>
+  return <Loading text="Cargando sección..." useIcon={true}/>
 }
 
   return (<>{

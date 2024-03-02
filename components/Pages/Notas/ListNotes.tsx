@@ -6,14 +6,21 @@ import { useState } from "react";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { NoteI } from "@/app/db/dbMock";
 import { useGetNotesContext } from "@/contexts/GetNotesProvider";
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
+import HistoryToggleOffIcon from "@mui/icons-material/HistoryToggleOff";
 
-function ListNotes({id,selectId}:{id:string|undefined, selectId:(id:string)=>void}) {
+function ListNotes({
+  id,
+  selectId,
+}: {
+  id: string | undefined;
+  selectId: (id: string) => void;
+}) {
   const [showCards, setShowCards] = useState<boolean>(false);
-  const {notesData}=useGetNotesContext();
+  const { notesData } = useGetNotesContext();
   return (
-    <div className={`bg-base h-fit w-full sm:w-80 p-1 pt-6`}>
-      <div>
+    <div className={`bg-base w-full sm:w-80 p-1 pt-6 bg-h-full`}>
+      <div className="">
         <div className="flex gap-1 relative">
           <DescriptionIcon fontSize="large" />
           <h1 className=" text-3xl mb-3">Notas</h1>
@@ -41,25 +48,39 @@ function ListNotes({id,selectId}:{id:string|undefined, selectId:(id:string)=>voi
         </div>
       </div>
       <div
-        className={`overflow-auto transition-all duration-300 ${
+        className={`overflow-auto transition-all duration-300 h-full ${
           showCards ? "max-h-0" : "max-h-600"
         }`}
       >
-        <div className="flex gap-1 text-sm text-secondary-text items-center my-2 p-1 cursor-pointer hover:brightness-125" onClick={()=>selectId("agregar")}>
-          <AddIcon/>
+        <div
+          className="flex gap-1 text-sm text-secondary-text items-center my-2 p-1 cursor-pointer hover:brightness-125"
+          onClick={() => selectId("agregar")}
+        >
+          <AddIcon />
           <p>Nueva nota</p>
         </div>
-        {notesData?.map((item: NoteI) => (
-          <NoteCardPrevisualization
-            selectId={selectId}
-            key={item.id}
-            title={item.title}
-            date={item.date}
-            content={item.content}
-            id={item.id}
-            selected={item.id===id}
-          />
-        ))}
+        <>
+          {notesData.length > 0 ? (
+            notesData?.map((item: NoteI) => (
+              <NoteCardPrevisualization
+                selectId={selectId}
+                key={item.id}
+                title={item.title}
+                date={item.date}
+                content={item.content}
+                id={item.id}
+                selected={item.id === id}
+              />
+            ))
+          ) : (
+            <div className="text-secondary-text flex justify-center items-center h-full text-xl sm:text-2xl my-8">
+              <p className="flex flex-col text-center justify-center items-center gap-1">
+                <HistoryToggleOffIcon fontSize="large" />
+                No tienes notas agregadas
+              </p>
+            </div>
+          )}
+        </>
       </div>
     </div>
   );

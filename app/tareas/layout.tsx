@@ -20,14 +20,14 @@ useEffect(() => {
 }, [user.logged]);
 
 if (loading) {
-  return <Loading text="Cargando sección..."/>
+  return <Loading text="Cargando sección..." useIcon={true}/>
 }
 return ( 
   <>
   {user.logged ?
-      <div className="w-full relative overflow-hidden flex flex-col">
+      <div className="w-full relative overflow-hidden h-full">
       <UserLogged/>
-    <div className="p-4 bg-base w-full">
+    <div className="p-4 bg-base w-full h-full overflow-auto">
     {children}
     </div>
     </div>

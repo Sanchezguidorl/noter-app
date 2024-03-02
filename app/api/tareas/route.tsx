@@ -1,4 +1,5 @@
 import { TasksI } from "@/app/db/dbMock";
+import { validateWhitespaceString } from "@/app/utils/utils";
 import { db } from "@/firebase/config"
 import { collection, deleteDoc, doc, getDocs, setDoc, updateDoc } from "firebase/firestore"
 import { NextRequest, NextResponse } from "next/server";
@@ -22,12 +23,14 @@ export const POST = async (req: NextRequest) => {
     const data = await req.text();
     const newData: TasksI = JSON.parse(data);
     try {
+      const errorTitleMessage="La terea no debe estar vacía"
+      validateWhitespaceString(newData.toDo,errorTitleMessage)
       const newTask = doc(tasksRef);
       await setDoc(newTask, newData);
   
       return NextResponse.json({ success: true });
     } catch (error) {
-      return NextResponse.json({ success: false, error: error });
+      return NextResponse.json({ success: false, error: {message:error.message} });
     }
   };
   
@@ -47,10 +50,8 @@ export const POST = async (req: NextRequest) => {
       const dataRequest = await req.text();
       const dataUpdated = JSON.parse(dataRequest);
   
-      if (!dataUpdated || !dataUpdated.id) {
-        return NextResponse.json({ success: false, error: 'Datos inválidos' });
-      }
-  
+      const errorTitleMessage="La terea no debe estar vacía"
+      validateWhitespaceString(dataUpdated.toDo,errorTitleMessage)
       const { id } = dataUpdated;
       const taskByIdRef = doc(tasksRef, id);
   
@@ -59,6 +60,6 @@ export const POST = async (req: NextRequest) => {
       return NextResponse.json({ success: true });
     } catch (error) {
       console.error(error);
-      return NextResponse.json({ success: false, error: 'Hubo un error al actualizar la tarea' });
+      return NextResponse.json({ success: false, error: {message:error.message} });
     }
   };

@@ -60,7 +60,7 @@ function DropDownItemNav({ itemCategoryName, icon }: NotebookDropDownMenuI) {
            href={`/${itemCategoryName.toLocaleLowerCase()}/${item.id}`}
            key={item.id}
            >
-            <li className="px-2 py-1 text-xxs hover:brightness-125 cursor-pointer uppercase ">
+            <li className="px-2 py-1 text-xxs hover:brightness-125 cursor-pointer uppercase text-ellipsis text-nowrap overflow-hidden ">
               <LibraryBooksIcon fontSize="small" />
               {item.title}
             </li>

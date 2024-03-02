@@ -11,7 +11,7 @@ function ModalDeleteNote({
   closeModal: () => void;
   refreshData: () => void;
   idNote: string;
-  vacuumInput:Dispatch<SetStateAction<NoteI>>
+  vacuumInput:(note:NoteI)=>void
 }) {
   const [successDelete, setSuccessDelete] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -34,7 +34,7 @@ function ModalDeleteNote({
           title: "",
           content: "",
           id: "",
-          date: new Date().getDate(),
+          date: Date.now(),
         });
         closeModal();
       }, 2000);
@@ -43,7 +43,7 @@ function ModalDeleteNote({
 
   return (
     <>
-      {loading && <Loading useIcon={undefined} text={"Eliminando..."}/>}
+      {loading && <Loading useIcon={true} text={"Eliminando..."}/>}
       <div
         onClick={(event: React.MouseEvent) => event.preventDefault()}
         className="fixed bg-overlay-transparent z-40 w-full h-full top-0 left-0 flex justify-center items-center cursor-default"

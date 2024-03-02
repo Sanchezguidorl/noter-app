@@ -9,6 +9,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { NoteI, NotebookI } from "@/app/db/dbMock";
+import { validateWhitespaceString } from "@/app/utils/utils";
 
 const notesRef = collection(db, "notas");
 
@@ -31,14 +32,19 @@ export const GET = async () => {
 export const POST = async (req: NextRequest) => {
   const data = await req.text();
   try {
+
     const newData: NoteI = JSON.parse(data);
+    const errorTitleMessage="El título no debe estar vacío"
+    validateWhitespaceString(newData.title,errorTitleMessage)
+    const errorContentMessage="El contenido no debe estar vacío"
+    validateWhitespaceString(newData.content,errorContentMessage)
     const newNote = doc(notesRef);
     delete (newData as any).id;
     await setDoc(newNote, newData);
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json({ success: false, error: error });
+    return NextResponse.json({ success: false, error:{message:error.message} });
   }
 };
 
@@ -60,10 +66,14 @@ export const PUT = async (req: NextRequest) => {
     const {id}=dataUpdated;
     const noteByIdRef = doc(notesRef,id);
     try {
+      const errorTitleMessage="El título no debe estar vacío"
+      validateWhitespaceString(dataUpdated.title,errorTitleMessage)
+      const errorContentMessage="El contenido no debe estar vacío"
+      validateWhitespaceString(dataUpdated.content,errorContentMessage)
       const updatedNote = await updateDoc(noteByIdRef,dataUpdated);
       return NextResponse.json({ success: true });
     } catch (error) {
-      return NextResponse.json({ success: false, error: error });
+      return NextResponse.json({ success: false, error:{message:error.message} });
     }
   };
   

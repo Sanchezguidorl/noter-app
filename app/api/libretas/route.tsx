@@ -1,4 +1,5 @@
 import { NotebookDataI } from '@/app/db/dbMock';
+import { validateWhitespaceString } from '@/app/utils/utils';
 import { db } from '@/firebase/config';
 import { collection, deleteDoc, doc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
 import { NextRequest, NextResponse } from 'next/server';
@@ -22,12 +23,18 @@ export const POST = async (req: NextRequest) => {
     const data = await req.text();
     const newData: NotebookDataI = JSON.parse(data);
     try {
+      const errorMessage="El título no debe estar vacío"
+      validateWhitespaceString(newData.title,errorMessage)
       const newNotebook = doc(notebooksRef);
       await setDoc(newNotebook, newData);
   
       return NextResponse.json({ success: true });
     } catch (error) {
-      return NextResponse.json({ success: false, error: error });
+      return NextResponse.json({
+        error: {
+          message: error.message,
+        },success: false
+      });
     }
   };
   

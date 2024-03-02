@@ -1,8 +1,15 @@
 "use client";
 import { useGetTasksContext } from "@/contexts/GetTasksContext";
-import { Dispatch, SetStateAction, useState } from "react";
-import CloseIcon from '@mui/icons-material/Close';
-function CreateTasks({selected, unselect}:{selected:boolean, unselect:Dispatch<SetStateAction<boolean>>}) {
+import { Dispatch, SetStateAction, useState, useEffect } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import ErrorMessage from "@/components/layouts/ErrorMessage";
+function CreateTasks({
+  selected,
+  unselect,
+}: {
+  selected: boolean;
+  unselect: Dispatch<SetStateAction<boolean>>;
+}) {
   const [newTask, setNewTask] = useState<{
     toDo: string;
     limitDate: number;
@@ -12,9 +19,34 @@ function CreateTasks({selected, unselect}:{selected:boolean, unselect:Dispatch<S
     limitDate: 0,
     done: false,
   });
-
+  const [errorInputs, setErrorInputs] = useState({
+    toDo: { valid: false },
+    limitDate: { valid: false },
+  });
   const { refreshData } = useGetTasksContext();
+  const [errorMessage, setErrorMessage] = useState<{
+    show: boolean;
+    message: string;
+  }>({ show: false, message: "" });
 
+  useEffect(() => {
+    if (newTask.toDo.length > 20 && newTask.toDo.length <= 200) {
+      setErrorInputs({ ...errorInputs, toDo: { valid: true } });
+    } else {
+      setErrorInputs({ ...errorInputs, toDo: { valid: false } });
+    }
+  }, [newTask.toDo]);
+
+  useEffect(() => {
+    if (newTask.limitDate > Date.now()) {
+      console.log("en if");
+      setErrorInputs({ ...errorInputs, limitDate: { valid: true } });
+    } else {
+      setErrorInputs({ ...errorInputs, limitDate: { valid: false } });
+    }
+  }, [newTask.limitDate]);
+
+  console.log(errorInputs.limitDate.valid);
   const handleChangeDate = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewTask({ ...newTask, limitDate: event.target.valueAsNumber });
   };
@@ -26,31 +58,50 @@ function CreateTasks({selected, unselect}:{selected:boolean, unselect:Dispatch<S
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const createTask = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/tareas`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newTask),
-      });
+      if (!(errorInputs.toDo.valid && errorInputs.limitDate.valid)) {
+        throw new Error("Los campos deben ser completados de manera correcta");
+      }
+      const createTask = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/tareas`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newTask),
+        }
+      );
 
-        const refresh=await refreshData();
-      if(refresh) {
-        unselect(false)
+const response= await createTask.json();
+      
+      if (response.succcess) {
+        const refresh = await refreshData();
+        unselect(false);
+      } else {
+        throw new Error(
+          response.error.message
+        );
       }
     } catch (error) {
-      console.log(error);
+      setErrorMessage({
+        show: true,
+        message: error.message
+      });
     }
   };
 
   return (
-    <div className={` transition-all duration-500 ${selected?"max-h-[1000px]":"max-h-0"} overflow-hidden`}>
+    <div
+      className={` transition-all duration-500 ${
+        selected ? "max-h-[1000px]" : "max-h-0"
+      } overflow-hidden`}
+    >
       <form
         onSubmit={handleSubmit}
         action=""
-        className="p-4 bg-interactive rounded-lg relative"
+        className="px-4 py-6 bg-interactive rounded-lg relative"
       >
-        <div className="flex flex-col">
+        <div className="flex flex-col relative mb-4">
           <label
             className="uppercase text-button-action  py-2"
             htmlFor="taskInput"
@@ -63,8 +114,23 @@ function CreateTasks({selected, unselect}:{selected:boolean, unselect:Dispatch<S
             onChange={handleChangeToDo}
             placeholder="Describe la nueva tarea"
           ></textarea>
+          {!errorInputs.limitDate.valid && newTask.toDo.length === 0 ? (
+            <p className="absolute top-full left-0 text-delete-hover text-xs">
+              La tarea no debe estar vacía
+            </p>
+          ) : newTask.toDo.length < 20 ? (
+            <p className="absolute top-full left-0 text-delete-hover text-xs">
+              La tarea debe tener un mínimo de 20 caracteres
+            </p>
+          ) : (
+            newTask.toDo.length >= 200 && (
+              <p className="absolute top-full left-0 text-delete-hover text-xs">
+                La tarea debe tener un máximo de 200 caracteres
+              </p>
+            )
+          )}
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col relative">
           <label
             className="uppercase text-button-action  py-2"
             htmlFor="dateInput"
@@ -83,9 +149,29 @@ function CreateTasks({selected, unselect}:{selected:boolean, unselect:Dispatch<S
               className="bg-primary-buttons py-2 px-3 cursor-pointer hover:brightness-125 uppercase text-sm"
             />
           </div>
+          {!errorInputs.limitDate.valid && newTask.limitDate === 0 ? (
+            <p className="absolute top-full left-0 text-delete-hover text-xs">
+              Debes seleccionar una fecha
+            </p>
+          ) : (
+            newTask.limitDate <= Date.now() && (
+              <p className="absolute top-full left-0 text-delete-hover text-xs">
+                La fecha debe ser mayor a un día de la fecha actual
+              </p>
+            )
+          )}
         </div>
-        <CloseIcon className="absolute top-3 right-3 cursor-pointer hover:brightness-150 text-button-action" onClick={()=>unselect(false)}/>
+        <CloseIcon
+          className="absolute top-3 right-3 cursor-pointer hover:brightness-150 text-button-action"
+          onClick={() => unselect(false)}
+        />
       </form>
+      {errorMessage.show && (
+        <ErrorMessage
+          message={errorMessage.message}
+          closeMessage={setErrorMessage}
+        />
+      )}
     </div>
   );
 }

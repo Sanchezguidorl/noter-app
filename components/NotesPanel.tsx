@@ -4,6 +4,7 @@ import ButtonSection from "./layouts/ButtonSection";
 import DialogOptions from "./layouts/DialogOptions";
 import AddNoteCard from "./layouts/AddNoteCard";
 import { DeleteNotesPanelProvider } from "@/contexts/DeleteNotesPanelContext";
+import Loading from "@/app/loading";
 
  function NotesPanel() {
   const ListCards = lazy(() => import("./ListNoteCards"));
@@ -26,13 +27,8 @@ import { DeleteNotesPanelProvider } from "@/contexts/DeleteNotesPanelContext";
           </li>
         </ul>
         <div className=" h-full mt-2 flex gap-2 max-w-full overflow-y-hidden overflow-x-auto pb-1 container-cards pr-6">
-          <Suspense
-            fallback={
-              <div className="text-white w-96 h-96 bg-delete-hover text-5xl relative z-50">
-                cargando
-              </div>
-            }
-          >
+        <Suspense
+        fallback={<Loading useIcon={true} text="Cargando notas..." />}>
             <ListCards />
           </Suspense>
           <AddNoteCard />

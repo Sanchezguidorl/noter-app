@@ -1,7 +1,7 @@
 "use client";
 
 import { TasksI } from "@/app/db/dbMock";
-import { ReactNode, useContext, useState } from "react";
+import { ReactNode, useContext, useState, useEffect } from "react";
 import { createContext } from "react";
 
 interface GetTasksContextI {
@@ -31,6 +31,10 @@ function GetTasksProvider({ children }: { children: ReactNode }) {
       throw new Error("No pudieron obtenerse las tareas");
     }
   };
+
+  useEffect(()=>{
+    refreshData();
+  },[]);
 
   return (
     <GetTasksContext.Provider value={{ tasksData: tasksData, refreshData: refreshData }}>

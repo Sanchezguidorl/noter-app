@@ -2,65 +2,66 @@
 @tailwind components;
 @tailwind utilities;
 
-html{
+html {
   height: 100%;
 }
 
-body{
+body {
   height: 100vh;
   background-color: #000;
   color: white;
 }
 
- textarea{
+textarea {
   outline: none;
   border: none;
-  resize:none !important;
+  resize: none !important;
 }
-input{
+
+input {
   outline: none !important;
 }
 
-#NotFound{
-  background: radial-gradient(#dcdcdc4e 2%, #000 70%,#000 100%)
+#NotFound {
+  background: radial-gradient(#dcdcdc4e 2%, #000 70%, #000 100%)
 }
 
-a{
+a {
   text-decoration: none;
 }
 
 
-*{
+* {
   box-sizing: border-box;
   scrollbar-color: red;
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   border: 2px solid #1A1A1A;
   background-color: #262626;
   width: 8px;
-  height: 8px; 
+  height: 8px;
 }
 
 
-::-webkit-scrollbar-thumb{
+::-webkit-scrollbar-thumb {
   background-color: #9A9A9A;
   border-radius: 10px;
- 
+
 }
 
 /*Utilities*/
 
-.max-h-500{
-  max-height:500px;
+.max-h-500 {
+  max-height: 500px;
 }
 
-.max-h-600{
-  max-height:600px;
+.max-h-600 {
+  max-height: 600px;
 }
 
-.text-xxs{
-font-size: 10px;
+.text-xxs {
+  font-size: 10px;
 }
 
 .loader {
@@ -68,26 +69,55 @@ font-size: 10px;
   height: 60px;
   position: relative;
 }
-.loader:before , .loader:after {
+
+.loader:before,
+.loader:after {
   content: "";
   position: absolute;
   left: 50%;
   bottom: 0;
-  width:64px;
+  width: 64px;
   height: 64px;
   border-radius: 50%;
-  background:#5E35B1;
-  transform: translate(-50% , -100%)  scale(0);
+  background: #5E35B1;
+  transform: translate(-50%, -100%) scale(0);
   animation: push 1s infinite linear;
 }
+
 .loader:after {
   animation-delay: .5s;
 }
+
 @keyframes push {
-    0% , 50%{ transform: translate(-50% , 0%)  scale(1) }
-  100% { transform: translate(-50%, -100%) scale(0) }
+
+  0%,
+  50% {
+    transform: translate(-50%, 0%) scale(1)
+  }
+
+  100% {
+    transform: translate(-50%, -100%) scale(0)
+  }
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
- filter: invert();
+  filter: invert();
+}
+
+
+
+.arise-animation{
+  animation: arise 0.7s forwards;
+}
+
+@keyframes arise {
+  0% {
+    opacity: 0;
+    transform: translateY(-70px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
 }

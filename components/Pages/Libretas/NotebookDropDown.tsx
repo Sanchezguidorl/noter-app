@@ -1,15 +1,14 @@
+import { NotebookI } from "@/app/db/dbMock";
+import ModalDeleteNotebook from "@/components/modals/ModalDeleteNotebook";
+import { useGetNotebooksContext } from "@/contexts/GetNotebooksProvider";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import CloseIcon from '@mui/icons-material/Close';
 import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
+import DeleteIcon from "@mui/icons-material/Delete";
 import DescriptionIcon from "@mui/icons-material/Description";
 import Link from "next/link";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { NotebookI } from "@/app/db/dbMock";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { useGetNotebooksContext } from "@/contexts/GetNotebooksProvider";
-import AddNoteToNotebook from "./AddNoteToNotebook";
-import GetNotesProvider from '@/contexts/GetNotesProvider';
 import { Dispatch, SetStateAction, useState } from "react";
-import CloseIcon from '@mui/icons-material/Close';
-import ModalDeleteNotebook from "@/components/modals/ModalDeleteNotebook";
+import AddNoteToNotebook from "./AddNoteToNotebook";
 
 function NotebookDropDown({ notebook, showNotes, setShowNotes }: { notebook: NotebookI, showNotes:boolean, setShowNotes:Dispatch<SetStateAction<string>> }) {
   const { refresh } = useGetNotebooksContext();
@@ -47,7 +46,7 @@ const refreshData=async()=>{
 }
 
   return (
-    <div className="relative">
+    <div className="">
             {
         showModalDelete && <ModalDeleteNotebook useIcon={false} idNotebook={notebook.id} refreshData={refreshData} closeModalDelete={closeModal}/>
       }
@@ -71,14 +70,17 @@ const refreshData=async()=>{
           className="mr-3 cursor-pointer hover:text-delete-hover"
         />
       </div>
+      <div className={`transition-all duration-300 ${showNotes?"max-h-80":"max-h-0 overflow-hidden"}`}>
+      <AddNoteToNotebook notebook={notebook} />
+      </div>
+      
       <ul
         className={`pl-4 mt-2 text-sm overflow-auto text-secondary-text transition-all duration-300 ${
-          !showNotes ? "max-h-0 ": "max-h-60"}
-        `}
+          !showNotes ? "max-h-0 ": "max-h-96"}
+          `}
       >
-        <GetNotesProvider>
-        <AddNoteToNotebook notebook={notebook} />
-        </GetNotesProvider>
+          
+          
         {notebook.notes.map((note) => (
           <li key={note.id} className="p-1  border-b hover:brightness-125 w-full overflow-hidden">
             <Link href={`/notas/${note.id}`} className="flex justify-between items-center">

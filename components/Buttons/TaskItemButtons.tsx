@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CloseIcon from "@mui/icons-material/Close";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -14,12 +14,17 @@ function TaskItemButtons({
   handleEdit,
   editTask,
   inputData,
+  setErrorMessage
 }: {
   isExpired: boolean;
   task: TasksI;
   handleEdit: (bool: boolean) => void;
   editTask: boolean;
   inputData: string;
+  setErrorMessage:Dispatch<SetStateAction<{
+    show: boolean;
+    message: string;
+  }>>
 }) {
   const { refreshData } = useGetTasksContext();
   const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
@@ -30,7 +35,7 @@ function TaskItemButtons({
 
   const handleSave = async (event: React.MouseEvent) => {
     event.preventDefault();
-    if (inputData.length === 0) {
+    if (inputData.length === 0 || inputData.length < 20) {
       return;
     }
     try {
@@ -44,10 +49,21 @@ function TaskItemButtons({
           body: JSON.stringify({ ...task, toDo: inputData }),
         }
       );
+const response= await successTask.json();
 
-     handleEdit(false);
-      await refreshData();
-    } catch (error) {}
+if(response.success){
+  handleEdit(false);
+  await refreshData();
+}else{
+  throw new Error(response.error.message);
+}
+    } catch (error) {
+      setErrorMessage({
+        show: true,
+        message:
+          error.message
+      });
+    }
   };
 
   const handleSuccess = async (event: React.MouseEvent) => {
@@ -76,31 +92,23 @@ function TaskItemButtons({
     handleEdit(bool);
   };
 
-  const handleDelete = async (id: string, event: React.MouseEvent) => {
-    event.preventDefault();
-
-    try {
-      const deleteTask = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/tareas?id=${id}`,
-        {
-          method: "DELETE",
-        }
-      );
-
-      const refresh = await refreshData();
-    } catch (error) {}
-  };
-
   return (
     <>
-    {showModalDelete &&
-      <ModalDeleteTask idTask={task.id} closeModalDelete={closeModal} refreshData={async()=>await refreshData()}/>
-    }
+      {showModalDelete && (
+        <ModalDeleteTask
+          idTask={task.id}
+          closeModalDelete={closeModal}
+          refreshData={async () => await refreshData()}
+        />
+      )}
       {!task.done ? (
         <div className="flex gap-3">
           {isExpired ? (
             <div
-              onClick={(event) =>{event.stopPropagation(); setShowModalDelete(true)}}
+              onClick={(event) => {
+                event.stopPropagation();
+                setShowModalDelete(true);
+              }}
               className={"p-3"}
             >
               <CloseIcon className=" text-button-action hover:text-delete-hover" />
@@ -130,7 +138,10 @@ function TaskItemButtons({
       ) : (
         <div className={"p-3 flex flex-col justify-between gap-3"}>
           <CloseIcon
-            onClick={(event) =>{event.stopPropagation(); setShowModalDelete(true)}}
+            onClick={(event) => {
+              event.stopPropagation();
+              setShowModalDelete(true);
+            }}
             className=" text-button-action hover:text-delete-hover"
           />
           <CheckCircleIcon className=" text-success" />

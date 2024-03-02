@@ -3,6 +3,7 @@ import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import { useState } from "react";
 import { readDate } from "./../app/utils/utils";
 import TaskItemButtons from "./Buttons/TaskItemButtons";
+import ErrorMessage from "./layouts/ErrorMessage";
 
 function TaskListItem({ task }: { task: TasksI }) {
   const [isActive, setIsActive] = useState<boolean>(false);
@@ -12,6 +13,10 @@ function TaskListItem({ task }: { task: TasksI }) {
     const dateNow = new Date().getTime();
     return dateNow > date;
   };
+  const [errorMessage, setErrorMessage] = useState<{
+    show: boolean;
+    message: string;
+  }>({ show: false, message: "" });
 
   const bgByLimitDate = () => {
     let className = "";
@@ -46,6 +51,7 @@ function TaskListItem({ task }: { task: TasksI }) {
               {task.toDo}
             </textarea>
             <p className={`text-delete-hover text-xs abslute top-full ${inputData.length===0?"visible":"invisible"}`}>La tarea no puede estar vacía</p>
+            <p className={`text-delete-hover text-xs abslute top-full ${inputData.length<20?"visible":"invisible"}`}>La tarea debe tener un mínimo de 20 dígitos</p>
             </div>
           ) : (
             <p
@@ -61,6 +67,7 @@ function TaskListItem({ task }: { task: TasksI }) {
           task={task}
           handleEdit={setEditTask}
           editTask={editTask}
+          setErrorMessage={setErrorMessage}
         />
       </div>
       <p
@@ -68,6 +75,12 @@ function TaskListItem({ task }: { task: TasksI }) {
       >
         {readDate(task.limitDate)} <AccessAlarmIcon />
       </p>
+      {errorMessage.show && (
+        <ErrorMessage
+          message={errorMessage.message}
+          closeMessage={setErrorMessage}
+        />
+      )}
     </div>
   );
 }

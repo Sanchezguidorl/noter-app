@@ -24,14 +24,14 @@ function NotebooksLayout({
   }, [user.logged]);
 
   if (loading) {
-    return <Loading text="Cargando sección..." />;
+    return <Loading useIcon={true} text="Cargando sección..." />;
   }
   return (
     <>
       {user.logged ? (
-        <div className="w-full">
+        <div className="w-full h-full">
           <UserLogged />
-          <div className="flex flex-col sm:flex-row w-full h-fit gap-2 sm:gap-0 justify-center items-center sm:items-start">
+          <div className="sm:flex-row w-full gap-2 sm:gap-0 justify-center items-center sm:items-start h-[92%]">
             {children}
           </div>
         </div>
