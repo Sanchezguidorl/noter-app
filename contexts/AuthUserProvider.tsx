@@ -54,7 +54,7 @@ await signOut(auth);
   };
 
 const authWithGoogle=async()=>{
-await signInWithPopup(auth,provider);
+await signInWithPopup(auth, provider);
 };
 
   useEffect(() => {
