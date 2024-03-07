@@ -4,6 +4,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
 import SaveIcon from "@mui/icons-material/Save";
 import React, { Dispatch, SetStateAction, useState } from "react";
+import { useAuthUserContext } from "@/contexts/AuthUserProvider";
 
 const emptyNotebook = {
   title: "",
@@ -31,7 +32,7 @@ function AddNotebook({
     setNotebookDataInput({ ...notebookDataInput, title: value });
   };
   const { refresh } = useGetNotebooksContext();
-
+  const {user}= useAuthUserContext();
   const closeInput = () => {
     setNotebookDataInput(emptyNotebook);
     unSelect(false);
@@ -53,13 +54,13 @@ function AddNotebook({
         `${process.env.NEXT_PUBLIC_API_URL}/api/libretas`,
         {
           method: "POST",
-          body: JSON.stringify(notebookDataInput),
+          body: JSON.stringify({...notebookDataInput, userId:user.uid}),
           cache: "no-cache",
         }
       );
       const response = await notebookSaved.json();
       if (response.success) {
-        await refresh();
+        refresh();
         closeInput();
         return;
       } else {

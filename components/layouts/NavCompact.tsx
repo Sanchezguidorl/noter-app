@@ -1,4 +1,3 @@
-import DeleteIcon from "@mui/icons-material/Delete";
 import DropDownNotesCompact from "../Buttons/DropDownNotesCompact";
 import Link from "next/link";
 import HomeIcon from "@mui/icons-material/Home";
@@ -10,7 +9,7 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
 import AssignmentIcon from '@mui/icons-material/Assignment';
 
-async function NavCompact() {
+ function NavCompact() {
   return (
 
     <div className="w-full sm:hidden px-4  py-4 bg-base">
@@ -19,7 +18,7 @@ async function NavCompact() {
         <div className="relative">
           <AddButton />
         </div>
-        <Link href={"/"}>
+        <Link href={"/principal"}>
           <PageActiveMobile icon={<HomeIcon />} currentUrl={""} />
         </Link>
           <DropDownNotesCompact icon={<DescriptionIcon fontSize="small" />} />
@@ -29,9 +28,9 @@ async function NavCompact() {
         <Link href={"/tareas"}>
           <PageActiveMobile icon={<AssignmentIcon />} currentUrl={"tareas"} />
         </Link>
-        <Link href={"/papelera"}>
+       {/* <Link href={"/papelera"}>
           <PageActiveMobile icon={<DeleteIcon />} currentUrl={"papelera"} />
-        </Link>
+  </Link>*/}
       </div>
     </div>
   );

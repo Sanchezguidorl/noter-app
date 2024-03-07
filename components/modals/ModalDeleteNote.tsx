@@ -1,6 +1,8 @@
 import { NoteI } from "@/app/db/dbMock";
 import Loading from "@/app/loading";
+import { useAuthUserContext } from "@/contexts/AuthUserProvider";
 import { Dispatch, SetStateAction, useState } from "react";
+import ErrorMessage from "../layouts/ErrorMessage";
 
 function ModalDeleteNote({
   closeModal,
@@ -15,30 +17,52 @@ function ModalDeleteNote({
 }) {
   const [successDelete, setSuccessDelete] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-
+  const [errorMessage, setErrorMessage] = useState<{
+    show: boolean;
+    message: string;
+  }>({ show: false, message: "" });
+  const {user}= useAuthUserContext();
   const handleDelete = async () => {
     setLoading(true);
-    const noteDeleted = await fetch(`/api/notas?id=${idNote}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const isDeleted: { success: boolean } = await noteDeleted.json();
+try {
+  const noteDeleted = await fetch(`/api/notas?id=${idNote}&&userId=${user.uid}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const isDeleted= await noteDeleted.json();
+  if (isDeleted.success) {
     await refreshData();
-    if (isDeleted) {
-      setLoading(false);
-      setSuccessDelete(true);
-      setTimeout(() => {
-        vacuumInput({
-          title: "",
-          content: "",
-          id: "",
-          date: Date.now(),
-        });
-        closeModal();
-      }, 2000);
-    }
+    setLoading(false);
+    setSuccessDelete(true);
+    setTimeout(() => {
+      vacuumInput({
+        title: "",
+        content: "",
+        id: "",
+        date: Date.now(),
+        userId:""
+      });
+      closeModal();
+    }, 2000);
+
+    return;
+  }else{
+    setLoading(false);
+    setTimeout(() => {
+      
+      closeModal();
+    }, 2000);
+    throw new Error(isDeleted.error.message);
+  }
+} catch (error) {
+  setErrorMessage({
+    show: true,
+    message:
+    (error as Error).message
+  });
+}
   };
 
   return (
@@ -78,6 +102,12 @@ function ModalDeleteNote({
           )}
         </div>
       </div>
+      {errorMessage.show && (
+          <ErrorMessage
+            message={errorMessage.message}
+            closeMessage={setErrorMessage}
+          />
+        )}
     </>
   );
 }

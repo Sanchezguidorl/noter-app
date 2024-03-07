@@ -9,10 +9,17 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import Link from "next/link";
 import { Dispatch, SetStateAction, useState } from "react";
 import AddNoteToNotebook from "./AddNoteToNotebook";
+import { useAuthUserContext } from "@/contexts/AuthUserProvider";
+import ErrorMessage from "@/components/layouts/ErrorMessage";
 
 function NotebookDropDown({ notebook, showNotes, setShowNotes }: { notebook: NotebookI, showNotes:boolean, setShowNotes:Dispatch<SetStateAction<string>> }) {
   const { refresh } = useGetNotebooksContext();
+  const {user}=useAuthUserContext();
   const [showModalDelete,setShowModalDelete]=useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<{
+    show: boolean;
+    message: string;
+  }>({ show: false, message: "" });
 
 const handleDeleteNoteInNotebook=async(event:React.MouseEvent,id:string)=>{
   event.preventDefault();
@@ -22,16 +29,28 @@ const handleDeleteNoteInNotebook=async(event:React.MouseEvent,id:string)=>{
     if(noteInNotebookIndex !==-1){
       notebookData.notes.splice(noteInNotebookIndex,1);
       try {
-        const deleteNoteInNotebook= await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/libretas`,{
+        const deleteNoteInNotebook= await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/libretas?userId=${user.uid}`,{
           method:"PUT", body: JSON.stringify(notebookData)
         });
-        if(deleteNoteInNotebook){
+
+
+const response= await deleteNoteInNotebook.json();
+
+        if(response.success){
           await refresh();
+        }else{
+          setErrorMessage({
+            show: true,
+            message: response.error.message,
+          });
         }
 
         return;
       } catch (error) {
-        
+            setErrorMessage({
+        show: true,
+        message: (error as Error).message,
+      });
       }
     }
 }
@@ -93,6 +112,12 @@ const refreshData=async()=>{
           </li>
         ))}
       </ul>
+      {errorMessage.show && (
+          <ErrorMessage
+            message={errorMessage.message}
+            closeMessage={setErrorMessage}
+          />
+        )}
     </div>
   );
 }

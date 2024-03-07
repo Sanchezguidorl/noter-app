@@ -1,12 +1,11 @@
 "use client";
 import Loading from "@/app/loading";
-import UserLogged from "@/components/UserLogged";
 import NavCompact from "@/components/layouts/NavCompact";
 import NavComponent from "@/components/layouts/NavComponent";
 import { useAuthUserContext } from "@/contexts/AuthUserProvider";
 import { useEffect, useState } from "react";
 
-function TasksLayout({
+function HomeLayout({
   children,
   loginUser,
 }: {
@@ -33,12 +32,7 @@ function TasksLayout({
         <div className="flex flex-col sm:flex-row h-full">
           <NavCompact />
           <NavComponent />
-          <div className="w-full relative overflow-hidden h-full">
-            <UserLogged />
-            <div className="p-4 bg-base w-full h-full overflow-auto">
               {children}
-            </div>
-          </div>
         </div>
       ) : (
         loginUser
@@ -47,4 +41,4 @@ function TasksLayout({
   );
 }
 
-export default TasksLayout;
+export default HomeLayout;

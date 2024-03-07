@@ -16,7 +16,6 @@ function Notes({ params }: ParamsInterface) {
 useEffect(()=>{
   selectId(params.id);
 },[]);
-console.log(idSelected)
 
   return (
     <>

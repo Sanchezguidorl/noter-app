@@ -20,7 +20,7 @@ function RegisterUser() {
   const [userData, setUser] = useState<UserCreateFormInputs>({
     email: "",
     password: "",
-    passwordValidation:""
+    passwordValidation: "",
   });
 
   const [errorInputs, setErrorInputs] = useState({
@@ -44,7 +44,8 @@ function RegisterUser() {
       password: { valid: validPassword, message: messagePassword },
     });
 
-    const passworRepeatValid=userData.password!==userData.passwordValidation;
+    const passworRepeatValid =
+      userData.password !== userData.passwordValidation;
 
     return validEmail && validPassword && passworRepeatValid;
   };
@@ -57,7 +58,9 @@ function RegisterUser() {
     setUser({ ...userData, password: value });
   };
 
-  const handleChangePasswordValidation = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangePasswordValidation = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const value = event.target.value;
 
     setUser({ ...userData, passwordValidation: value });
@@ -72,7 +75,7 @@ function RegisterUser() {
   const handleSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (validateInputs()) {
-      await register({email:userData.email, password:userData.password});
+      await register({ email: userData.email, password: userData.password });
     }
   };
 
@@ -89,13 +92,16 @@ function RegisterUser() {
           También puedes ingresar mediante
         </p>
         <div className="flex justify-center gap-10 my-6">
-          <div className=" aspect-square w-14 flex justify-center items-center">
+          {/**
+           <div className=" aspect-square w-14 flex justify-center items-center">
             <Image
               alt="Icono de red social Facebook"
               className="relative transition-all duration-150 cursor-pointer hover:w-20"
               src={FacebookIcon}
             ></Image>
           </div>
+   * 
+   */}
           <div className=" aspect-square w-14 flex justify-center items-center">
             <Image
               onClick={authWithGoogle}
@@ -117,7 +123,8 @@ function RegisterUser() {
             <label className="mt-8 mb-2" htmlFor="inputUser">
               Email
             </label>
-            <input required
+            <input
+              required
               onChange={handleChangeEmail}
               value={userData.email}
               className="bg-c-transparent border-b outline-none border-secondary-text"
@@ -125,13 +132,20 @@ function RegisterUser() {
               type="text"
               placeholder="Ingresa tu email"
             />
-            <p className={` text-delete-hover text-xs absolute top-full ${!errorInputs.email.valid?"visible":"invisible"}`}>{errorInputs.email.message}</p>
+            <p
+              className={` text-delete-hover text-xs absolute top-full ${
+                !errorInputs.email.valid ? "visible" : "invisible"
+              }`}
+            >
+              {errorInputs.email.message}
+            </p>
           </div>
           <div className="relative flex flex-col">
             <label className="mt-8 mb-2" htmlFor="inputPassword">
               Contraseña
             </label>
-            <input required
+            <input
+              required
               value={userData.password}
               onChange={handleChangePassword}
               className="bg-c-transparent border-b outline-none border-secondary-text"
@@ -139,21 +153,46 @@ function RegisterUser() {
               type="password"
               placeholder="Ingresa tu contraseña"
             />
-            <p className={` text-delete-hover text-xs absolute top-full ${!errorInputs.password.valid?"visible":"invisible"}`}>{errorInputs.password.message}</p>
+            <p
+              className={` text-delete-hover text-xs absolute top-full ${
+                !errorInputs.password.valid ? "visible" : "invisible"
+              }`}
+            >
+              {errorInputs.password.message}
+            </p>
           </div>
           <div className="relative flex flex-col">
             <label className="mt-8 mb-2" htmlFor="inputPasswordValidation">
               Verificar Contraseña
             </label>
-            <input required
+            <input
+              required
               className="bg-c-transparent border-b outline-none border-secondary-text"
               id="inputPasswordValidation"
               type="password"
               placeholder="Pepite tu contraseña"
               onChange={handleChangePasswordValidation}
             />
-            <p className={` text-delete-hover text-xs absolute top-full ${(userData.passwordValidation!=="") && userData.password!==userData.passwordValidation?"visible": "invisible"}`}>La contraseña debe coincidir con la ingresada</p>
-            <p className={` text-success text-xs absolute top-full ${(userData.passwordValidation!=="") && userData.password===userData.passwordValidation?"visible": "invisible"}`}>Verificado</p>
+            <p
+              className={` text-delete-hover text-xs absolute top-full ${
+                userData.passwordValidation !== "" &&
+                userData.password !== userData.passwordValidation
+                  ? "visible"
+                  : "invisible"
+              }`}
+            >
+              La contraseña debe coincidir con la ingresada
+            </p>
+            <p
+              className={` text-success text-xs absolute top-full ${
+                userData.passwordValidation !== "" &&
+                userData.password === userData.passwordValidation
+                  ? "visible"
+                  : "invisible"
+              }`}
+            >
+              Verificado
+            </p>
           </div>
           <input
             type="submit"

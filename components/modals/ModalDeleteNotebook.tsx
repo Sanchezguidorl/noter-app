@@ -1,5 +1,7 @@
 import Loading from "@/app/loading";
+import { useAuthUserContext } from "@/contexts/AuthUserProvider";
 import { useState } from "react";
+import ErrorMessage from "../layouts/ErrorMessage";
 
 function ModalDeleteNotebook({
   closeModalDelete,
@@ -14,24 +16,46 @@ function ModalDeleteNotebook({
 }) {
   const [successDelete, setSuccessDelete] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const {user}=useAuthUserContext();
+  const [errorMessage, setErrorMessage] = useState<{
+    show: boolean;
+    message: string;
+  }>({ show: false, message: "" });
 
   const handleDelete = async () => {
-    setLoading(true);
-    const notebookDeleted = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/libretas?id=${idNotebook}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const isDeleted: { success: boolean } = await notebookDeleted.json();
+try {
+  setLoading(true);
+  const notebookDeleted = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/libretas?id=${idNotebook}&&userId=${user.uid}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const isDeleted = await notebookDeleted.json();
+  if (isDeleted.success) {
     await refreshData();
-    if (isDeleted) {
-      setLoading(false);
-      setSuccessDelete(true);
-      setTimeout(() => {
-        closeModalDelete();
-      }, 2000);
-    }
+    setLoading(false);
+    setSuccessDelete(true);
+    setTimeout(() => {
+      closeModalDelete();
+    }, 2000);
+  }else{
+
+
+    setLoading(false);
+    
+    throw new Error(isDeleted.error.message);
+  }
+} catch (error) {
+  setErrorMessage({
+    show: true,
+    message:
+    (error as Error).message
+  });
+  setTimeout(() => {
+    closeModalDelete();
+  }, 2000);
+}
   };
 
   return (
@@ -70,6 +94,12 @@ function ModalDeleteNotebook({
             </>
           )}
         </div>
+        {errorMessage.show && (
+          <ErrorMessage
+            message={errorMessage.message}
+            closeMessage={setErrorMessage}
+          />
+        )}
       </div>
     </>
   );

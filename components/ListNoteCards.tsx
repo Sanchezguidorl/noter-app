@@ -8,9 +8,6 @@ function ListNoteCards() {
 
   const getData=async()=>{
     const freshData=await refreshData();
-    if(freshData){
-      return;
-    }
   }
 
   return (

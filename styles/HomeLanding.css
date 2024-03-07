@@ -1,0 +1,59 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
+#HomeLanding{
+    background: url("/bg-landing.webp");
+    background-position:center center;
+    background-size:cover;
+    background-attachment:fixed;
+}
+
+#HomeLanding h1{
+    text-shadow: 4px 5px 4px #5E35B155;
+}
+
+.text-clip-style{
+    color:rgb(23, 0, 44, 0.5);
+    background:url("/text-clip.webp");
+    background-size:cover;
+    background-clip: text;
+}
+
+.p-benefits{ 
+    font-family: "Permanent Marker", cursive;
+    letter-spacing: 2px;
+    border-radius: 47px 40px 78px 17px / 0px 2px 26px 136px;
+    background-color: #F6EA91;
+    backdrop-filter: blur(2px);
+    box-shadow: 0px 0px 16px 0px rgb(70, 70, 70);
+}
+
+.p-benefits:hover{
+    box-shadow: 0px 0px 16px 0px rgb(99, 99, 99);
+}
+    
+    .overlay-p-note{
+        box-shadow: inset 0px 0px 6px 1px rgba(126, 75, 0, 0.815);
+        padding:20px;
+        border-radius: 47px 40px 78px 17px / 0px 2px 26px 136px;
+    }
+
+.bg-blur{
+    backdrop-filter: blur(10px);
+}
+
+#HomeLanding a{
+    font-family: "Permanent Marker", cursive;
+    letter-spacing: 8px;
+}
+.link-start:hover{
+transform: scale(1.1);
+}
+
+.shadow-drop{
+    filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.7));
+}
+
+.shadow-drop-hover{
+    filter: drop-shadow(0px 5px 18px rgba(0, 0, 0, 0.7));
+}

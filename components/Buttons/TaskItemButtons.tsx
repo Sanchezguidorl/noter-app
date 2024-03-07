@@ -7,6 +7,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import { TasksI } from "@/app/db/dbMock";
 import { useGetTasksContext } from "@/contexts/GetTasksContext";
 import ModalDeleteTask from "../modals/ModalDeleteTask";
+import { useAuthUserContext } from "@/contexts/AuthUserProvider";
 
 function TaskItemButtons({
   isExpired,
@@ -28,7 +29,7 @@ function TaskItemButtons({
 }) {
   const { refreshData } = useGetTasksContext();
   const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
-
+  const {user}=useAuthUserContext();
   const closeModal = () => {
     setShowModalDelete(false);
   };
@@ -40,7 +41,7 @@ function TaskItemButtons({
     }
     try {
       const successTask = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/tareas`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/tareas?userId=${user.uid}`,
         {
           method: "PUT",
           headers: {
@@ -73,7 +74,7 @@ if(response.success){
     }
     try {
       const successTask = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/tareas`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/tareas?userId=${user.uid}`,
         {
           method: "PUT",
           headers: {
@@ -83,8 +84,22 @@ if(response.success){
         }
       );
 
-      await refreshData();
-    } catch (error) {}
+      const response=await successTask.json();
+
+      if(response.success){
+        await refreshData();
+      }else{
+        throw new Error(response.error.message);
+      }
+
+    } catch (error) {
+
+      setErrorMessage({
+        show: true,
+        message:
+        (error as Error).message
+      });
+    }
   };
 
   const switchEdit = (bool: boolean, event: React.MouseEvent) => {

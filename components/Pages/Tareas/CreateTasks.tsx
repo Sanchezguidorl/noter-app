@@ -3,6 +3,7 @@ import { useGetTasksContext } from "@/contexts/GetTasksContext";
 import { Dispatch, SetStateAction, useState, useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import ErrorMessage from "@/components/layouts/ErrorMessage";
+import { useAuthUserContext } from "@/contexts/AuthUserProvider";
 function CreateTasks({
   selected,
   unselect,
@@ -14,10 +15,12 @@ function CreateTasks({
     toDo: string;
     limitDate: number;
     done: boolean;
+    userId: string;
   }>({
     toDo: "",
     limitDate: 0,
     done: false,
+    userId:""
   });
   const [errorInputs, setErrorInputs] = useState({
     toDo: { valid: false },
@@ -28,6 +31,7 @@ function CreateTasks({
     show: boolean;
     message: string;
   }>({ show: false, message: "" });
+  const {user}= useAuthUserContext();
 
   useEffect(() => {
     if (newTask.toDo.length > 20 && newTask.toDo.length <= 200) {
@@ -39,14 +43,12 @@ function CreateTasks({
 
   useEffect(() => {
     if (newTask.limitDate > Date.now()) {
-      console.log("en if");
       setErrorInputs({ ...errorInputs, limitDate: { valid: true } });
     } else {
       setErrorInputs({ ...errorInputs, limitDate: { valid: false } });
     }
   }, [newTask.limitDate]);
 
-  console.log(errorInputs.limitDate.valid);
   const handleChangeDate = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewTask({ ...newTask, limitDate: event.target.valueAsNumber });
   };
@@ -68,13 +70,13 @@ function CreateTasks({
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(newTask),
+          body: JSON.stringify({...newTask, userId:user.uid}),
         }
       );
 
 const response= await createTask.json();
       
-      if (response.succcess) {
+      if (response.success) {
         const refresh = await refreshData();
         unselect(false);
       } else {

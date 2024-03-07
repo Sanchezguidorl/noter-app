@@ -38,7 +38,7 @@ function TaskListItem({ task }: { task: TasksI }) {
   return (
     <div
       onClick={() => setIsActive(!isActive)}
-      className={`p-4 pt-8 ${bgByLimitDate()} rounded-lg mt-3 relative cursor-pointer`}
+      className={`p-4 pt-8 transition-all duration-300 ${bgByLimitDate()} rounded-lg mt-3 relative cursor-pointer`}
     >
       <div className="flex items-center justify-between">
           {editTask ? (
@@ -50,7 +50,7 @@ function TaskListItem({ task }: { task: TasksI }) {
             >
               {task.toDo}
             </textarea>
-            <p className={`text-delete-hover text-xs abslute top-full ${inputData.length===0?"visible":"invisible"}`}>La tarea no puede estar vacía</p>
+            <p className={`text-delete-hover text-xs abslute top-full ${inputData.length===0?"visible":"invisible"}`}>La tarea no debe estar vacía</p>
             <p className={`text-delete-hover text-xs abslute top-full ${inputData.length<20?"visible":"invisible"}`}>La tarea debe tener un mínimo de 20 dígitos</p>
             </div>
           ) : (

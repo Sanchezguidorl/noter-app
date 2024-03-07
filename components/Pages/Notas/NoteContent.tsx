@@ -7,14 +7,17 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ModalDeleteNote from "@/components/modals/ModalDeleteNote";
 import { useGetNotesContext } from "@/contexts/GetNotesProvider";
 import ErrorMessage from "@/components/layouts/ErrorMessage";
+import { useAuthUserContext } from "@/contexts/AuthUserProvider";
 
 function NoteContent({ id }: { id: string }) {
+  const {user}= useAuthUserContext();
   const { notesData, refreshData } = useGetNotesContext();
   const [noteData, setNoteData] = useState<NoteI>({
     title: "",
     content: "",
     id: "",
     date: Date.now(),
+    userId:""
   });
   const [errorInputs, setErrorInputs] = useState({
     title: { valid: false },
@@ -38,6 +41,7 @@ function NoteContent({ id }: { id: string }) {
           content: noteSelected.content,
           id: noteSelected.id,
           date: noteSelected.date,
+          userId:noteSelected.userId
         });
         setErrorInputs({
           title: { valid: true },
@@ -49,6 +53,7 @@ function NoteContent({ id }: { id: string }) {
           content: "",
           id: "",
           date: Date.now(),
+          userId:""
         });
       }
     }
@@ -122,7 +127,7 @@ function NoteContent({ id }: { id: string }) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(noteData),
+          body: JSON.stringify({...noteData, userId:user.uid}),
         }
       );
 
@@ -160,9 +165,8 @@ function NoteContent({ id }: { id: string }) {
     }
 
     setLoading(true);
-
       const updatedNote = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/notas`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/notas?userId=${user.uid}`,
         {
           method: "PUT",
           headers: {
@@ -298,6 +302,7 @@ const response=await updatedNote.json();
             content: "",
             id: "",
             date: Date.now(),
+            userId:""
           });}}
           idNote={noteData.id}
         />

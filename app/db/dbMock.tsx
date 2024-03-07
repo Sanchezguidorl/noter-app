@@ -7,7 +7,7 @@ import { ReactNode } from "react"
   }
 
 export interface NoteI{
-  title: string, id: string,date:number, content:string
+  title: string, id: string,date:number, content:string, userId:string
 }
 
  export interface NotebookDataI{
@@ -20,11 +20,11 @@ export interface NoteI{
   }
   
   export interface TasksI{
-    id:string, toDo:string, limitDate:number, done:boolean 
+    id:string, toDo:string, limitDate:number, done:boolean , userId:string
   }
 
   export interface NotebookI{
-    title:string, notes:{id:string, title:string}[], id:string
+    title:string, notes:{id:string, title:string}[], id:string, userId:string
   }
 
   export interface UserCreateAndLoginFormInputs {

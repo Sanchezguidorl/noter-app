@@ -1,5 +1,7 @@
 import Loading from "@/app/loading";
 import { useState } from "react";
+import ErrorMessage from "../layouts/ErrorMessage";
+import { useAuthUserContext } from "@/contexts/AuthUserProvider";
 
 function ModalDeleteTask({
   closeModalDelete,
@@ -11,21 +13,43 @@ function ModalDeleteTask({
   idTask: string;
 }) {
   const [successDelete, setSuccessDelete] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<{
+    show: boolean;
+    message: string;
+  }>({ show: false, message: "" });
   const [loading, setLoading] = useState<boolean>(false);
+  const {user}= useAuthUserContext();
 
   const handleDelete = async () => {
-    setLoading(true);
-    const taskDeleted = await fetch(`/api/tareas?id=${idTask}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const isDeleted: { success: boolean } = await taskDeleted.json();
-    await refreshData();
-    if (isDeleted) {
+
+    try {
+      setLoading(true);
+      const taskDeleted = await fetch(`/api/tareas?id=${idTask}&&userId=${user.uid}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const isDeleted = await taskDeleted.json();
+      if (isDeleted.success) {
+        setSuccessDelete(true);
+        await refreshData();
+        setLoading(false);
+        setTimeout(() => {
+          closeModalDelete();
+        }, 2500);
+      }else{
+          throw new Error("La tarea no pudo ser eliminada. Por favor, verifica la solicitud.")
+        }
+    } catch (error) {
+      
+      setErrorMessage({
+        show: true,
+        message:
+        (error as Error).message
+      });
+    
       setLoading(false);
-      setSuccessDelete(true);
       setTimeout(() => {
         closeModalDelete();
       }, 2000);
@@ -68,6 +92,12 @@ function ModalDeleteTask({
             </>
           )}
         </div>
+        {errorMessage.show && (
+        <ErrorMessage
+          message={errorMessage.message}
+          closeMessage={setErrorMessage}
+        />
+      )}
       </div>
     </>
   );

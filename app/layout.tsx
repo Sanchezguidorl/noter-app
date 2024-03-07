@@ -25,11 +25,7 @@ export default function RootLayout({
         <AuthUserProvider>
           <GetNotebooksProvider>
             <GetNotesProvider>
-              <div className="flex flex-col sm:flex-row h-full">
-                <NavCompact />
-                <NavComponent />
                 {children}
-              </div>
             </GetNotesProvider>
           </GetNotebooksProvider>
         </AuthUserProvider>
