@@ -32,9 +32,9 @@ if (loading) {
    <p className='text-3xl sm:text-6xl text-center'>
    ¿Estás perdido?
    </p>
-    <Link href={'/'} className='flex- items-center w-full pt-10'>
+    <Link href={'/principal'} className='flex- items-center w-full pt-10'>
 <div className=' p-3 px-8 bg-primary-buttons text-white w-fit mx-auto flex items-center gap-1 uppercase hover:brightness-125 hover:scale-110 transition-all duration-200 rounded-md hover:rounded-xl '>
-
+{""}
     <p className='w-fit'>Volver a</p>
     <HomeIcon/>
 </div>

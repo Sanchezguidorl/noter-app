@@ -1,18 +1,41 @@
 import AuthUserProvider from "@/contexts/AuthUserProvider";
 import "./globals.css";
-import NavCompact from "@/components/layouts/NavCompact";
-import NavComponent from "@/components/layouts/NavComponent";
 import GetNotesProvider from "@/contexts/GetNotesProvider";
 import GetNotebooksProvider from "@/contexts/GetNotebooksProvider";
-import { Metadata } from "next";
 import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
 
+
+interface Metadata {
+  title: string;
+  description: string;
+  tags?: string[];
+}
+
 export const metadata: Metadata = {
   title: 'Noter',
-  description: 'Tu app de notas gratuita favorita',
-}
+  description: 'Tu app de notas gratuita favorita para tomar notas, organizarlas y ser más productivo. Sincroniza tus notas en la nube, usa etiquetas, crea listas y recordatorios, y comparte tus ideas con otros. Ideal para estudiantes, profesionales, universitarios, emprendedores y freelancers.',
+  tags: [
+    '#notas',
+    '#notasgratis',
+    '#appnotas',
+    '#tomarnotas',
+    '#organizarnotas',
+    '#productividad',
+    '#herramientasdeestudio',
+    '#appsgratis',
+    '#sincronizacionennube',
+    '#etiquetas',
+    '#listas',
+    '#recordatorios',
+    '#estudiantes',
+    '#profesionales',
+    '#universitarios',
+    '#emprendedores',
+    '#freelancers',
+  ],
+};
 
 export default function RootLayout({
   children,
