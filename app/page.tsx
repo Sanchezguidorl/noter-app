@@ -1,66 +1,95 @@
 import Image from "next/image";
 import "../styles/HomeLanding.css";
-import ClipImg from "/public/clip-img.webp";
-import StartLinkButton from "@/components/Buttons/StartLinkButton";
-
+import PresentationImg from "/public/bg-presentation.webp";
+import BgStartImage from "/public/bg-start-section.webp";
+import SignalCellularConnectedNoInternet0BarIcon from "@mui/icons-material/SignalCellularConnectedNoInternet0Bar";
+import AddTaskIcon from "@mui/icons-material/AddTask";
+import SubjectIcon from "@mui/icons-material/Subject";
+import Link from "next/link";
 function Home() {
   return (
-    <div id="HomeLanding" className="">
-      <div className="min-h-96 flex flex-col justify-center bg-blur p-6 relative arise-animation">
-        <h1 className=" text-center text-5xl font-bold text-clip-style uppercase flex flex-col">
-          <strong className="mb-2">
-            <i className="text-7xl">Noter</i>app{" "}
-          </strong>
-          Toma notas con estilo y facilidad
-        </h1>
-        <div className="absolute -top-10 -left-10 sm:-top-14 aspect-square w-40 sm:w-60 rotate-45 sm:-left-16">
-          <Image src={ClipImg} alt="Clip de notas" />
+    <div className=" bg-white ">
+      <div className="h-96 sm:h-[600px] overflow-hidden relative flex justify-center arise-animation">
+        <div className="absolute top-10 sm:top-20 sm:left-20 w-[90%] sm:w-1/2 presentation-banner p-10 z-10">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
+            La herramienta perfecta para tomar apuntes, crear listas y mantener
+            tus tareas en orden
+          </h1>
+          <h2 className=" text-primary text-md sm:text-xl mt-3 sm:mt-6 opacity-75 ">
+            Organiza tu vida con Noter
+          </h2>
+        </div>
+        <Image
+          src={PresentationImg}
+          className=" object-cover saturate-50"
+          alt="Imagen de cuaderno de notas"
+        />
+      </div>
+      <div className=" bg-white relative px-10 word-spacing overflow-hidden arise-animation">
+        <div className="px-8 flex justify-center sm:justify-start pt-20">
+          <p className=" text-2xl sm:text-3xl md:text-4xl lg:text-5xl opacity-75 text-primary  w-full sm:w-2/3 md:w-1/2 p-6">
+            Estamos comprometidos a promover el desarrollo personal y el estudio
+            en todos los estratos de la sociedad
+          </p>
+        </div>
+        <div className="p-8  flex justify-center sm:justify-end pt-20">
+          <p className=" text-2xl sm:text-3xl md:text-4xl lg:text-5xl opacity-75 text-primary w-full sm:w-2/3 md:w-1/2 p-6">
+            Por tal motivo, hemos creado esta herramienta gratuita y accesible
+          </p>
+        </div>
+        <div className="py-10 mt-10 w-full flex flex-col sm:flex-row justify-center gap-8 md:gap-14 lg:gap-24 text-primary">
+          <div className="benefitCard p-8 rounded-3xl flex-1 flex flex-col items-center gap-5  ">
+            <SignalCellularConnectedNoInternet0BarIcon className="text-7xl opacity-75" />
+            <p className="opacity-75 text-center sm:text-lg md:text-xl font-semibold">
+              Accede a tus notas en cualquier lugar sin preocuparte por la
+              clidad de conexión
+            </p>
+          </div>
+          <div className="benefitCard p-8 rounded-3xl flex-1 flex flex-col items-center gap-5">
+            <AddTaskIcon className="text-7xl opacity-75" />
+            <p className="opacity-75 text-center sm:text-lg md:text-xl font-semibold">
+              Agrega tareas con fechas límite y márclas cuando las completes con
+              un simple clck
+            </p>
+          </div>
+          <div className="benefitCard p-8 rounded-3xl flex-1 flex flex-col items-center gap-5">
+            <SubjectIcon className="text-7xl opacity-75" />
+            <p className="opacity-75 text-center sm:text-lg md:text-xl font-semibold">
+              Optimiza tu tiempo y ahorra papel al tomar notas digitalmente
+            </p>
+          </div>
+        </div>
+        <div className="absolute top-0 left-0 w-full h-full">
+          <div className="relative h-full w-full bubles-animation">
+            <div className="rounded-full aspect-square absolute top-10 bg-primary-buttons w-10 opacity-30"></div>
+            <div className="rounded-full aspect-square absolute top-20 bg-primary-buttons w-20 opacity-30 left-1/2"></div>
+            <div className="rounded-full aspect-square absolute top-60 bg-primary-buttons w-40 opacity-30 left-3/4"></div>
+            <div className="rounded-full aspect-square absolute top-1/2 bg-primary-buttons w-40 opacity-30 left-1/4"></div>
+            <div className="rounded-full aspect-square absolute top-1/2 bg-primary-buttons w-1/4 opacity-30 left-3/4"></div>
+            <div className="rounded-full aspect-square absolute -bottom-20 bg-primary-buttons w-40 opacity-30 left-2/4"></div>
+          </div>
         </div>
       </div>
-      <section className="text-black uppercase text-sm sm:max-w-[800px] mx-auto px-6">
-        <div className="my-10 w-full select-none hover:scale-110 transition-all duration-200">
-          <div className="w-full sm:w-2/3 md:w-1/2 p-benefits relative arise-animation">
-            <div className="absolute -top-2 aspect-square w-14 -left-5">
-              <Image src={ClipImg} alt="Clip de notas" />
-            </div>
-            <p className=" overlay-p-note ">
-              Explora la simplicidad de capturar y organizar tus ideas de manera
-              ágil. Disfruta de una experiencia sin complicaciones al escribir y
-              guarda al instante todos tus pensamientos. Simplifica tu proceso
-              creativo y mantén tus ideas al alcance de tus manos de manera
-              eficiente.
-            </p>
+      <div className="relative arise-animation">
+        <Image
+          src={BgStartImage}
+          alt="Imagen de fondo de mesa de estudio con artículos de estudio"
+          className=" saturate-50"
+        />
+        <div className="absolute top-0 text-center presentation-banner w-1/2 h-full left-1/2 flex flex-col justify-center items-center">
+          <p className="text-xl sm:text-4xl md:text-4xl lg:text-5xl p-3 opacity-75 text-primary word-spacing font-semibold font-permanent">
+            Moderniza tu manera de estudiar y aumenta tu productividad
+          </p>
+          <div className="w-full sm:p-10 flex justify-center">
+            <Link
+              href={"/principal"}
+              className="gradient-start-button px-6 py-3 sm:px-10 sm:py-6 text-md sm:text-xl rounded-2xl text-white "
+            >
+              Empezar
+            </Link>
           </div>
         </div>
-        <div className="my-10 w-full select-none hover:scale-110 transition-all duration-200 flex justify-end">
-          <div className="w-full sm:w-2/3 md:w-1/2 p-benefits relative arise-animation">
-            <div className="absolute -top-2 aspect-square w-14 -left-5">
-              <Image src={ClipImg} alt="Clip de notas" />
-            </div>
-            <p className=" overlay-p-note">
-              Aumenta tu eficiencia y logra más al planificar y asignar fechas
-              de vencimiento a tus tareas esenciales. Con nuestra aplicación,
-              asegúrate de no dejar nada sin hacer y maximiza tu productividad.
-              Programa tus actividades de manera intuitiva para mantener un
-              control efectivo de tus responsabilidades diarias. ¡Haz que cada
-              momento cuente y alcanza tus objetivos sin esfuerzo!
-            </p>
-          </div>
-        </div>
-        <div className="my-10 w-full select-none hover:scale-110 transition-all duration-200">
-          <div className="w-full sm:w-2/3 md:w-1/2 p-benefits relative arise-animation">
-            <div className="absolute -top-2 aspect-square w-14 -left-5">
-              <Image src={ClipImg} alt="Clip de notas" />
-            </div>
-            <p className=" overlay-p-note">
-              Optimiza tu organización personal al clasificar tus notas con
-              nuestro sistema de libretas. Organiza tus ideas por temática para
-              un acceso rápido y una experiencia sin complicaciones
-            </p>
-          </div>
-        </div>
-      </section>
-      <StartLinkButton />
+      </div>
     </div>
   );
 }

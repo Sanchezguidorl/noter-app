@@ -1,60 +1,62 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 
-#HomeLanding{
-    background: url("/bg-landing.webp");
-    background-position:center center;
-    background-size:cover;
-    background-attachment:fixed;
+
+.presentation-banner{
+    background-color:#ffffff44;
+    backdrop-filter: blur(6px);
+    color: #1a024a74;
+    box-shadow: 0px 5px 4px #15141955;
+    font-weight: bold;
+
 }
 
-#HomeLanding h1{
-    text-shadow: 4px 5px 4px #5E35B155;
+.word-spacing{
+    word-spacing: 5px;
 }
 
-.text-clip-style{
-    color:rgba(255, 255, 255, 0.3);
-    background:url("/text-clip.webp");
-    background-size:cover;
-    background-clip: text;
+.benefitCard{
+    background-color: #0b23a948;
 }
 
-.p-benefits{ 
-    font-family: "Permanent Marker", cursive;
-    letter-spacing: 2px;
-    border-radius: 47px 40px 78px 17px / 0px 2px 26px 136px;
-    background-color: #F6EA91;
-    backdrop-filter: blur(2px);
-    box-shadow: 0px 0px 16px 0px rgb(70, 70, 70);
+
+@keyframes ariseBublesAnimation {
+    from {
+        opacity: 0;
+        transform: scale(0.2);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
 }
 
-.p-benefits:hover{
-    box-shadow: 0px 0px 16px 0px rgba(99, 99, 99, 0.315);
-}
-    
-    .overlay-p-note{
-        box-shadow: inset 0px 0px 6px 1px rgba(126, 75, 0, 0.815);
-        padding:20px;
-        border-radius: 47px 40px 78px 17px / 0px 2px 26px 136px;
-    }
 
-.bg-blur{
-    background-color: rgba(240, 248, 255, 0.425);
-    backdrop-filter: blur(10px);
+.bubles-animation{
+    animation-name: ariseBublesAnimation;
+    animation-duration: 2s; 
+    animation-timing-function: ease;
+    animation-fill-mode: both;
 }
 
-#HomeLanding a{
-    font-family: "Permanent Marker", cursive;
-    letter-spacing: 8px;
+.gradient-start-button{
+    background: linear-gradient(180deg,#707CE7 0%, #512C6D 100%);
+    opacity:0.6;
+    transition:opacity 1s ease;
 }
-.link-start:hover{
-transform: scale(1.1);
-}
-
-.shadow-drop{
-    filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.7));
+.gradient-start-button:hover{
+    opacity:1;
 }
 
-.shadow-drop-hover{
-    filter: drop-shadow(0px 5px 18px rgba(0, 0, 0, 0.7));
+.arise-animation{
+animation: ariseAnimation 1s forwards;
+}
+
+@keyframes ariseAnimation {
+    from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
 }
