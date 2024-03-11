@@ -20,6 +20,7 @@ function Home() {
           </h2>
         </div>
         <Image
+          placeholder="blur"
           src={PresentationImg}
           className=" object-cover saturate-50"
           alt="Imagen de cuaderno de notas"
@@ -72,6 +73,7 @@ function Home() {
       </div>
       <div className="relative arise-animation">
         <Image
+          placeholder="blur"
           src={BgStartImage}
           alt="Imagen de fondo de mesa de estudio con artículos de estudio"
           className=" saturate-50"

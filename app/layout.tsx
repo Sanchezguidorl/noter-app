@@ -2,10 +2,6 @@ import AuthUserProvider from "@/contexts/AuthUserProvider";
 import "./globals.css";
 import GetNotesProvider from "@/contexts/GetNotesProvider";
 import GetNotebooksProvider from "@/contexts/GetNotebooksProvider";
-import { Inter } from 'next/font/google'
-
-const inter = Inter({ subsets: ['latin'] })
-
 
 interface Metadata {
   title: string;
@@ -44,7 +40,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body className={inter.className}> 
+      <body> 
         <AuthUserProvider>
           <GetNotebooksProvider>
             <GetNotesProvider>
