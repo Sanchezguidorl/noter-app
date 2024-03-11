@@ -3,6 +3,8 @@ import Loading from "@/app/loading";
 import NavCompact from "@/components/layouts/NavCompact";
 import NavComponent from "@/components/layouts/NavComponent";
 import { useAuthUserContext } from "@/contexts/AuthUserProvider";
+import GetNotebooksProvider from "@/contexts/GetNotebooksProvider";
+import GetNotesProvider from "@/contexts/GetNotesProvider";
 import { useEffect, useState } from "react";
 
 function HomeLayout({
@@ -29,11 +31,15 @@ function HomeLayout({
   return (
     <>
       {user.logged ? (
-        <div className="flex flex-col sm:flex-row h-full">
-          <NavCompact />
-          <NavComponent />
+        <GetNotebooksProvider>
+          <GetNotesProvider>
+            <div className="flex flex-col sm:flex-row h-full">
+              <NavCompact />
+              <NavComponent />
               {children}
-        </div>
+            </div>
+          </GetNotesProvider>
+        </GetNotebooksProvider>
       ) : (
         loginUser
       )}

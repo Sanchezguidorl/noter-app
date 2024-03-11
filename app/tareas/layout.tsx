@@ -4,6 +4,8 @@ import UserLogged from "@/components/UserLogged";
 import NavCompact from "@/components/layouts/NavCompact";
 import NavComponent from "@/components/layouts/NavComponent";
 import { useAuthUserContext } from "@/contexts/AuthUserProvider";
+import GetNotebooksProvider from "@/contexts/GetNotebooksProvider";
+import GetNotesProvider from "@/contexts/GetNotesProvider";
 import { useEffect, useState } from "react";
 
 function TasksLayout({
@@ -30,16 +32,20 @@ function TasksLayout({
   return (
     <>
       {user.logged ? (
-        <div className="flex flex-col sm:flex-row h-full">
-          <NavCompact />
-          <NavComponent />
-          <div className="w-full relative overflow-hidden h-full">
-            <UserLogged />
-            <div className="p-4 bg-base w-full h-full overflow-auto">
-              {children}
+        <GetNotebooksProvider>
+          <GetNotesProvider>
+            <div className="flex flex-col sm:flex-row h-full">
+              <NavCompact />
+              <NavComponent />
+              <div className="w-full relative overflow-hidden h-full">
+                <UserLogged />
+                <div className="p-4 bg-base w-full h-full overflow-auto">
+                  {children}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </GetNotesProvider>
+        </GetNotebooksProvider>
       ) : (
         loginUser
       )}

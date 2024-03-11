@@ -42,11 +42,7 @@ export default function RootLayout({
     <html lang="es">
       <body> 
         <AuthUserProvider>
-          <GetNotebooksProvider>
-            <GetNotesProvider>
                 {children}
-            </GetNotesProvider>
-          </GetNotebooksProvider>
         </AuthUserProvider>
       </body>
     </html>

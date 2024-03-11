@@ -5,6 +5,8 @@ import UserLogged from "@/components/UserLogged";
 import NavCompact from "@/components/layouts/NavCompact";
 import NavComponent from "@/components/layouts/NavComponent";
 import { useAuthUserContext } from "@/contexts/AuthUserProvider";
+import GetNotebooksProvider from "@/contexts/GetNotebooksProvider";
+import GetNotesProvider from "@/contexts/GetNotesProvider";
 import { useEffect, useState } from "react";
 
 function NotebooksLayout({
@@ -31,16 +33,20 @@ function NotebooksLayout({
   return (
     <>
       {user.logged ? (
-        <div className="flex flex-col sm:flex-row h-full">
-          <NavCompact />
-          <NavComponent />
-          <div className="w-full h-full">
-            <UserLogged />
-            <div className="sm:flex-row w-full gap-2 sm:gap-0 justify-center items-center sm:items-start h-[92%]">
-              {children}
+        <GetNotebooksProvider>
+          <GetNotesProvider>
+            <div className="flex flex-col sm:flex-row h-full">
+              <NavCompact />
+              <NavComponent />
+              <div className="w-full h-full">
+                <UserLogged />
+                <div className="sm:flex-row w-full gap-2 sm:gap-0 justify-center items-center sm:items-start h-[92%]">
+                  {children}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </GetNotesProvider>
+        </GetNotebooksProvider>
       ) : (
         loginUser
       )}
