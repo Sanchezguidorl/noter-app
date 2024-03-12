@@ -33,22 +33,14 @@ function NoteLayout({
   return (
     <>
       {user.logged ? (
-        <GetNotebooksProvider>
-          <GetNotesProvider>
-            <SelectNotesProvider>
-              <div className="flex flex-col sm:flex-row h-full">
-                <NavCompact />
-                <NavComponent />
-                <div className="w-full">
-                  <UserLogged />
-                  <div className="flex flex-col sm:flex-row w-full h-fit gap-2 sm:gap-0 justify-center items-center sm:items-start bg-base">
-                    {children}
-                  </div>
-                </div>
-              </div>
-            </SelectNotesProvider>
-          </GetNotesProvider>
-        </GetNotebooksProvider>
+        <SelectNotesProvider>
+          <div className="w-full">
+            <UserLogged />
+            <div className="flex flex-col sm:flex-row w-full h-fit gap-2 sm:gap-0 justify-center items-center sm:items-start bg-base">
+              {children}
+            </div>
+          </div>
+        </SelectNotesProvider>
       ) : (
         loginUser
       )}

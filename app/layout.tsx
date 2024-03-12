@@ -2,6 +2,8 @@ import AuthUserProvider from "@/contexts/AuthUserProvider";
 import "./globals.css";
 import GetNotesProvider from "@/contexts/GetNotesProvider";
 import GetNotebooksProvider from "@/contexts/GetNotebooksProvider";
+import NavCompact from "@/components/layouts/NavCompact";
+import NavComponent from "@/components/layouts/NavComponent";
 
 interface Metadata {
   title: string;
@@ -42,7 +44,15 @@ export default function RootLayout({
     <html lang="es">
       <body> 
         <AuthUserProvider>
+        <GetNotebooksProvider>
+          <GetNotesProvider>
+          <div className="flex flex-col sm:flex-row h-full">
+              <NavCompact />
+              <NavComponent />
                 {children}
+                </div>
+          </GetNotesProvider>
+                </GetNotebooksProvider>
         </AuthUserProvider>
       </body>
     </html>
