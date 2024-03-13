@@ -18,7 +18,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
         <div className="relative">
           <AddButton />
         </div>
-        <Link href={"/principal"}>
+        <Link href={"/"}>
           <PageActiveMobile icon={<HomeIcon />} currentUrl={""} />
         </Link>
           <DropDownNotesCompact icon={<DescriptionIcon fontSize="small" />} />

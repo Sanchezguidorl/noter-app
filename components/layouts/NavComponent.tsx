@@ -17,7 +17,7 @@ import SearchDataInput from "./SearchDataInput";
       </div>
       <nav>
         <ul className=" text-secondary-text">
-          <Link href={"/principal"} className="">
+          <Link href={"/"} className="">
             <li className="h-10 flex items-center gap-1 hover:bg-primary  pl-6 cursor-pointer uppercase">
               <HomeIcon /> Inicio
             </li>
