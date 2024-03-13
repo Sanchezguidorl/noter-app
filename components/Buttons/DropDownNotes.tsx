@@ -50,12 +50,12 @@ function DropDownNotes({ icon }: {icon:ReactNode}) {
         </li>
         {notesData.length > 0 ? (
           notesData.map((note: NoteI) => (
-            <Link href={`/notas/${note.id}`} key={note.id}>
-              <li className="px-2 py-1 text-xxs hover:brightness-125 cursor-pointer uppercase text-nowrap text-ellipsis overflow-hidden">
+            <li className="px-2 py-1 text-xxs hover:brightness-125 cursor-pointer uppercase text-nowrap text-ellipsis overflow-hidden" key={note.id}>
+                <Link href={`/notas/${note.id}`} className="w-full">
                 <LibraryBooksIcon fontSize="small" />
                 {note.title}
-              </li>
             </Link>
+              </li>
           ))
         ) : (
           <></>

@@ -43,9 +43,11 @@ if(active){
         </li>
         {notesData.length > 0 &&
           notesData.map((note) => (
-            <Link key={note.id} href={`/notas/${note.id}`}>
-              <li className=" uppercase mt-1 border-t-2 py-1 border-secondary-text hover:bg-secondary-text hover:text-primary">{note.title.length>20?note.title.slice(0,20)+" ...":note.title}</li>
+            <li className=" uppercase mt-1 border-t-2 py-1 border-secondary-text hover:bg-secondary-text hover:text-primary" key={note.id}>
+                <Link className="w-full" href={`/notas/${note.id}`}>
+                {note.title.length>20?note.title.slice(0,20)+" ...":note.title}
             </Link>
+                </li>
           ))}
       </ul>
       </div>

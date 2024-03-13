@@ -32,16 +32,16 @@ function AddButtonDropDown() {
       </div>
       <div ref={dropDownRef} className={`absolute overflow-hidden top-0 text-secondary-text left-full uppercase bg-black z-20 transition-all duration-200 rounded-md rounded-l-none ${showOptions ? 'max-w-48' : 'max-w-0'}`}>
         <ul>
-          <Link href={'/notas/agregar' } onClick={() => setShowOptions(false)}>
             <li className='py-1 px-2 hover:text-white text-nowrap'>
+          <Link href={'/notas/agregar' } className='w-full' onClick={() => setShowOptions(false)}>
               <AddIcon /> Nota
-            </li>
           </Link>
-          <Link href={'/tareas'} onClick={() => setShowOptions(false)}>
+            </li>
             <li className='py-1 px-2 hover:text-white text-nowrap'>
+          <Link href={'/tareas'} className='w-full' onClick={() => setShowOptions(false)}>
               <AddIcon /> Tarea
-            </li>
           </Link>
+            </li>
         </ul>
       </div>
     </div>

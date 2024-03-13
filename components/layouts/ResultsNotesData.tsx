@@ -7,9 +7,12 @@ function ResultsNotesData({data, clases, input, }:{data:NoteI[], clases:string,i
         {data
           .filter((note) => input && (note.title?.toLowerCase().includes(input.toLowerCase())&& input!==""))
           .map((filteredNote) => (
-            <Link key={filteredNote.id} href={`/notas/${filteredNote.id}`}>
-            <li className="px-2 py-1 uppercase text-xs border-b-2 hover:bg-secondary-text hover:text-white">{filteredNote.title.slice(0,42)}</li>
+            <li key={filteredNote.id} className="px-2 py-1 uppercase text-xs border-b-2 hover:bg-secondary-text hover:text-white">
+              <Link className="w-full" href={`/notas/${filteredNote.id}`}>
+              
+              {filteredNote.title.slice(0,42)}
             </Link>
+            </li>
           ))}
       </ul>      
   )

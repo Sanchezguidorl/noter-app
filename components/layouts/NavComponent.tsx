@@ -17,11 +17,11 @@ import SearchDataInput from "./SearchDataInput";
       </div>
       <nav>
         <ul className=" text-secondary-text">
-          <Link href={"/"} className="">
             <li className="h-10 flex items-center gap-1 hover:bg-primary  pl-6 cursor-pointer uppercase">
+          <Link href={"/"} className="w-full">
               <HomeIcon /> Inicio
-            </li>
           </Link>
+            </li>
           <li className="relative flex flex-col justify-center">
               <DropDownNotebook
                 icon={<CollectionsBookmarkIcon fontSize="small" />}
@@ -31,11 +31,11 @@ import SearchDataInput from "./SearchDataInput";
           <li className="relative flex flex-col justify-center">
               <DropDownNotes icon={<DescriptionIcon fontSize="small" />} />
           </li>
-          <Link href={"/tareas"} className="">
             <li className="h-10 flex items-center gap-1 hover:bg-primary  pl-6 cursor-pointer uppercase">
+          <Link href={"/tareas"} className="w-full">
               <AssignmentIcon fontSize="small" /> Tareas
-            </li>
           </Link>
+            </li>
 {/*          <Link href={"/papelera"} className="">
             <li className="h-10 flex items-center gap-1 hover:bg-primary  pl-6 cursor-pointer uppercase">
               <DeleteIcon fontSize="small" /> Papelera

@@ -42,9 +42,11 @@ function DropDownNotebooksCompact({ icon }: { icon: React.ReactNode }) {
         </li>
         {notebooksData.length > 0 &&
           notebooksData.map((notebook) => (
-            <Link key={notebook.id} href={`/libretas/${notebook.id}`}>
-              <li className="uppercase mt-1 border-t-2 py-1 border-secondary-text hover:bg-secondary-text hover:text-primary">{notebook.title.length>20? notebook.title.slice(0,20)+" ...": notebook.title}</li>
+            <li className="uppercase mt-1 border-t-2 py-1 border-secondary-text hover:bg-secondary-text hover:text-primary" key={notebook.id}>
+                <Link className="w-full" href={`/libretas/${notebook.id}`}>
+                {notebook.title.length>20? notebook.title.slice(0,20)+" ...": notebook.title}
             </Link>
+                </li>
           ))}
       </ul>
       </div>

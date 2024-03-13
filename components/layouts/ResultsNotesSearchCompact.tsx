@@ -7,9 +7,12 @@ function ResultsNotesSearchCompact({data, clases, input, }:{data:NoteI[], clases
         {data
           .filter((note) => input && (note.title?.toLowerCase().includes(input.toLowerCase())&& input!==""))
           .map((filteredNote) => (
-            <Link key={filteredNote.id} href={`/notas/${filteredNote.id}`}>
-            <li className="px-2 py-1 uppercase text-xs border-b-2 hover:bg-secondary-text">{filteredNote.title.slice(0,22)}</li>
+            <li key={filteredNote.id} className="px-2 py-1 uppercase text-xs border-b-2 hover:bg-secondary-text">
+              <Link className="w-full" href={`/notas/${filteredNote.id}`}>
+              
+              {filteredNote.title.slice(0,22)}
             </Link>
+              </li>
           ))}
       </ul>      
   )
