@@ -54,11 +54,10 @@ function DropDownItemNav({ itemCategoryName, icon }: NotebookDropDownMenuI) {
             </Link>
           </li>
           {notebooksData.map((item: NotebookI) => (
-            <li className="px-2 py-1 text-xxs hover:brightness-125 cursor-pointer uppercase text-ellipsis text-nowrap overflow-hidden ">
+            <li key={item.id} className="px-2 py-1 text-xxs hover:brightness-125 cursor-pointer uppercase text-ellipsis text-nowrap overflow-hidden ">
               <Link
                 href={`/${itemCategoryName.toLocaleLowerCase()}/${item.id}`}
                 className="w-full"
-                key={item.id}
               >
                 <LibraryBooksIcon fontSize="small" />
                 {item.title}
