@@ -28,7 +28,7 @@ if (loading) {
   user.logged ?
   <div id="NotFound" className='w-full flex justify-center items-center text-white'>
   <div className='flex flex-wrap items-center justify-center'>
-    <Image src={'/not-found.webp'} height={280} width={280} alt='Icono de página no encontrada'/>
+    <Image quality={70} src={'/not-found.webp'} height={280} width={280} alt='Icono de página no encontrada'/>
    <p className='text-3xl sm:text-6xl text-center'>
    ¿Estás perdido?
    </p>
