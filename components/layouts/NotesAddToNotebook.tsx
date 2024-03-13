@@ -38,13 +38,13 @@ function NotesAddToNotebook({
         }
       );
 
-const response= await addNote.json();
+      const response = await addNote.json();
 
       if (response.success) {
         await refresh();
         setActive(false);
         setInput("");
-      }else{
+      } else {
         setErrorMessage({
           show: true,
           message: response.error.message,
@@ -60,38 +60,38 @@ const response= await addNote.json();
   };
 
   return (
-    <ul
-      className={`absolute h-fit z-30 left-0 top-8 ml-2 text-black ${clases} overflow-hidden`}
-    >
-      {data
-        .filter(
-          (note) =>
-            input &&
-            note.title?.toLowerCase().includes(input.toLowerCase()) &&
-            notebookData.notes.filter((item) => note.id === item.id).length ===
-              0 &&
-            input !== ""
-        )
-        .map((filteredNote) => (
-          <li
-            onClick={() => handleAddNoteToNotebook(filteredNote)}
-            key={filteredNote.id}
-            className="px-2 py-1 hover:brightness-150 uppercase text-xs border-b-2 text-ellipsis text-nowrap whitespace-nowrap"
-          >
-            {filteredNote.title.length > 90
-              ? filteredNote.title.slice(0, 90) + " ..."
-              : filteredNote.title}
-          </li>
-        ))}
-      <>
-        {errorMessage.show && (
-          <ErrorMessage
-            message={errorMessage.message}
-            closeMessage={setErrorMessage}
-          />
-        )}
-      </>
-    </ul>
+    <>
+      <ul
+        className={`absolute h-fit z-30 left-0 top-8 ml-2 text-black ${clases} overflow-hidden`}
+      >
+        {data
+          .filter(
+            (note) =>
+              input &&
+              note.title?.toLowerCase().includes(input.toLowerCase()) &&
+              notebookData.notes.filter((item) => note.id === item.id)
+                .length === 0 &&
+              input !== ""
+          )
+          .map((filteredNote) => (
+            <li
+              onClick={() => handleAddNoteToNotebook(filteredNote)}
+              key={filteredNote.id}
+              className="px-2 py-1 hover:brightness-150 uppercase text-xs border-b-2 text-ellipsis text-nowrap whitespace-nowrap"
+            >
+              {filteredNote.title.length > 90
+                ? filteredNote.title.slice(0, 90) + " ..."
+                : filteredNote.title}
+            </li>
+          ))}
+      </ul>
+      {errorMessage.show && (
+        <ErrorMessage
+          message={errorMessage.message}
+          closeMessage={setErrorMessage}
+        />
+      )}
+    </>
   );
 }
 
